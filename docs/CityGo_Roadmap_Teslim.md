@@ -272,70 +272,8 @@ Arayüz, React ve MUI (Material UI) kütüphanesi ile geliştirilecektir. MUI'ni
 
 ---
 
-## 5. İş Bölümü ve Görev Dağılımı
 
-Her ekip üyesi hem backend hem de frontend geliştirme sürecinde aktif rol alacaktır. Görevler modül bazlı dağıtılmış olup, her üye kendi modülünün tüm katmanlarından (model, servis, controller) sorumludur.
-
-### 5.1 Muhammed Köseoğlu — Kullanıcı Yönetimi & Proje Altyapısı
-
-| Kategori | Görev |
-|----------|-------|
-| Proje Altyapısı | Spring Boot proje oluşturma, H2 veritabanı konfigürasyonu |
-| Proje Altyapısı | GitHub repository kurulumu, branch stratejisi belirleme |
-| Proje Altyapısı | CORS ayarları ve WebConfig sınıfı |
-| Backend Model | `Kullanici` abstract sınıfı, `Yolcu` ve `Admin` entity sınıfları |
-| Backend Repository | `KullaniciRepository` (Spring Data JPA) |
-| Backend Service | `KullaniciService` — kayıt, giriş, kullanıcı CRUD işlemleri |
-| Backend Controller | `AuthController` — login, register, logout endpoint'leri |
-| Koordinasyon | Ekip toplantıları, code review, modüller arası entegrasyon |
-
-### 5.2 Mustafa Mert Çevik — Ulaşım Modeli & Sefer Yönetimi
-
-| Kategori | Görev |
-|----------|-------|
-| Backend Model | `UlasimAraci` abstract sınıfı (Kalıtım, Soyutlama) |
-| Backend Model | `Ucak`, `Tren`, `Otobus` alt sınıfları (Polymorphism - Override) |
-| Backend Model | `Sefer` ve `Koltuk` entity sınıfları |
-| Backend Interface | `IAranabilir` interface tanımı |
-| Backend Service | `AramaService` — sefer arama, 3 farklı overloaded metot (Polymorphism - Overloading) |
-| Backend Repository | `SeferRepository`, `KoltukRepository` |
-| Backend Controller | `SeferController` — arama ve sefer detay endpoint'leri |
-| Veri | Başlangıç verilerinin hazırlanması (DataSeeder) — örnek seferler, araçlar, koltuklar |
-
-### 5.3 Ömer Faruk Kara — Frontend Geliştirme & Veri Dışa Aktarım
-
-| Kategori | Görev |
-|----------|-------|
-| Frontend Altyapı | React projesi kurulumu (Vite + MUI + React Router) |
-| Frontend Altyapı | API servis katmanı (axios ile backend bağlantısı) |
-| Frontend Bileşenler | Navbar, Footer, TripCard, SeatMap, TicketCard bileşenleri |
-| Frontend Sayfalar | Giriş ve Kayıt sayfaları |
-| Frontend Sayfalar | Ana Sayfa (sefer arama formu) |
-| Frontend Sayfalar | Arama Sonuçları sayfası |
-| Frontend Sayfalar | Koltuk Seçimi sayfası (görsel koltuk haritası) |
-| Frontend Sayfalar | Biletlerim sayfası |
-| Frontend Sayfalar | Admin Paneli sayfası |
-| Backend Interface | `IExportable` interface tanımı |
-| Backend Service | `ExportService` — JSON ve CSV dışa aktarım |
-| Backend Controller | `ExportController` — export endpoint'leri |
-
-### 5.4 Elif Feyza Şengül — Rezervasyon Sistemi & Hata Yönetimi
-
-| Kategori | Görev |
-|----------|-------|
-| Backend Model | `Bilet` entity sınıfı, `BiletDurumu` enum |
-| Backend Interface | `IRezervasyon` interface tanımı |
-| Backend Service | `RezervasyonService` — bilet alma, iptal, listeleme |
-| Backend Repository | `BiletRepository` |
-| Backend Controller | `BiletController` — bilet CRUD endpoint'leri |
-| Backend Exception | `KapasiteDoluException`, `GecersizTarihException`, `BiletBulunamadiException` |
-| Backend Exception | `KullaniciBulunamadiException`, `SeferBulunamadiException` |
-| Backend Exception | `GlobalExceptionHandler` — merkezi hata yönetimi (@ControllerAdvice) |
-| Backend Validasyon | Tüm input validasyonları (tarih, email, kapasite kontrolleri) |
-
----
-
-## 6. Proje Zaman Çizelgesi (Timeline)
+## 5. Proje Zaman Çizelgesi (Timeline)
 
 ### Hafta 1: 7 – 13 Nisan — Temel Kurulum & Öğrenme
 
@@ -383,7 +321,7 @@ Her ekip üyesi hem backend hem de frontend geliştirme sürecinde aktif rol ala
 
 ---
 
-## 7. Kullanılacak Araçlar
+## 6. Kullanılacak Araçlar
 
 | Araç | Kullanım Amacı |
 |------|----------------|
@@ -391,14 +329,3 @@ Her ekip üyesi hem backend hem de frontend geliştirme sürecinde aktif rol ala
 | H2 Console | Gömülü veritabanı yönetim arayüzü (localhost:8080/h2-console) |
 | Postman | API test etme |
 | Git & GitHub | Versiyon kontrolü ve iş birliği |
-| Figma (opsiyonel) | UI tasarım taslakları |
-
----
-
-## 8. Risk Analizi ve Çözüm Stratejileri
-
-| Risk | Olasılık | Çözüm Stratejisi |
-|------|----------|-------------------|
-| Spring Boot öğrenme süreci uzayabilir | Orta | Ekip içi bilgi paylaşımı, resmi dokümantasyon ve tutorial takibi |
-| Frontend-Backend entegrasyon sorunları | Orta | API kontratının erken belirlenmesi, Postman ile test |
-| Zaman yönetimi | Orta | Haftalık sprint toplantıları, görev takibi |

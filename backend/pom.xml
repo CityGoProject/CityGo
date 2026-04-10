@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    CityGo Backend - Maven Yapılandırma Dosyası
+    =============================================
+    Bu dosya projenin bağımlılıklarını ve build ayarlarını içerir.
+
+    Gerekli bağımlılıklar:
+    - spring-boot-starter-web       → REST API geliştirme
+    - spring-boot-starter-data-jpa  → JPA/Hibernate ORM desteği
+    - h2                            → Gömülü H2 veritabanı
+    - spring-boot-starter-validation → Input validasyonu (@Valid, @NotBlank vb.)
+    - spring-boot-devtools          → Geliştirme sırasında hot-reload
+    - spring-boot-starter-test      → Test bağımlılıkları
+    - lombok (opsiyonel)            → Getter/Setter/Constructor boilerplate azaltma
+
+    Java versiyonu: 17
+    Spring Boot versiyonu: 3.x
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.2.5</version>
+    </parent>
+
+    <groupId>com.citygo</groupId>
+    <artifactId>citygo-backend</artifactId>
+    <version>1.0.0</version>
+    <name>CityGo Backend</name>
+    <description>CityGo Akıllı Ulaşım ve Rezervasyon Sistemi - Backend</description>
+
+    <properties>
+        <java.version>17</java.version>
+    </properties>
+
+    <dependencies>
+        <!-- TODO: Bağımlılıkları buraya ekleyin -->
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+</project>
