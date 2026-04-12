@@ -91,11 +91,11 @@ Proje, OOP'nin beş temel prensibini (Kalıtım, Kapsülleme, Çok Biçimlilik, 
 Proje, **katmanlı mimari (Layered Architecture)** prensibiyle tasarlanmıştır. Frontend ve backend birbirinden bağımsız iki ayrı uygulama olarak geliştirilmiş olup, aralarındaki iletişim REST API üzerinden JSON formatında sağlanmaktadır.
 
 ```
-┌─────────────────────────────────────────────────┐
+┌──────────────────────────────────────────────────┐
 │               KULLANICI (Tarayıcı)               │
 │  ┌───────────────────────────────────────────┐   │
 │  │         React + MUI (Frontend)            │   │
-│  │  Sayfalar: Giriş, Kayıt, Ana Sayfa,      │   │
+│  │  Sayfalar: Giriş, Kayıt, Ana Sayfa,       │   │
 │  │  Arama Sonuçları, Koltuk Seçimi,          │   │
 │  │  Biletlerim, Admin Paneli                 │   │
 │  └─────────────────┬─────────────────────────┘   │
@@ -107,7 +107,7 @@ Proje, **katmanlı mimari (Layered Architecture)** prensibiyle tasarlanmıştır
 │  └─────────────────┬─────────────────────────┘   │
 │  ┌─────────────────▼─────────────────────────┐   │
 │  │  Service Katmanı (İş Mantığı)             │   │
-│  │  Interfaces: IRezervasyon, IAranabilir     │   │
+│  │  Interfaces: IRezervasyon, IAranabilir    │   │
 │  └─────────────────┬─────────────────────────┘   │
 │  ┌─────────────────▼─────────────────────────┐   │
 │  │  Repository Katmanı (Spring Data JPA)     │   │
@@ -115,8 +115,8 @@ Proje, **katmanlı mimari (Layered Architecture)** prensibiyle tasarlanmıştır
 │  ┌─────────────────▼─────────────────────────┐   │
 │  │      H2 Veritabanı (Dosya Tabanlı)        │   │
 │  └───────────────────────────────────────────┘   │
-│               SUNUCU (Spring Boot)                │
-└───────────────────────────────────────────────────┘
+│               SUNUCU (Spring Boot)               │
+└──────────────────────────────────────────────────┘
 ```
 
 ---
