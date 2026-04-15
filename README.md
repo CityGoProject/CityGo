@@ -1,7 +1,5 @@
 <div align="center">
 
-Uçak Araba
-
 # 🚌 CityGo
 
 ### Akıllı Ulaşım ve Rezervasyon Sistemi
