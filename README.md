@@ -1,5 +1,7 @@
 <div align="center">
 
+Mamiyi Çok Seviyorum
+
 # 🚌 CityGo
 
 ### Akıllı Ulaşım ve Rezervasyon Sistemi
