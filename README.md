@@ -1,6 +1,6 @@
 <div align="center">
 
-Mamiyi Çok Seviyorum
+Mustafa Mert Çevik
 
 # 🚌 CityGo
 
