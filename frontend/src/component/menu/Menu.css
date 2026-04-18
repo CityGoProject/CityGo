@@ -1,0 +1,92 @@
+/* Menü Taşıyıcı: Tüm Satırı Kaplar */
+.citygo-menu-wrapper {
+    width: 100%;
+    display: block;
+}
+
+.citygo-menu-wrapper nav {
+    width: 100%;
+}
+
+/* Genel Liste Sıfırlaması */
+.citygo-menu-wrapper ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.citygo-menu-wrapper > nav > ul {
+    display: flex; /* Bütün genişliği kaplasın diye Flexbox (Esnek kutular) özelliklerine geçiyoruz */
+    width: 100%;
+}
+
+/* Ana menü elemanları: Ekrana göre orantılı büyür ve küçülür (flex: 1) */
+.citygo-menu-wrapper > nav > ul > li {
+    flex: 1; /* Ekrandaki boşluğu eşit derecede paylaş ve kapla */
+    position: relative; /* Alt menüler (dropdown) tamamen bu kutunun alt hizasından başlasın */
+    margin-right: 1px; /* Menüler arasındaki şık ince ayıraç çizgisi */
+    min-width: 0; /* Sayfa aşırı küçülürse kutular dışarı taşmasın diye */
+}
+
+/* Menü içi genel linkler */
+.citygo-menu-wrapper li a {
+    display: block;
+    width: 100%;
+    background-color: rgb(52, 52, 96);
+    color: #fff;
+    text-decoration: none;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    font-family: helvetica;
+    box-sizing: border-box;
+    white-space: nowrap; /* Menü küçüldüğünde yazılar alta kayıp barı bozmasın */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Eğer isim ekrana sığmazsa sonuna '...' koysun */
+}
+
+/* Ana menü elemanının üstüne gelince (Hover) linkin arka planı değişsin */
+.citygo-menu-wrapper li:hover > a {
+    background-color: tomato;
+}
+
+/* ---------- ALT MENÜ (DROPDOWN / GİZLE) ---------- */
+
+/* Varsayılan olarak kapalı */
+.citygo-menu-wrapper li ul {
+    display: none;
+    position: absolute;
+    top: 50px; /* Ana linkin boyutu bitince hemen altından başla */
+    left: 0;
+    width: 100%; /* İçine girdiği ana liste elemanının bütün genişliği kadar (flex: 1) genişler */
+    flex-direction: column; /* Alt menüleri yan yana değil alt alta diz */
+    z-index: 100;
+}
+
+/* Alt menü hover ile açılma etkileşimi (.gizle) */
+.citygo-menu-wrapper li:hover > ul.gizle,
+.citygo-menu-wrapper .gizle:hover {
+    display: flex;
+}
+
+/* Alt menünün içindeki her liste satırı kendi içerisinde %100 alan kaplasın */
+.citygo-menu-wrapper li ul li {
+    width: 100%;
+    margin-right: 0;
+}
+
+/* Alt menü linklerinin görünüm özellikleri (Orijinal css'inizdeki gibi) */
+.citygo-menu-wrapper li ul li a {
+    background-color: rgb(199, 186, 186);
+    color: black;
+    height: 40px;
+    line-height: 40px;
+    white-space: normal; /* Yazı alt menüde serbest kalsın */
+    overflow: visible;
+}
+
+/* Alt menü link hover durumu (Orijinal css'inizdeki gibi) */
+.citygo-menu-wrapper li ul li a:hover {
+    background-color: tomato;
+    color: #fff;
+}
