@@ -4,6 +4,18 @@ import com.citygo.model.Kullanici;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
+// JpaRepository'den extends edince save, findAll, deleteById gibi metotlar otomatik geliyor
+public interface KullaniciRepository extends JpaRepository<Kullanici, Long> {
+
+    // Spring metot adina bakarak SQL uretiyor, biz sql yazmiyoruz
+    Optional<Kullanici> findByEmail(String email); // SELECT * FROM kullanicilar WHERE email = ?
+
+    Optional<Kullanici> findByEmailAndSifre(String email, String sifre); // email + sifre ile giris dogrulama
+
+    boolean existsByEmail(String email); // kayit sirasinda ayni email var mi kontrolu
+
+}
+
 /*
  * =============================================================
  * KullaniciRepository.java — Kullanıcı Veri Erişim Katmanı
