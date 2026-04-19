@@ -1,5 +1,7 @@
 package com.citygo.repository;
 
+// birileri çalışmıyor burası niye boş abi
+
 /*
  * =============================================================
  * KoltukRepository.java — Koltuk Veri Erişim Katmanı
@@ -9,15 +11,15 @@ package com.citygo.repository;
  * Spring Data JPA repository interface'i.
  *
  * Tanım:
- *   public interface KoltukRepository extends JpaRepository<Koltuk, Long>
+ * public interface KoltukRepository extends JpaRepository<Koltuk, Long>
  *
  * Özel Query Metotları:
  * - findBySefer_Id(Long seferId): List<Koltuk>
- *     → Bir sefere ait tüm koltukları getir (dolu/boş hepsi)
+ * → Bir sefere ait tüm koltukları getir (dolu/boş hepsi)
  *
  * - findBySefer_IdAndDolu(Long seferId, boolean dolu): List<Koltuk>
- *     → Bir seferdeki sadece boş (false) veya dolu (true) koltukları getir
+ * → Bir seferdeki sadece boş (false) veya dolu (true) koltukları getir
  *
  * - findBySefer_IdAndKoltukNo(Long seferId, int koltukNo): Optional<Koltuk>
- *     → Belirli bir seferdeki belirli numaralı koltuğu bul
+ * → Belirli bir seferdeki belirli numaralı koltuğu bul
  */
