@@ -1,22 +1,19 @@
 package com.citygo;
 
-/*
- * =============================================================
- * CityGoApplication.java — Ana Uygulama Sınıfı
- * =============================================================
- * Sorumlu: Muhammed
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+/**
+ * CityGo Uygulamasının Giriş Noktası
  *
- * Bu dosya Spring Boot uygulamasının giriş noktasıdır.
- *
- * Yapılacaklar:
- * - @SpringBootApplication anotasyonu ile sınıfı işaretleyin
- * - main() metodu içinde SpringApplication.run() çağrısı yapın
- *
- * Örnek:
- *   @SpringBootApplication
- *   public class CityGoApplication {
- *       public static void main(String[] args) {
- *           SpringApplication.run(CityGoApplication.class, args);
- *       }
- *   }
+ * @SpringBootApplication anotasyonu 3 şeyi birden yapar:
+ * 1. @Configuration    → "Bu sınıf ayar içerir"
+ * 2. @EnableAutoConfiguration → "Spring, bağımlılıklara bakarak kendini otomatik ayarla"
+ * 3. @ComponentScan    → "com.citygo paketi altındaki tüm sınıfları tara ve bul"
  */
+@SpringBootApplication
+public class CityGoApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(CityGoApplication.class, args);
+    }
+}
