@@ -1,5 +1,12 @@
 package com.citygo.exception;
 
+public class SeferBulunamadiException extends RuntimeException {
+
+    public SeferBulunamadiExceptions(String mesaj){
+        super(mesaj);
+    }
+    
+}
 /*
  * =============================================================
  * SeferBulunamadiException.java — Sefer Bulunamadı Hatası
