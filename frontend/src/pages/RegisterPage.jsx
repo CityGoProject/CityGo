@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Box, TextField, Button, Typography, Alert, Paper, Link as MuiLink, Grid } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import api from '../services/api';
+import { setStoredUser } from '../services/auth';
 
 const RegisterPage = () => {
   const [formData, setFormData] = useState({
@@ -30,7 +31,7 @@ const RegisterPage = () => {
           email: formData.email,
           sifre: formData.sifre
       });
-      localStorage.setItem('user', JSON.stringify(loginResponse.data));
+      setStoredUser(loginResponse.data);
       navigate('/'); // Ana sayfaya yonlendir
     } catch (err) {
       setError(err.response?.data?.hata || 'Kayıt sırasında bir hata oluştu. Bilgileri kontrol edin.');

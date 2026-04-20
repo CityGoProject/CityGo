@@ -45,8 +45,38 @@
     text-overflow: ellipsis; /* Eğer isim ekrana sığmazsa sonuna '...' koysun */
 }
 
+.citygo-menu-wrapper li .menu-button,
+.citygo-menu-wrapper li .menu-user {
+    display: block;
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    box-sizing: border-box;
+    font-family: helvetica;
+}
+
+.citygo-menu-wrapper li .menu-button {
+    border: 0;
+    background-color: rgb(52, 52, 96);
+    color: #fff;
+    cursor: pointer;
+}
+
+.citygo-menu-wrapper li .menu-user {
+    background-color: rgb(34, 80, 139);
+    color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 /* Ana menü elemanının üstüne gelince (Hover) linkin arka planı değişsin */
 .citygo-menu-wrapper li:hover > a {
+    background-color: tomato;
+}
+
+.citygo-menu-wrapper li:hover > .menu-button {
     background-color: tomato;
 }
 

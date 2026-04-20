@@ -45,6 +45,12 @@ public class AuthController {
                     .body(Map.of("hata", e.getMessage()));
         }
     }
+
+    @PostMapping("/logout")
+    public ResponseEntity<?> cikisYap() {
+        // Auth state frontend'de tutulduğu için backend tarafında bilgilendirici cevap yeterli.
+        return ResponseEntity.ok(Map.of("mesaj", "Çıkış başarılı"));
+    }
 }
 
 /*

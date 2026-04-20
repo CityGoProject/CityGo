@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Box, TextField, Button, Typography, Alert, Paper, Link as MuiLink } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import api from '../services/api';
+import { setStoredUser } from '../services/auth';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -16,7 +17,7 @@ const LoginPage = () => {
     try {
       const response = await api.post('/auth/login', { email, sifre });
       // Basarili giris sonrasi kullanici bilgisini sakliyoruz
-      localStorage.setItem('user', JSON.stringify(response.data));
+      setStoredUser(response.data);
       navigate('/'); // Ana sayfaya yonlendir
     } catch (err) {
       setError(err.response?.data?.hata || 'Giriş yapılamadı. E-posta veya şifre hatalı olabilir.');
