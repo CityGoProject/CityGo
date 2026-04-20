@@ -1,5 +1,7 @@
 package com.citygo.controller;
 
+import com.citygo.model.Bilet;
+
 /*
  * =============================================================
  * BiletController.java — Bilet İşlemleri Controller

@@ -1,5 +1,12 @@
 package com.citygo.exception;
 
+public class BiletBulunamadiException extends RuntimeException {
+   
+    public BiletBulunamadiException(String mesaj){
+        super(mesaj);
+    }
+
+}
 /*
  * =============================================================
  * BiletBulunamadiException.java — Bilet Bulunamadı Hatası

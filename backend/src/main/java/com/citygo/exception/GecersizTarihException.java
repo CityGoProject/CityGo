@@ -1,5 +1,12 @@
 package com.citygo.exception;
 
+public class GecersizTarihException extends RuntimeException {
+
+    public GecersizTarihException(String mesaj){
+        super(mesaj);
+    }
+    
+}
 /*
  * =============================================================
  * GecersizTarihException.java — Geçersiz Tarih Hatası

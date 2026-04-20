@@ -1,5 +1,12 @@
 package com.citygo.exception;
 
+public class KapasiteDoluException extends RuntimeException {
+
+    public KapasiteDoluException(String mesaj){
+        super(mesaj);
+    }
+    
+}
 /*
  * =============================================================
  * KapasiteDoluException.java — Kapasite Dolu Hatası

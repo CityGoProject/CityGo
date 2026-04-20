@@ -1,5 +1,12 @@
 package com.citygo.exception;
 
+public class KullaniciBulunamadiException extends RuntimeException {
+
+    public KullaniciBulunamadiException(String mesaj){
+        super(mesaj);
+    }
+    
+}
 /*
  * =============================================================
  * KullaniciBulunamadiException.java — Kullanıcı Bulunamadı Hatası

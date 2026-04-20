@@ -1,5 +1,56 @@
 package com.citygo.exception;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.time.LocalDateTime;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+@RestControllerAdvice // tüm controllerdeki hataları dinleyen merkez, bu hatayı yakalayacak metodu arar.
+public class GlobalExceptionHandler {
+
+    //Bulunamadı Hataları (404 not found)
+    @ExceptionHandler({
+        BiletBulunamadiException.class,
+        KullaniciBulunamadiException.class,
+        SeferBulunamadiException.class
+    })
+    public ResponseEntity<Object> handleNotFoundExceptions(RuntimeException ex) { //hem mesajı hem durum kodunu göndermeyi sağlar.
+        return createResponse("Bulunamadi", ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+
+    //Geçersiz İşlem - Tarih Hataları(400 bad request)
+    @ExceptionHandler({
+        KapasiteDoluException.class,
+        GecersizTarihException.class
+    })
+    public ResponseEntity<Object> handleBadRequestExceptions(RuntimeException ex) {
+        return createResponse("Hatali İstek", ex.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+
+    //Genel Beklenmedik Hatalar (500 internal server error)
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Object> handleGeneralExceptions(Exception ex) {
+        return createResponse("Sunucu Hatasi", " Beklenmeyen bir hata olustu.", HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+
+    //yardımcı metot -> standart bir hata formatı oluşturmayı sağlar.
+    private ResponseEntity<Object> createResponse(String hataTipi, String mesaj, HttpStatus durum) {
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("hata", hataTipi); //"hata" nın yerine hataTipi değişkenini koymaya yarar.
+        body.put("mesaj", mesaj);
+        body.put("zaman", LocalDateTime.now());
+
+        return new ResponseEntity<>(body,durum);
+    }
+
+}
 /*
  * =============================================================
  * GlobalExceptionHandler.java — Merkezi Hata Yönetimi

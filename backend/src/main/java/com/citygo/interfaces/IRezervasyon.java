@@ -1,5 +1,15 @@
 package com.citygo.interfaces;
 
+import com.citygo.model.Bilet;
+import java.util.List;
+
+public interface IRezervasyon {
+    Bilet rezervasyonYap(Long yolcuId, Long seferId, int koltukNo);
+
+    boolean rezervasyonIptal(Long biletId);
+
+    List<Bilet> rezervasyonlariGetir(Long yolcuId);
+}
 /*
  * =============================================================
  * IRezervasyon.java — Rezervasyon Interface (ABSTRACTION)
