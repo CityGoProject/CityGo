@@ -34,7 +34,7 @@ import jakarta.persistence.*;
 @Table(name = "seferler")
 public class Sefer {
 
-    @id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
