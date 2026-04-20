@@ -99,12 +99,12 @@ backend/
 
 ### 🟠 HAFTA 3 — 21–23 Nisan (Milestone / Demo Teslimi)
 
-| # | Görev | Detay |
-|---|-------|-------|
+| # | Görev | Detay | Durum |
+|---|-------|-------|-------|
 | 12 | `LoginPage.jsx` | MUI TextField (email, şifre) + Button. `api.post("/auth/login", {...})` çağrısı. Başarılıysa kullanıcı bilgisini `localStorage`'a kaydet ve ana sayfaya yönlendir. Hata varsa MUI Alert göster. | ✅ |
 | 13 | `RegisterPage.jsx` | MUI TextField (ad, soyad, email, şifre, telefon, tcNo) + Button. `api.post("/auth/register", {...})` çağrısı. Başarılıysa otomatik login yap. | ✅ |
-| 14 | Frontend-Backend entegrasyonu | Login/Register sayfalarının auth API'ne bağlanması + test |
-| 15 | Diğer ekip arkadaşlarının kodlarını review et | Merge conflict'leri çöz, entegrasyonu sağla |
+| 14 | Frontend-Backend entegrasyonu | Login/Register sayfalarının auth API'ne bağlanması + test | ✅ |
+| 15 | Diğer ekip arkadaşlarının kodlarını review et | Merge conflict'leri çöz, entegrasyonu sağla | ✅ |
 
 > **🚨 23 Nisan: ÇALIŞAN DEMO TESLİMİ — Auth sistemi + Login/Register sayfaları hazır olmalı!**
 
@@ -137,10 +137,10 @@ backend/
    ↓ (modeller hazır, H2'de tablolar oluştu)
 8. KullaniciRepository.java → veri erişim             ✅
 9. KullaniciService.java → iş mantığı                ✅
-10. AuthController.java → API endpoint'leri
+10. AuthController.java → API endpoint'leri          ✅
     ↓ (auth sistemi çalışır durumda)
-11. LoginPage.jsx → giriş sayfası (React)
-12. RegisterPage.jsx → kayıt sayfası (React)
+11. LoginPage.jsx → giriş sayfası (React)            ✅
+12. RegisterPage.jsx → kayıt sayfası (React)         ✅
     ↓ (frontend auth sayfaları hazır)
 13. AdminPanel.jsx → admin paneli (React, Hafta 4-5)
 ```
