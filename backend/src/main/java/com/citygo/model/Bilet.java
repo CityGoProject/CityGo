@@ -1,14 +1,10 @@
 package com.citygo.model;
 
-import jakarta.persistence*.;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
    @Entity //veritabanında biletler tablosuna eşlenir.
    @Table(name = "biletler")
-   @NoArgsConstructor
-   @AllArgsConstructor
 
    public class Bilet{
 
@@ -17,7 +13,7 @@ import java.time.LocalDateTime;
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY) // bir yolcunun birden fazla bileti olabilir.
-    @JoinColumn(name = "yolcu_id", nullable false)
+    @JoinColumn(name = "yolcu_id", nullable = false)
     private Yolcu yolcu;
 
     @ManyToOne(fetch = FetchType.LAZY) //bir seferde birçok bilet satılabilir.
@@ -25,7 +21,7 @@ import java.time.LocalDateTime;
     private Sefer sefer;
 
     @OneToOne(fetch = FetchType.LAZY) //her bilet tek bir spesifik koltuğa atanır.
-    @JoinColumn(name = "koltuk_id", nullable false)
+    @JoinColumn(name = "koltuk_id", nullable = false)
     private Koltuk koltuk;
 
     @Column(nullable = false)
@@ -35,7 +31,8 @@ import java.time.LocalDateTime;
     @Column(nullable = false)
     private BiletDurumu durum;
 
-    private LocalDate olusturmaTarihi;
+    @Column(nullable = false)
+    private LocalDateTime olusturmaTarihi;
 
     @PrePersist //veritabanına yeni bilet kaydı eklenmeden hemen önce bu metod tetiklenir ve biletin satın alınma anını sistem saatiyle kaydeder.
     protected void onCreate(){
@@ -85,6 +82,13 @@ import java.time.LocalDateTime;
     }
     public BiletDurumu getDurum(){
         return this.durum;
+    }
+
+    public void setOlusturmaTarihi(LocalDateTime olusturmaTarihi){
+        this.olusturmaTarihi = olusturmaTarihi;
+    }
+    public LocalDateTime getOlusturmaTarihi(){
+        return this.olusturmaTarihi;
     }
 
    }
