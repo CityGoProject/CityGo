@@ -23,3 +23,43 @@ package com.citygo.model;
  *
  * Not: Roadmap'ta "dpieces" yazıyor ama bu alan "dolu" (occupied) olmalı.
  */
+
+@Entity
+@Table(name = "koltuklar")
+public class Koltuk {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "koltuk_no", nullable = false)
+    private int koltukNo;
+
+    @Column(name = "dolu", nullable = false)
+    private boolean dolu = false; 
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tip", nullable = false)
+    private KoltukTipi tip;
+
+    @ManyToOne
+    @JoinColumn(name = "sefer_id", nullable = false) 
+    private Sefer sefer;
+
+
+    public Long getId() {return id; }
+    public void setId(Long id) {this.id = id;}
+
+    public int getKoltukNo() {return koltukNo;}
+
+    public void setKoltukNo(int koltukNo) {this.koltukNo = koltukNo;}
+
+    public boolean isDolu() {return dolu;}
+    public void setDolu(boolean dolu) {this.dolu = dolu;}
+
+    public KoltukTipi getTip() {return tip;}
+    public void setTip(KoltukTipi tip) {this.tip = tip;}
+
+    public Sefer getSefer() {return sefer;}
+    public void setSefer(Sefer sefer) {this.sefer = sefer;}
+}

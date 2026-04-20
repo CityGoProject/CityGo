@@ -14,3 +14,9 @@ package com.citygo.model;
  *
  * Kullanımı: Koltuk entity'sinde @Enumerated(EnumType.STRING) ile
  */
+
+public enum KoltukTipi {
+
+    STANDART,
+    PREMIUM
+}
