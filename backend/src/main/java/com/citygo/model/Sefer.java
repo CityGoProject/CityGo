@@ -1,4 +1,6 @@
 package com.citygo.model;
+import java.time.LocalDateTime;
+import java.util.List;
 import jakarta.persistence.*;
 
 /*
@@ -47,9 +49,10 @@ public class Sefer {
     private String varisNoktasi;
 
     @Column(name = "kalkis_zamani", nullable = false)
-    private String kalkisZamani;
+    // Repository ve görev planıyla uyum için tarih alanları LocalDateTime olmalı.
+    private LocalDateTime kalkisZamani;
     @Column(name = "varis_zamani", nullable = false)
-    private String varisZamani;
+    private LocalDateTime varisZamani;
 
     @OneToMany(mappedBy = "sefer", cascade = CascadeType.ALL)
     private List<Koltuk> koltuklar;
@@ -65,12 +68,12 @@ public class Sefer {
 
     public String getVarisNoktasi() {return varisNoktasi;}
     public void setVarisNoktasi(String varisNoktasi) {this.varisNoktasi = varisNoktasi;}
-    
-    public String getKalkisNoktasi() {return kalkisNoktasi;}
-    public void setKalkisNoktasi(String kalkisNoktasi) {this.kalkisNoktasi = kalkisNoktasi;}
 
-    public String getVarisNoktasi() {return varisNoktasi;}
-    public void setVarisNoktasi(String varisNoktasi) {this.varisNoktasi = varisNoktasi;}
+    public LocalDateTime getKalkisZamani() {return kalkisZamani;}
+    public void setKalkisZamani(LocalDateTime kalkisZamani) {this.kalkisZamani = kalkisZamani;}
+
+    public LocalDateTime getVarisZamani() {return varisZamani;}
+    public void setVarisZamani(LocalDateTime varisZamani) {this.varisZamani = varisZamani;}
     
     public List<Koltuk> getKoltuklar() {return koltuklar;}
     public void setKoltuklar(List<Koltuk> koltuklar) {this.koltuklar = koltuklar;}

@@ -48,7 +48,8 @@
         public void setHavaalaniVergiOrani(double havaalaniVergiOrani) {this.havaalaniVergiOrani = havaalaniVergiOrani;}
 
         public String getHavaalani() {return havaalani;}
-        public void setHavaalani(String havaalin) {this.havaalani = havaalani;}
+        // Parametre adı yanlış kullanıldığı için alan hiç set edilmiyordu.
+        public void setHavaalani(String havaalani) {this.havaalani = havaalani;}
 
         
         @Override
@@ -56,7 +57,8 @@
 
         @Override
         public double hesaplaToplamFiyat(double temelFiyat) {
-            return temelFiyat + (temelFiyat + havaalaniVergiOrani);
+            // Vergi oranı yüzde gibi uygulanmalı; iki kez temel fiyat eklenmemeli.
+            return temelFiyat + (temelFiyat * havaalaniVergiOrani);
         }
         
     }

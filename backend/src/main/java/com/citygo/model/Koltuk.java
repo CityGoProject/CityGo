@@ -1,4 +1,5 @@
 package com.citygo.model;
+import jakarta.persistence.*;
 
 /*
  * =============================================================

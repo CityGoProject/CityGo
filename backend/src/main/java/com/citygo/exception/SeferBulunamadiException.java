@@ -2,7 +2,8 @@ package com.citygo.exception;
 
 public class SeferBulunamadiException extends RuntimeException {
 
-    public SeferBulunamadiExceptions(String mesaj){
+    // Constructor adı sınıf adıyla aynı olmalı.
+    public SeferBulunamadiException(String mesaj){
         super(mesaj);
     }
     

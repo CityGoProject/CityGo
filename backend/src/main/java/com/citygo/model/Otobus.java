@@ -40,8 +40,9 @@ public class Otobus extends UlasimAraci {
     private boolean ikramVar;
     private double ikramBedeli;
 
-    public void setIkramVar(boolean ikramVar) {this.ikramvar = ikramVar;}
-    public boolean getIkramVar() {return ikramvar;}
+    // Alan adı ile getter/setter'daki isimlerin birebir uyuşması gerekiyor.
+    public void setIkramVar(boolean ikramVar) {this.ikramVar = ikramVar;}
+    public boolean getIkramVar() {return ikramVar;}
     public void setIkramBedeli(double ikramBedeli) {this.ikramBedeli = ikramBedeli;} 
     public double getIkramBedeli () {return ikramBedeli;}
 
