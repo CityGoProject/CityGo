@@ -1,4 +1,5 @@
 package com.citygo.model;
+import jakarta.persistence.*;
 
 /*
  * =============================================================
@@ -31,3 +32,29 @@ package com.citygo.model;
  * Getter/Setter:
  * - Ek alanlar için getter/setter metotları
  */
+
+@Entity
+@DiscriminatorValue("OTOBUS")
+public class Otobus extends UlasimAraci {
+
+    private boolean ikramVar;
+    private double ikramBedeli;
+
+    public void setIkramVar(boolean ikramVar) {this.ikramvar = ikramVar;}
+    public boolean getIkramVar() {return ikramvar;}
+    public void setIkramBedeli(double ikramBedeli) {this.ikramBedeli = ikramBedeli;} 
+    public double getIkramBedeli () {return ikramBedeli;}
+
+    @Override 
+    public double hesaplaToplamFiyat(double temelFiyat) 
+    {
+        if(ikramVar ==  true) 
+            {
+                return ikramBedeli + temelFiyat;
+            }
+        else {return temelFiyat;}
+    }
+
+    @Override
+    public String getAracTipi() {return "OTOBUS";}
+}
