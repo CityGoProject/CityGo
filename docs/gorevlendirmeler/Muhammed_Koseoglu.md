@@ -68,13 +68,13 @@ backend/
 
 > **Bu hafta bitirmesi gereken görevler altyapı görevleridir. Ekibin çalışabilmesi için bunların hazır olması şart!**
 
-| # | Dosya | Yapılacaklar | Öncelik |
-|---|-------|-------------|---------|
-| 1 | `pom.xml` | Tüm bağımlılıkları ekle: `spring-boot-starter-web`, `spring-boot-starter-data-jpa`, `h2`, `spring-boot-starter-validation`, `spring-boot-devtools` | 🔴 İLK İŞ |
-| 2 | `application.properties` | H2 veritabanı ayarları (dosya tabanlı mod), JPA/Hibernate ayarları, H2 Console erişimi aktifleştirme | 🔴 İLK İŞ |
-| 3 | `CityGoApplication.java` | `@SpringBootApplication` ile ana sınıfı yaz, uygulamayı başlat ve test et | 🔴 İLK İŞ |
-| 4 | `WebConfig.java` | CORS konfigürasyonu — frontend (localhost:5173) erişimine izin ver | 🔴 İLK İŞ |
-| 5 | — | GitHub'da branch stratejisi belirle, `dev` ve kişisel branch'ları oluştur | 🔴 İLK İŞ |
+| # | Dosya | Yapılacaklar | Durum |
+|---|-------|-------------|-------|
+| 1 | `pom.xml` | Tüm bağımlılıkları ekle: `spring-boot-starter-web`, `spring-boot-starter-data-jpa`, `h2`, `spring-boot-starter-validation`, `spring-boot-devtools` | ✅ |
+| 2 | `application.properties` | H2 veritabanı ayarları (dosya tabanlı mod), JPA/Hibernate ayarları, H2 Console erişimi aktifleştirme | ✅ |
+| 3 | `CityGoApplication.java` | `@SpringBootApplication` ile ana sınıfı yaz, uygulamayı başlat ve test et | ✅ |
+| 4 | `WebConfig.java` | CORS konfigürasyonu — frontend (localhost:5173) erişimine izin ver | ✅ |
+| 5 | — | GitHub'da branch stratejisi belirle, `dev` ve kişisel branch'ları oluştur | ✅ |
 
 **Bu haftanın çıktısı:** Uygulama `mvn spring-boot:run` ile ayağa kalkmalı, H2 Console erişilebilir olmalı.
 
@@ -82,14 +82,14 @@ backend/
 
 ### 🟡 HAFTA 2 — 14–20 Nisan (Model & API Geliştirme)
 
-| # | Dosya | Yapılacaklar | Detay |
+| # | Dosya | Yapılacaklar | Durum |
 |---|-------|-------------|-------|
-| 6 | `Kullanici.java` | Abstract entity sınıfını yaz | `@Entity`, `@Inheritance(strategy=SINGLE_TABLE)`, `@DiscriminatorColumn(name="rol")`. Alanlar: id, ad, soyad, email, sifre, telefon. Tümü `private` + getter/setter. |
-| 7 | `Yolcu.java` | Kullanici'dan miras alan sınıf | `@DiscriminatorValue("YOLCU")`. Ek alanlar: tcNo, biletler (`@OneToMany`). |
-| 8 | `Admin.java` | Kullanici'dan miras alan sınıf | `@DiscriminatorValue("ADMIN")`. Ek alan: yetki. |
-| 9 | `KullaniciRepository.java` | JPA Repository interface | `extends JpaRepository<Kullanici, Long>`. Metotlar: `findByEmail()`, `findByEmailAndSifre()`, `existsByEmail()`. |
-| 10 | `KullaniciService.java` | İş mantığı servisi | `@Service`. Metotlar: `kayitOl()`, `girisYap()`, `kullaniciBul()`, `tumKullanicilariGetir()`. |
-| 11 | `AuthController.java` | REST Controller | `@RestController`, `@RequestMapping("/api/auth")`. Endpoint'ler: `POST /register`, `POST /login`, `POST /logout`. |
+| 6 | `Kullanici.java` | Abstract entity sınıfını yaz | ✅ |
+| 7 | `Yolcu.java` | Kullanici'dan miras alan sınıf | ✅ |
+| 8 | `Admin.java` | Kullanici'dan miras alan sınıf | ✅ |
+| 9 | `KullaniciRepository.java` | JPA Repository interface | ✅ |
+| 10 | `KullaniciService.java` | İş mantığı servisi | ✅ |
+| 11 | `AuthController.java` | REST Controller — `POST /register`, `POST /login`, `POST /logout` | ✅ |
 
 **Bu haftanın çıktısı:** Postman'dan `/api/auth/register` ve `/api/auth/login` çalışmalı. H2 Console'da `kullanicilar` tablosu görülmeli.
 
