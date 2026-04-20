@@ -1,6 +1,6 @@
 # 👤 Muhammed Köseoğlu — Görev Planı
 
-**Rol:** Kullanıcı Yönetimi & Proje Altyapısı + Koordinasyon  
+**Rol:** Kullanıcı Yönetimi & Proje Altyapısı + Frontend Auth/Admin Sayfaları + Koordinasyon  
 **Öğrenci No:** 24118080049
 
 ---
@@ -101,10 +101,12 @@ backend/
 
 | # | Görev | Detay |
 |---|-------|-------|
-| 12 | Frontend-Backend entegrasyonu | Ömer Faruk'un yaptığı Login/Register sayfalarının senin auth API'ne bağlanması |
-| 13 | Diğer ekip arkadaşlarının kodlarını review et | Merge conflict'leri çöz, entegrasyonu sağla |
+| 12 | `LoginPage.jsx` | MUI TextField (email, şifre) + Button. `api.post("/auth/login", {...})` çağrısı. Başarılıysa kullanıcı bilgisini `localStorage`'a kaydet ve ana sayfaya yönlendir. Hata varsa MUI Alert göster. |
+| 13 | `RegisterPage.jsx` | MUI TextField (ad, soyad, email, şifre, telefon, tcNo) + Button. `api.post("/auth/register", {...})` çağrısı. Başarılıysa otomatik login yap. |
+| 14 | Frontend-Backend entegrasyonu | Login/Register sayfalarının auth API'ne bağlanması + test |
+| 15 | Diğer ekip arkadaşlarının kodlarını review et | Merge conflict'leri çöz, entegrasyonu sağla |
 
-> **🚨 23 Nisan: ÇALIŞAN DEMO TESLİMİ — Auth sistemi kesinlikle hazır olmalı!**
+> **🚨 23 Nisan: ÇALIŞAN DEMO TESLİMİ — Auth sistemi + Login/Register sayfaları hazır olmalı!**
 
 ---
 
@@ -112,10 +114,10 @@ backend/
 
 | # | Dosya/Görev | Yapılacaklar |
 |---|-------------|-------------|
-| 14 | `AdminController.java` | Admin paneli backend endpoint'leri: `GET /api/admin/seferler`, `POST`, `PUT`, `DELETE` sefer CRUD. `GET /api/admin/kullanicilar`, `GET /api/admin/biletler`, `GET /api/admin/istatistikler`. Ömer Faruk ile birlikte çalışılacak. |
-| 15 | `README.md` | Proje açıklaması, kurulum talimatları, teknoloji listesi (zaten oluşturuldu, güncellenecek) |
-| 16 | Proje raporu | Tüm ekiple birlikte |
-| 17 | Video sunum kaydı | Tüm ekiple birlikte |
+| 16 | `AdminPanel.jsx` | Tab yapısı (MUI Tabs): Seferler, Kullanıcılar, Biletler, İstatistikler. Sefer CRUD: ekleme dialog, düzenleme, silme. İstatistikler: toplam sefer, bilet, kullanıcı sayıları. Ömer Faruk'un yazdığı AdminController API'lerini kullanır. |
+| 17 | `README.md` | Proje açıklaması, kurulum talimatları, teknoloji listesi (zaten oluşturuldu, güncellenecek) |
+| 18 | Proje raporu | Tüm ekiple birlikte |
+| 19 | Video sunum kaydı | Tüm ekiple birlikte |
 
 > **🚨 10 Mayıs: FİNAL TESLİM**
 
@@ -124,20 +126,23 @@ backend/
 ## 🎯 Başlama Sırası (Nereden Başlamalıyım?)
 
 ```
-1. pom.xml → bağımlılıkları ekle
-2. application.properties → H2 + JPA ayarları
-3. CityGoApplication.java → uygulamayı başlat
-4. WebConfig.java → CORS aç
+1. pom.xml → bağımlılıkları ekle                    ✅
+2. application.properties → H2 + JPA ayarları        ✅
+3. CityGoApplication.java → uygulamayı başlat        ✅
+4. WebConfig.java → CORS aç                          ✅
    ↓ (uygulama ayağa kalktı)
-5. Kullanici.java → abstract model
-6. Yolcu.java → alt sınıf
-7. Admin.java → alt sınıf
+5. Kullanici.java → abstract model                   ✅
+6. Yolcu.java → alt sınıf                            ✅
+7. Admin.java → alt sınıf                            ✅
    ↓ (modeller hazır, H2'de tablolar oluştu)
-8. KullaniciRepository.java → veri erişim
-9. KullaniciService.java → iş mantığı
+8. KullaniciRepository.java → veri erişim             ✅
+9. KullaniciService.java → iş mantığı                ✅
 10. AuthController.java → API endpoint'leri
-    ↓  (auth sistemi çalışır durumda)
-11. AdminController.java → admin API (Hafta 4-5)
+    ↓ (auth sistemi çalışır durumda)
+11. LoginPage.jsx → giriş sayfası (React)
+12. RegisterPage.jsx → kayıt sayfası (React)
+    ↓ (frontend auth sayfaları hazır)
+13. AdminPanel.jsx → admin paneli (React, Hafta 4-5)
 ```
 
 ---
@@ -157,3 +162,6 @@ backend/
 - [Spring Boot + H2 Kurulumu](https://spring.io/guides/gs/accessing-data-jpa/)
 - [Spring Data JPA Repository](https://docs.spring.io/spring-data/jpa/docs/current/reference/html/)
 - [Spring Boot REST Controller](https://spring.io/guides/gs/rest-service/)
+- [MUI Components](https://mui.com/material-ui/all-components/)
+- [React Router v6](https://reactrouter.com/en/main/start/tutorial)
+- [Axios Kullanımı](https://axios-http.com/docs/intro)

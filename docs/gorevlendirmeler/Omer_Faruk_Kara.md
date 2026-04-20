@@ -1,6 +1,6 @@
 # 👤 Ömer Faruk Kara — Görev Planı
 
-**Rol:** Frontend Geliştirme & Veri Dışa Aktarım  
+**Rol:** Frontend Geliştirme & Backend Admin API & Veri Dışa Aktarım  
 **Öğrenci No:** 24118080064
 
 ---
@@ -34,7 +34,7 @@ backend/
     │   ├── AuthController.java                      (Muhammed)
     │   ├── SeferController.java                     (Mert)
     │   ├── BiletController.java                     (Elif Feyza)
-    │   ├── AdminController.java                     (Muhammed + ⭐ birlikte)
+    │   ├── AdminController.java                     ⭐ Admin paneli API (tamamen Ömer Faruk'un)
     │   └── ExportController.java                    ⭐ Export API endpoint'leri
     └── exception/
         └── ...                                      (Elif Feyza)
@@ -91,12 +91,12 @@ frontend/                                            ⭐ TAMAMINI SEN YAPACAKSIN
 
 | # | Dosya | Yapılacaklar | Detay |
 |---|-------|-------------|-------|
-| 8 | `LoginPage.jsx` | Giriş sayfası | MUI TextField (email, şifre) + Button. `api.post("/auth/login", {...})` çağrısı. Başarılıysa kullanıcı bilgisini `localStorage`'a kaydet ve ana sayfaya yönlendir. Hata varsa MUI Alert göster. |
-| 9 | `RegisterPage.jsx` | Kayıt sayfası | MUI TextField (ad, soyad, email, şifre, telefon, tcNo) + Button. `api.post("/auth/register", {...})` çağrısı. Başarılıysa otomatik login yap. Form validasyonu ekle. |
-| 10 | `HomePage.jsx` | Ana sayfa (arama formu) | MUI Autocomplete/Select (kalkış, varış şehirleri), DatePicker (tarih), ToggleButton (araç tipi: Uçak/Tren/Otobüs). "Sefer Ara" butonu → SearchResultsPage'e yönlendir. |
-| 11 | `Footer.jsx` | Alt kısım | Basit bir footer: "© 2026 CityGo" + takım bilgisi |
+| 8 | `HomePage.jsx` | Ana sayfa (arama formu) | MUI Autocomplete/Select (kalkış, varış şehirleri), DatePicker (tarih), ToggleButton (araç tipi: Uçak/Tren/Otobüs). "Sefer Ara" butonu → SearchResultsPage'e yönlendir. |
+| 9 | `Footer.jsx` | Alt kısım | Basit bir footer: "© 2026 CityGo" + takım bilgisi |
 
-**Bu haftanın çıktısı:** Login, Register ve Ana Sayfa görsel olarak tamamlanmış ve backend API'ye bağlanabilir durumda olmalı.
+> **Not:** `LoginPage.jsx`, `RegisterPage.jsx` ve `AdminPanel.jsx` **Muhammed'e devredildi**. Auth backend'ini o yazdığı için frontend'ini de o yapacak.
+
+**Bu haftanın çıktısı:** HomePage ve Footer görsel olarak tamamlanmış ve backend API'ye bağlanabilir durumda olmalı.
 
 ---
 
@@ -120,7 +120,7 @@ frontend/                                            ⭐ TAMAMINI SEN YAPACAKSIN
 | 16 | `SeatMap.jsx` | Görsel koltuk haritası bileşeni | Grid layout ile koltukları göster (4'lü sıra: 2+koridor+2). Props: koltuklar dizisi, seçim callback'i. Renk kodlaması: boş=yeşil, dolu=gri, seçili=mavi. |
 | 17 | `MyTicketsPage.jsx` | Biletlerim sayfası | `api.get("/biletler/benim?yolcuId=...")` ile biletleri çek. `TicketCard` bileşenleri ile listele. İptal butonu → `api.put("/biletler/{id}/iptal")`. |
 | 18 | `TicketCard.jsx` | Bilet kartı bileşeni | Props: sefer bilgisi, koltuk no, fiyat, tarih, durum. Aktif biletlerde "İptal Et" butonu. İptal edilen biletlerde "İptal Edildi" badge'i. |
-| 19 | `AdminPanel.jsx` | Admin paneli sayfası | Tab yapısı (MUI Tabs): Seferler, Kullanıcılar, Biletler, İstatistikler. Sefer CRUD: ekleme dialog, düzenleme, silme. İstatistikler: toplam sefer, bilet, kullanıcı sayıları (kartlar). Muhammed'in backend API'lerini kullanır. |
+| 19 | `AdminController.java` | **🆕 Backend Admin API** | `@RestController`, `@RequestMapping("/api/admin")`. Endpoint'ler: `GET/POST/PUT/DELETE /seferler` (sefer CRUD), `GET /kullanicilar`, `GET /biletler`, `GET /istatistikler`. Birden fazla entity ile çalışır — OOP prensiplerini gösterir. |
 | 20 | `IExportable.java` | Backend interface | `exportJSON()` ve `exportCSV()` metot tanımları. `byte[]` döndürecek. |
 | 21 | `ExportService.java` | Backend servis | `@Service`, `implements IExportable`. JSON: ObjectMapper ile. CSV: StringBuilder ile başlık satırı + veri satırları. |
 | 22 | `ExportController.java` | Backend controller | `@RestController`, `@RequestMapping("/api/export")`. `GET /biletler/json` → dosya indirme. `GET /biletler/csv` → dosya indirme. Content-Disposition header'ı eklemeyi unutma! |
@@ -197,6 +197,7 @@ Sayfalarını yazarken bu endpoint'leri kullanacaksın:
 |---------|-------------------|
 | **Abstraction** | `IExportable` interface tanımı |
 | **Encapsulation** | ExportService'de iç detayların gizlenmesi |
+| **Polymorphism** | AdminController'da farklı entity'lerle (Sefer, Kullanici, Bilet) çalışma |
 
 ---
 

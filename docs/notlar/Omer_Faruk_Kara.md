@@ -13,15 +13,23 @@ Bu dosya, proje geliştirme sürecinde **Ömer Faruk'un takip etmesi gereken not
 
 ## Bekleyen Güncellemeler
 
-### ⏳ Frontend Login/Register — Muhammed'in Auth API'sini bekliyor
-**Bağımlılık:** Muhammed → `AuthController.java`
+### ⏳ Frontend HomePage — Mert'in SeferController API'sini bekliyor
+**Bağımlılık:** Mert → `SeferController.java`
 
-Muhammed auth API'yi tamamladığında, Login ve Register sayfalarını şu endpoint'lere bağlaman gerekecek:
+HomePage'deki arama formu, Mert'in yazacağı sefer arama endpoint'ini kullanacak:
+- `GET http://localhost:8080/api/seferler/ara?kalkis=...&varis=...&tarih=...`
 
-- `POST http://localhost:8080/api/auth/register` → Kayıt
-  - Body: `{ "ad", "soyad", "email", "sifre", "telefon", "tcNo" }`
-- `POST http://localhost:8080/api/auth/login` → Giriş
-  - Body: `{ "email", "sifre" }`
-- `POST http://localhost:8080/api/auth/logout` → Çıkış
+### 🔄 AdminController.java — 🆕 Yeni görev!
+**Durum:** Bu dosya artık **tamamen senin sorumluluğunda**. (Eskiden Muhammed ile paylaşımlıydı)
 
-Muhammed API'yi bitirince sana haber verecek.
+**Yapılacaklar:**
+- `@RestController`, `@RequestMapping("/api/admin")`
+- Sefer CRUD: `GET/POST/PUT/DELETE /api/admin/seferler`
+- Kullanıcı listesi: `GET /api/admin/kullanicilar`
+- Bilet listesi: `GET /api/admin/biletler`
+- İstatistikler: `GET /api/admin/istatistikler`
+
+**Bağımlılıklar:** `SeferRepository` (Mert), `KullaniciService` (Muhammed), `BiletRepository` (Elif Feyza)
+
+### 📌 Görev Değişikliği Notu
+`LoginPage.jsx`, `RegisterPage.jsx` ve `AdminPanel.jsx` **Muhammed'e devredildi**. Auth backend'ini o yazdığı için frontend'ini de o yapacak. Senin frontend yükün azaldı ama backend OOP görevin arttı — dengeleme yapıldı.
