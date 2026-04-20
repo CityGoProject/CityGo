@@ -1,5 +1,11 @@
 package com.citygo.model;
 
+public enum BiletDurumu{
+    AKTIF, // bilet aktif, kullanılabilir durumda
+    IPTAL_EDILDI, //kullanıcı aldı ama iptal etti
+    KULLANILDI, // sefer tamamlandı bilet gecersiz durumda
+}
+
 /*
  * =============================================================
  * BiletDurumu.java — Bilet Durumu Enum
