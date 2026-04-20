@@ -1,4 +1,5 @@
 package com.citygo.model;
+import jakarta.persistence.*;
 
 /*
  * =============================================================
@@ -28,3 +29,52 @@ package com.citygo.model;
  * Not: koltuklar listesi sefer oluşturulurken otomatik olarak
  *      aracın kapasitesi kadar Koltuk nesnesi ile doldurulmalıdır.
  */
+
+@Entity
+@Table(name = "seferler")
+public class sefer {
+
+    @id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "arac_id")
+    private UlasimAraci arac;
+    @Column(name = "kalkis_noktasi", nullable = false)
+    private String kalkisNoktasi;
+    @Column(name = "varis_noktasi", nullable = false)
+    private String varisNoktasi;
+
+    @Column(name = "kalkis_zamani", nullable = false)
+    private String kalkisZamani;
+    @Column(name = "varis_zamani", nullable = false)
+    private String varisZamani;
+
+    @OneToMany(mappedBy = "sefer", cascade = CascadeType.ALL)
+    private List<Koltuk> koltuklar;
+
+    public Long getId() {return id;}
+    public void setId(Long id) {this.id = id;}
+
+    public UlasimAraci getArac() {return arac;}
+    public void setArac(UlasimAraci arac) {this.arac = arac;}
+
+    public String getKalkisNoktasi() {return kalkisNoktasi;}
+    public void setKalkisNoktasi(String kalkisNoktasi) {this.kalkisNoktasi = kalkisNoktasi;}
+
+    public String getVarisNoktasi() {return varisNoktasi;}
+    public void setVarisNoktasi(String varisNoktasi) {this.varisNoktasi = varisNoktasi;}
+    
+    public String getKalkisNoktasi() {return kalkisNoktasi;}
+    public void setKalkisNoktasi(String kalkisNoktasi) {this.kalkisNoktasi = kalkisNoktasi;}
+
+    public String getVarisNoktasi() {return varisNoktasi;}
+    public void setVarisNoktasi(String varisNoktasi) {this.varisNoktasi = varisNoktasi;}
+    
+    public List<Koltuk> getKoltuklar() {return koltuklar;}
+    public void setKoltuklar(List<Koltuk> koltuklar) {this.koltuklar = koltuklar;}
+
+    // Koltukları Otamatik Doldurma Fonksiyonu Oluşturcağım
+
+}
