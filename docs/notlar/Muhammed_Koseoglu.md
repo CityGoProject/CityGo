@@ -13,10 +13,10 @@ Bu dosya, proje geliştirme sürecinde **Muhammed'in takip etmesi gereken notlar
 
 ## Bekleyen Güncellemeler
 
-### ⏳ KullaniciService.java — Exception sınıfı güncellemesi
+### ✅ KullaniciService.java — Exception sınıfı güncellemesi (TAMAMLANDI)
 **Bağımlılık:** Elif Feyza → `KullaniciBulunamadiException.java`
 
-Şu an `KullaniciService.java`'da geçici olarak `RuntimeException` kullanıyorsun. Elif Feyza `KullaniciBulunamadiException` sınıfını yazdığında:
+Elif Feyza exception sınıfını yazdı, `KullaniciService.java`'daki `RuntimeException`'lar `KullaniciBulunamadiException` ile değiştirildi.
 
 1. `KullaniciService.java`'daki import'lara ekle:
    ```java

@@ -2,6 +2,7 @@ package com.citygo.service;
 
 import com.citygo.model.Kullanici;
 import com.citygo.model.Yolcu;
+import com.citygo.exception.KullaniciBulunamadiException;  // Elif Feyza'nin yazdigi exception sinifi
 import com.citygo.repository.KullaniciRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,7 +39,7 @@ public class KullaniciService {
     // email ve sifre ile giris dogrulama
     public Kullanici girisYap(String email, String sifre){
 
-        Kullanici kullanici = kullaniciRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("Kullanıcı bulunamadı: " + email));
+        Kullanici kullanici = kullaniciRepository.findByEmail(email).orElseThrow(() -> new KullaniciBulunamadiException("Kullanıcı bulunamadı: " + email));
 
         // girilen sifreyi hashleyip veritabanindaki hash ile karsilastiriyoruz
         if(!kullanici.getSifre().equals(sifreHashle(sifre))){
@@ -51,7 +52,7 @@ public class KullaniciService {
     }
 
     public Kullanici kullaniciBul(Long id) {
-        return kullaniciRepository.findById(id).orElseThrow(() -> new RuntimeException("Kullanıcı bulunamadı, ID: " + id));
+        return kullaniciRepository.findById(id).orElseThrow(() -> new KullaniciBulunamadiException("Kullanıcı bulunamadı, ID: " + id));
     }
 
     // admin paneli icin tum kullanicilari listeler
