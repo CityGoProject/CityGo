@@ -32,7 +32,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "seferler")
-public class sefer {
+public class Sefer {
 
     @id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
