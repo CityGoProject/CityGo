@@ -32,9 +32,9 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "seferler")
-public class sefer {
+public class Sefer {
 
-    @id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

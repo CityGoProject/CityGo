@@ -1,0 +1,25 @@
+# === Java / Maven ===
+backend/target/
+*.class
+*.jar
+*.war
+
+# === IDE Dosyaları ===
+.idea/
+*.iml
+.vscode/
+.settings/
+.classpath
+.project
+
+# === OS Dosyaları ===
+.DS_Store
+Thumbs.db
+
+# === H2 Veritabanı (her bilgisayarda farklı olur) ===
+backend/data/
+
+# === Node / React ===
+frontend/node_modules/
+frontend/dist/
+frontend/.env.local

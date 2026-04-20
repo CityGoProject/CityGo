@@ -1,6 +1,10 @@
 package com.citygo.repository;
 
-// birileri çalışmıyor burası niye boş abi
+import com.citygo.model.Koltuk;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import java.util.List;
+import java.util.Optional;
 
 /*
  * =============================================================
@@ -23,3 +27,13 @@ package com.citygo.repository;
  * - findBySefer_IdAndKoltukNo(Long seferId, int koltukNo): Optional<Koltuk>
  * → Belirli bir seferdeki belirli numaralı koltuğu bul
  */
+
+@Repository
+public interface KoltukRepository extends JpaRepository<Koltuk, Long> {
+
+    List<Koltuk> findBySefer_Id(Long seferId);
+
+    List<Koltuk> findBySefer_IdAndDolu(Long seferId, boolean dolu);
+
+    Optional<Koltuk> findBySefer_IdAndKoltukNo(Long seferId, int koltukNo);
+}

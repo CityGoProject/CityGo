@@ -1,5 +1,11 @@
 package com.citygo.repository;
 
+import com.citygo.model.Sefer;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import java.util.List;
+
+
 /*
  * =============================================================
  * SeferRepository.java — Sefer Veri Erişim Katmanı
@@ -26,3 +32,14 @@ package com.citygo.repository;
  * Not: Tarih filtresi için kalkisZamani alanının başlangıç-bitiş
  *      arasında olup olmadığı kontrol edilecek (Between).
  */
+
+@Repository
+public interface SeferRepository extends JpaRepository<Sefer, Long> {
+
+    List<Sefer> findByKalkisNoktasiAndVarisNoktasi(String kalkis, String varis);
+
+    List<Sefer> findByKalkisNoktasiAndVarisNoktasiAndKalkisZamani(
+        String kalkis, String varis, String kalkisZamani);
+
+    List<Sefer> findByArac_AracTipi(String aracTipi);
+}
