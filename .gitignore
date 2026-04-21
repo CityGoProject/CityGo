@@ -21,6 +21,7 @@ backend/data/
 
 # === Node / React ===
 frontend/node_modules/
+Frontend/node_modules/
 frontend/dist/
 frontend/.env.local
 frontend/.env.*
