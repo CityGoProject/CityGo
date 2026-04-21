@@ -24,8 +24,12 @@ import java.util.List;
  *      stratejisi sayesinde alt sınıfları (Ucak, Tren, Otobus) da döndürür.
  */
 
+// Spring'e bu interface veritabanı işlemleri yaptığını söyleme 
 @Repository
+
 public interface UlasimAraciRepository extends JpaRepository<UlasimAraci, Long> {
 
+    // Firmaya göre araç listesi getirir
+    // SELECT * FROM ulasim_araclari WHERE firma = ?
     List<UlasimAraci> findByFirma(String firma);
 }

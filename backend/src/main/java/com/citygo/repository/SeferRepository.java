@@ -3,6 +3,7 @@ package com.citygo.repository;
 import com.citygo.model.Sefer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -33,13 +34,21 @@ import java.util.List;
  *      arasında olup olmadığı kontrol edilecek (Between).
  */
 
+// Spring'e bu interface veritabanı işlemleri yaptığını söyleme 
 @Repository
 public interface SeferRepository extends JpaRepository<Sefer, Long> {
 
+    // Sadece kalkış ve varış noktasına göre sefer arama
+    // SELECT * FROM seferler WHERE kalkis_noktasi = ? AND varis_noktasi = ?
     List<Sefer> findByKalkisNoktasiAndVarisNoktasi(String kalkis, String varis);
 
-    List<Sefer> findByKalkisNoktasiAndVarisNoktasiAndKalkisZamani(
-        String kalkis, String varis, String kalkisZamani);
+    // Kalkış, varış ve tarih ARALIĞINA göre sefer arama
+    // Between → o günün 00:00 ile 23:59 arasındaki seferleri bulur
+    // SELECT * FROM seferler WHERE kalkis_noktasi = ? AND varis_noktasi = ?
+    List<Sefer> findByKalkisNoktasiAndVarisNoktasiAndKalkisZamaniBetween(String kalkis, String varis,LocalDateTime baslangic, LocalDateTime bitis);
 
-    List<Sefer> findByArac_AracTipi(String aracTipi);
+    // Araç tipine göre filtreleme ("UCAK", "TREN", "OTOBUS")
+    // Sefer → Arac → AracTipi alanına göre arama yapar
+    // SELECT * FROM seferler s JOIN ulasim_araclari a ON s.arac_id = a.id
+   List<Sefer> findByArac_AracTipi(String aracTipi);
 }

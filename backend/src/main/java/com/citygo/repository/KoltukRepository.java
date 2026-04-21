@@ -28,12 +28,19 @@ import java.util.Optional;
  * → Belirli bir seferdeki belirli numaralı koltuğu bul
  */
 
+// Spring'e bu interface veritabanı işlemleri yaptığını söyleme 
 @Repository
 public interface KoltukRepository extends JpaRepository<Koltuk, Long> {
 
+    // Bir sefere ait TÜM koltukları getirir (dolu + boş)
+    // SELECT * FROM koltuklar WHERE sefer_id = ?
     List<Koltuk> findBySefer_Id(Long seferId);
 
+    // Bir seferdeki sadece BOŞ veya DOLU koltukları getirir
+    // SELECT * FROM koltuklar WHERE sefer_id = ? AND dolu = ?
     List<Koltuk> findBySefer_IdAndDolu(Long seferId, boolean dolu);
 
+    // Belirli bir seferdeki belirli numaralı koltuğu bulur
+    // SELECT * FROM koltuklar WHERE sefer_id = ? AND koltuk_no = ?
     Optional<Koltuk> findBySefer_IdAndKoltukNo(Long seferId, int koltukNo);
 }

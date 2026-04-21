@@ -1,5 +1,12 @@
 package com.citygo.service;
 
+import com.citygo.interfaces.IAranabilir;
+import com.citygo.model.Sefer;
+import com.citygo.repository.SeferRepository;
+import org.springframework.stereotype.Service;
+import java.util.List;
+import java.util.stream.Collectors;
+
 /*
  * =============================================================
  * AramaService.java — Sefer Arama İş Mantığı (POLYMORPHISM - Overloading)
@@ -41,3 +48,48 @@ package com.citygo.service;
  * ÖNEMLI: Bu 3 overloaded metot projedeki Polymorphism (Overloading)
  *         örneğinin temelini oluşturuyor!
  */
+
+
+@Service
+public class AramaService implements IAranabilir {
+
+    private final SeferRepository seferRepository;
+
+    // Constructor injection
+    public AramaService(SeferRepository seferRepository) {
+        this.seferRepository = seferRepository;
+    }
+
+    // Sadece güzergaha göre arama
+    @Override
+    public List<Sefer> ara(String kalkis, String varis) {
+        return seferRepository.findByKalkisNoktasiAndVarisNoktasi(kalkis, varis);
+    }
+
+    // Güzergah ve tarihe göre arama
+    @Override
+    public List<Sefer> ara(String kalkis, String varis, String tarih) {
+        return seferRepository.findByKalkisNoktasiAndVarisNoktasiAndKalkisZamani( kalkis, varis, tarih);
+        }
+
+    // Güzergah, tarih ve araç tipine göre arama
+    @Override
+    public List<Sefer> ara(String kalkis, String varis, String tarih, String aracTipi) {
+        return seferRepository
+            .findByKalkisNoktasiAndVarisNoktasiAndKalkisZamani(kalkis, varis, tarih)
+            .stream()
+            .filter(sefer -> sefer.getArac().getAracTipi().equals(aracTipi))
+            .collect(Collectors.toList());
+    }
+
+    // Tek bir seferin detaylarını getirir
+    public Sefer seferDetay(Long seferId) {
+        return seferRepository.findById(seferId)
+            .orElseThrow(() -> new RuntimeException("Sefer bulunamadi: " + seferId));
+    }
+
+    // Tüm seferleri listeler
+    public List<Sefer> tumSeferleriGetir() {
+        return seferRepository.findAll();
+    } 
+}

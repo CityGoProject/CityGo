@@ -1,4 +1,6 @@
 package com.citygo.interfaces;
+import com.citygo.model.Sefer;
+import java.util.List;
 
 /*
  * =============================================================
@@ -28,3 +30,15 @@ package com.citygo.interfaces;
  * NOT: Bu 3 metot method overloading örneğidir (Polymorphism).
  *      Hocaya gösterilecek önemli bir OOP prensip uygulaması!
  */
+
+public interface IAranabilir {
+
+    // Sadece güzergaha göre arama
+    List<Sefer> ara(String kalkis, String varis);
+
+    // Güzergah ve tarihe göre arama
+    List<Sefer> ara(String kalkis, String varis, String tarih);
+
+    // Güzergah, tarih ve araç tipine göre arama
+    List<Sefer> ara(String kalkis, String varis, String tarih, String aracTipi);
+}

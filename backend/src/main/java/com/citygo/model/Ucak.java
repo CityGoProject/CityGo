@@ -33,13 +33,11 @@
     * - Ek alanlar için getter/setter metotları
     */
 
-    @Entity
+    @Entity // Veritabanını tablo ile eşleştirme 
     @DiscriminatorValue("UCAK") // SuperClass'da yazdığımız ayırt edici sutünun değeri
     public class Ucak extends UlasimAraci{
         
-        @Column(name="havaalani_vergi_orani")        
         private double havaalaniVergiOrani;
-        @Column(name="havaalani")
         private String havaalani;
 
         // getter/setter'lar
@@ -48,15 +46,15 @@
         public void setHavaalaniVergiOrani(double havaalaniVergiOrani) {this.havaalaniVergiOrani = havaalaniVergiOrani;}
 
         public String getHavaalani() {return havaalani;}
-        public void setHavaalani(String havaalin) {this.havaalani = havaalani;}
+        public void setHavaalani(String havaalani) {this.havaalani = havaalani;}
 
         
         @Override
-        public String getAracTipi() {return "UCAK";}
+        public String getAracTipi() {return "UCAK";} // Araç tipi döndürme
 
         @Override
         public double hesaplaToplamFiyat(double temelFiyat) {
-            return temelFiyat + (temelFiyat + havaalaniVergiOrani);
+            return temelFiyat + (temelFiyat * havaalaniVergiOrani); // Havaalani Vergi Oranı ile temel fiyattandan son fiyatı bulma
         }
         
     }
