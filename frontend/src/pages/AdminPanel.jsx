@@ -128,7 +128,7 @@ function AdminPanel() {
           </Paper>
 
           {loading && (
-            <Stack alignItems="center" sx={{ py: 6 }}>
+            <Stack sx={{ py: 6, alignItems: 'center' }}>
               <CircularProgress />
             </Stack>
           )}
@@ -154,7 +154,11 @@ function AdminPanel() {
                   {!trips.length && <Alert severity="info">Sefer bulunamadı.</Alert>}
                   {trips.map((trip) => (
                     <Paper key={trip.id} sx={{ p: 2 }} variant="outlined">
-                      <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} alignItems="center">
+                      <Stack
+                        direction={{ xs: 'column', sm: 'row' }}
+                        spacing={2}
+                        sx={{ alignItems: 'center' }}
+                      >
                         <Box sx={{ mr: 'auto' }}>
                           <Typography fontWeight={700}>
                             #{trip.id} · {trip.kalkisNoktasi} → {trip.varisNoktasi}
@@ -191,7 +195,7 @@ function AdminPanel() {
               )}
 
               {activeTab === 4 && (
-                <Stack spacing={2} alignItems="flex-start">
+                <Stack spacing={2} sx={{ alignItems: 'flex-start' }}>
                   <Typography variant="h6" fontWeight={800}>
                     Dışa Aktarma
                   </Typography>

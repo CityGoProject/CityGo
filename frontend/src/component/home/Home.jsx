@@ -57,8 +57,7 @@ const Home = () => {
           <Stack 
             direction={{ xs: 'column', md: 'row' }} 
             spacing={2} 
-            alignItems="center"
-            justifyContent="center"
+            sx={{ alignItems: 'center', justifyContent: 'center' }}
           >
             <Autocomplete
               fullWidth

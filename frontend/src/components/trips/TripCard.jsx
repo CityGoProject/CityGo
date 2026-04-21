@@ -24,7 +24,7 @@ function TripCard({ sefer, onSelect }) {
     <Card variant="outlined" sx={{ borderRadius: 2 }}>
       <CardContent>
         <Stack spacing={2}>
-          <Stack direction="row" spacing={1} alignItems="center" flexWrap="wrap">
+          <Stack direction="row" spacing={1} sx={{ alignItems: 'center', flexWrap: 'wrap' }}>
             <Chip label={vehicleType} color="primary" size="small" />
             <Typography variant="body2" color="text.secondary">
               {[arac.firma, arac.model].filter(Boolean).join(' · ') || 'Araç bilgisi bekleniyor'}

@@ -1,5 +1,19 @@
 package com.citygo.interfaces;
 
+import com.citygo.model.Sefer;
+
+import java.time.LocalDate;
+import java.util.List;
+
+public interface IAranabilir {
+
+    List<Sefer> ara(String kalkis, String varis);
+
+    List<Sefer> ara(String kalkis, String varis, LocalDate tarih);
+
+    List<Sefer> ara(String kalkis, String varis, LocalDate tarih, String aracTipi);
+}
+
 /*
  * =============================================================
  * IAranabilir.java — Arama Interface (ABSTRACTION + POLYMORPHISM)
@@ -7,24 +21,11 @@ package com.citygo.interfaces;
  * Sorumlu: Mert
  *
  * Sefer arama işlemlerini tanımlayan interface.
- * AramaService bu interface'i implement edecek.
+ * AramaService bu interface'i implement eder.
  *
- * OOP Prensipleri:
- * - ABSTRACTION: Arama mantığı soyutlanıyor
- * - POLYMORPHISM (Overloading): Aynı isimde farklı parametreli metotlar
- *
- * Metotlar (3 farklı overloaded versiyon):
- *
- * - ara(String kalkis, String varis): List<Sefer>
- *     → Sadece kalkış ve varış noktasına göre arama
- *
- * - ara(String kalkis, String varis, LocalDate tarih): List<Sefer>
- *     → Kalkış, varış ve tarihe göre arama
- *
- * - ara(String kalkis, String varis, LocalDate tarih, String aracTipi): List<Sefer>
- *     → Kalkış, varış, tarih ve araç tipine göre arama
- *     → aracTipi: "UCAK", "TREN" veya "OTOBUS"
- *
- * NOT: Bu 3 metot method overloading örneğidir (Polymorphism).
- *      Hocaya gösterilecek önemli bir OOP prensip uygulaması!
+ * Not:
+ * Bu dosya daha önce sadece yorum içeriyordu. Frontend /api/seferler/ara
+ * endpoint'ine istek atınca backend tarafında gerçek arama kontratı olmadığı
+ * için endpoint zinciri tamamlanamıyordu. Bu yüzden interface gerçek metot
+ * imzalarıyla dolduruldu.
  */

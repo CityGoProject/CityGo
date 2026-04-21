@@ -111,7 +111,11 @@ function HomePage() {
             <Box component="form" onSubmit={handleSearch}>
               {/* Bu form HomePage'i placeholder olmaktan çıkarıp gerçek sefer arama ekranı yapar. */}
               <Stack spacing={2}>
-                <Stack direction={{ xs: 'column', md: 'row' }} spacing={2} alignItems="center">
+                <Stack
+                  direction={{ xs: 'column', md: 'row' }}
+                  spacing={2}
+                  sx={{ alignItems: 'center' }}
+                >
                   <Autocomplete
                     fullWidth
                     value={formData.kalkis}
@@ -159,7 +163,9 @@ function HomePage() {
                     type="date"
                     value={formData.tarih}
                     onChange={handleChange}
-                    InputLabelProps={{ shrink: true }}
+                    // MUI'nin yeni sürümünde InputLabelProps DOM'a sızabiliyor.
+                    // slotProps ile label'ı güvenli şekilde küçültüyoruz.
+                    slotProps={{ inputLabel: { shrink: true } }}
                   />
 
                   <TextField

@@ -64,7 +64,7 @@ function MyTicketsPage() {
           </Paper>
 
           {loading && (
-            <Stack alignItems="center" sx={{ py: 6 }}>
+            <Stack sx={{ py: 6, alignItems: 'center' }}>
               <CircularProgress />
             </Stack>
           )}

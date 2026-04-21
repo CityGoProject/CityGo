@@ -83,7 +83,7 @@ function SeatSelectionPage() {
           </Paper>
 
           {loading && (
-            <Stack alignItems="center" sx={{ py: 6 }}>
+            <Stack sx={{ py: 6, alignItems: 'center' }}>
               <CircularProgress />
             </Stack>
           )}
@@ -99,7 +99,11 @@ function SeatSelectionPage() {
                   onSeatSelect={setSelectedSeat}
                 />
 
-                <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} alignItems="center">
+                <Stack
+                  direction={{ xs: 'column', sm: 'row' }}
+                  spacing={2}
+                  sx={{ alignItems: 'center' }}
+                >
                   <Typography color="text.secondary" sx={{ mr: 'auto' }}>
                     Seçili koltuk: {selectedSeat?.koltukNo || 'Yok'}
                   </Typography>

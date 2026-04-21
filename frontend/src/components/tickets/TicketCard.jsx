@@ -24,7 +24,7 @@ function TicketCard({ bilet, onCancel }) {
     <Card variant="outlined" sx={{ borderRadius: 2 }}>
       <CardContent>
         <Stack spacing={1.5}>
-          <Stack direction="row" spacing={1} alignItems="center">
+          <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
             <Chip
               label={bilet?.durum || 'DURUM BEKLENIYOR'}
               color={isActive ? 'success' : 'default'}

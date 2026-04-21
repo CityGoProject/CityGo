@@ -1,43 +1,75 @@
 package com.citygo.service;
 
+import com.citygo.exception.SeferBulunamadiException;
+import com.citygo.interfaces.IAranabilir;
+import com.citygo.model.Sefer;
+import com.citygo.repository.SeferRepository;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.List;
+
+@Service
+public class AramaService implements IAranabilir {
+
+    private final SeferRepository seferRepository;
+
+    public AramaService(SeferRepository seferRepository) {
+        this.seferRepository = seferRepository;
+    }
+
+    @Override
+    public List<Sefer> ara(String kalkis, String varis) {
+        return seferRepository.findByKalkisNoktasiAndVarisNoktasi(kalkis, varis);
+    }
+
+    @Override
+    public List<Sefer> ara(String kalkis, String varis, LocalDate tarih) {
+        /*
+         * Kullanıcı sadece tarih seçiyor, Sefer entity'sinde ise LocalDateTime var.
+         * Bu yüzden seçilen günün 00:00-23:59 aralığını sorguluyoruz.
+         */
+        LocalDateTime baslangic = tarih.atStartOfDay();
+        LocalDateTime bitis = tarih.atTime(LocalTime.MAX);
+
+        return seferRepository.findByKalkisNoktasiAndVarisNoktasiAndKalkisZamaniBetween(
+                kalkis,
+                varis,
+                baslangic,
+                bitis);
+    }
+
+    @Override
+    public List<Sefer> ara(String kalkis, String varis, LocalDate tarih, String aracTipi) {
+        return ara(kalkis, varis, tarih)
+                .stream()
+                .filter(sefer -> sefer.getArac() != null)
+                .filter(sefer -> sefer.getArac().getAracTipi().equalsIgnoreCase(aracTipi))
+                .toList();
+    }
+
+    public Sefer seferDetay(Long seferId) {
+        return seferRepository.findById(seferId)
+                .orElseThrow(() -> new SeferBulunamadiException("Sefer bulunamadı, ID: " + seferId));
+    }
+
+    public List<Sefer> tumSeferleriGetir() {
+        return seferRepository.findAll();
+    }
+}
+
 /*
  * =============================================================
  * AramaService.java — Sefer Arama İş Mantığı (POLYMORPHISM - Overloading)
  * =============================================================
  * Sorumlu: Mert
  *
- * IAranabilir interface'ini implement eden sefer arama servisi.
- * 3 farklı overloaded ara() metodu ile POLYMORPHISM gösterilecek.
+ * Bu dosya daha önce sadece açıklama içeriyordu. Frontend'deki Sefer Ara
+ * butonu /api/seferler/ara endpoint'ine gittiği için artık gerçek servis
+ * kodu eklendi.
  *
- * Anotasyonlar:
- * - @Service
- *
- * Implements:
- * - IAranabilir
- *
- * Bağımlılıklar:
- * - SeferRepository
- *
- * Metotlar (hepsi IAranabilir'den geliyor):
- *
- * - ara(String kalkis, String varis): List<Sefer>
- *     → SeferRepository.findByKalkisNoktasiAndVarisNoktasi() çağır
- *
- * - ara(String kalkis, String varis, LocalDate tarih): List<Sefer>
- *     → Tarih filtresini de ekleyerek arama yap
- *     → Tarih: o günün 00:00 - 23:59 arasındaki seferleri getir
- *
- * - ara(String kalkis, String varis, LocalDate tarih, String aracTipi): List<Sefer>
- *     → Tarih + araç tipi filtreleri ile arama yap
- *     → Sonuçları araç tipine göre filtrele (stream().filter() kullanılabilir)
- *
- * Ek Metotlar:
- * - seferDetay(Long seferId): Sefer
- *     → Tek bir seferin detaylarını getir
- *
- * - tumSeferleriGetir(): List<Sefer>
- *     → Admin paneli için tüm seferleri listele
- *
- * ÖNEMLI: Bu 3 overloaded metot projedeki Polymorphism (Overloading)
- *         örneğinin temelini oluşturuyor!
+ * OOP notu:
+ * Aynı isimde 3 farklı ara() metodu method overloading örneğidir.
  */
