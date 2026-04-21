@@ -1,0 +1,50 @@
+.footer {
+    background-color: #1a1a1a;
+    color: #e2e8f0;
+    padding: 1rem 1rem;
+    /* Padding azaltıldı */
+    width: 100%;
+    margin-top: auto;
+    /* Sticky layout için */
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    /* Boşluk azaltıldı */
+}
+
+.footer-team {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.2rem;
+}
+
+.team-member {
+    font-size: 0.85rem;
+    /* Font küçültüldü */
+    font-weight: 500;
+    color: #94a3b8;
+    transition: color 0.3s ease;
+    cursor: default;
+}
+
+.team-member:hover {
+    color: #3b82f6;
+}
+
+.footer-bottom {
+    font-size: 0.75rem;
+    /* Font küçültüldü */
+    color: #64748b;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: 1rem;
+    width: 100%;
+    text-align: center;
+}
