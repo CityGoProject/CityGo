@@ -20,6 +20,15 @@ const LoginPage = () => {
       setStoredUser(response.data);
       navigate('/'); // Ana sayfaya yonlendir
     } catch (err) {
+      /*
+       * Backend kapalıysa kullanıcıya "şifre hatalı" demek yanıltıcı olur.
+       * Bu kontrol bağlantı sorununu daha anlaşılır gösterir.
+       */
+      if (!err.response) {
+        setError('Backend çalışmıyor olabilir. Lütfen backend sunucusunu localhost:8080 üzerinde başlatın.');
+        return;
+      }
+
       setError(err.response?.data?.hata || 'Giriş yapılamadı. E-posta veya şifre hatalı olabilir.');
     }
   };

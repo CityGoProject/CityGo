@@ -34,6 +34,15 @@ const RegisterPage = () => {
       setStoredUser(loginResponse.data);
       navigate('/'); // Ana sayfaya yonlendir
     } catch (err) {
+      /*
+       * Backend kapalıysa err.response gelmez. Bu durumda kullanıcıya
+       * form bilgilerini değil, backend bağlantısını kontrol etmesini söylüyoruz.
+       */
+      if (!err.response) {
+        setError('Backend çalışmıyor olabilir. Lütfen backend sunucusunu localhost:8080 üzerinde başlatın.');
+        return;
+      }
+
       setError(err.response?.data?.hata || 'Kayıt sırasında bir hata oluştu. Bilgileri kontrol edin.');
     }
   };
