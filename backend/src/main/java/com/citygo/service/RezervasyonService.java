@@ -1,5 +1,97 @@
 package com.citygo.service;
 
+import com.citygo.exception.*;
+import com.citygo.model.*;
+import com.citygo.repository.*;
+import com.citygo.interfaces.IRezervasyon;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+@Service
+public class RezervasyonService implements IRezervasyon {
+
+    private final BiletRepository biletRepository;
+    private final KoltukRepository koltukRepository;
+    private final SeferRepository seferRepository;
+    private final KullaniciRepository kullaniciRepository;
+
+    @Autowired
+    public RezervasyonService(BiletRepository biletRepository, KoltukRepository koltukRepository, SeferRepository seferRepository, KullaniciRepository kullaniciRepository) {
+
+        this.biletRepository = biletRepository;
+        this.koltukRepository = koltukRepository;
+        this.seferRepository = seferRepository;
+        this.kullaniciRepository = kullaniciRepository;
+
+    }
+
+    @Override
+    @Transactional
+    public Bilet rezervasyonYap(Long yolcuId, Long seferId, int koltukNo) {
+
+        // Yolcu Kontrolü
+        Kullanici yolcu = kullaniciRepository.findById(yolcuId).orElseThrow(() -> new KullaniciBulunamadiException("Yolcu Bulunamadi!"));
+
+        // Sefer Kontrolü
+        Sefer sefer = seferRepository.findById(seferId).orElseThrow(() -> new SeferBulunamadiException("Sefer Bulunamadi!"));
+
+        // Koltuk Kontrolü (Sefer + KoltukNo ile)
+        Koltuk koltuk = koltukRepository.findBySeferAndKoltukNo(sefer, koltukNo).orElseThrow(() -> new KoltukBulunamadiException("Koltuk mevcut değil!"));
+
+        // Koltuk Dolu Mu Kontrolü
+        if (koltuk.isDolu()) {
+            throw new KapasiteDoluException("Bu Koltuk Zaten Rezerve Edilmiş!");
+        }
+
+        // Koltuğu Dolu Olarak İşaretleme
+        koltuk.setDolu(true);
+        koltukRepository.save(koltuk);
+
+        // Fiyat Hesaplama
+        double toplamFiyat = sefer.getUlasimAraci().hesaplaToplamFiyat();
+
+        // Bilet Nesnesi Oluşturma
+        Bilet bilet = new Bilet();
+        bilet.setYolcu(yolcu);
+        bilet.setSefer(sefer);
+        bilet.setKoltuk(koltuk);
+        bilet.setFiyat(toplamFiyat);
+        bilet.setDurum(BiletDurumu.AKTIF);
+
+        // Kaydet ve Döndür
+        return biletRepository.save(bilet);
+    }
+
+    @Override
+    @Transactional
+    public boolean rezervasyonIptal(Long biletId) {
+
+        // Bilet Kontrolü
+        Bilet bilet = biletRepository.findById(biletId).orElseThrow(() -> new BiletBulunamadiException("Bilet Bulunamadi!"));
+
+        // Bilet Durumunu IPTAL_EDILDI Yap
+        bilet.setDurum(BiletDurumu.IPTAL_EDILDI);
+
+        // İlgili Koltuğu Tekrar Boş Yap
+        Koltuk koltuk = bilet.getKoltuk();
+        koltuk.setDolu(false);
+        koltukRepository.save(koltuk);
+
+        // Kaydet ve True Döndür
+        biletRepository.save(bilet);
+        return true;
+    }
+
+    @Override
+    public List<Bilet> rezervasyonlariGetir(Long yolcuId) {
+
+        return biletRepository.findByYolcu_Id(yolcuId); // BiletRepositorydeki özel metodu çağırıyoruz
+
+    }
+}
 /*
  * =============================================================
  * RezervasyonService.java — Rezervasyon İş Mantığı
