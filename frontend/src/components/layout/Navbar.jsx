@@ -1,7 +1,6 @@
 import { AppBar, Box, Button, Toolbar, Typography } from '@mui/material'
 import { Link as RouterLink, useNavigate } from 'react-router-dom'
-import api from '../../services/api'
-import { clearStoredUser, getStoredUser, isAdminUser } from '../../services/auth'
+import { clearStoredUser, getStoredUser, isAdminUser, logoutUser } from '../../services/auth'
 
 /*
  * Eski `src/component/menu/Menu.jsx` statik site menüsü gibiydi.
@@ -13,7 +12,7 @@ function Navbar() {
 
   const handleLogout = async () => {
     try {
-      await api.post('/auth/logout')
+      await logoutUser()
     } catch {
       // Backend logout cevap vermezse bile frontend oturumunu temizlemek yeterli.
     } finally {

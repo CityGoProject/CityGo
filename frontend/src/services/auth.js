@@ -1,3 +1,18 @@
+import api from './api'
+
+// Auth API çağrılarını burada topluyoruz ki sayfalar sadece ekran işi yapsın.
+export function loginUser(email, sifre) {
+  return api.post('/auth/login', { email, sifre })
+}
+
+export function registerUser(formData) {
+  return api.post('/auth/register', formData)
+}
+
+export function logoutUser() {
+  return api.post('/auth/logout')
+}
+
 // Auth verisini tek yerde toplamak tekrar eden localStorage kodunu azaltır.
 export function getStoredUser() {
   const rawUser = localStorage.getItem('user')

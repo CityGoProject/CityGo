@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { Box, TextField, Button, Typography, Alert, Paper, Link as MuiLink, Grid } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
-import api from '../services/api';
-import { setStoredUser } from '../services/auth';
+import { loginUser, registerUser, setStoredUser } from '../services/auth';
 
 const RegisterPage = () => {
   const [formData, setFormData] = useState({
@@ -25,12 +24,9 @@ const RegisterPage = () => {
     setError('');
     
     try {
-      await api.post('/auth/register', formData);
+      await registerUser(formData);
       // Kayit basariliysa otomatik giris yapalim
-      const loginResponse = await api.post('/auth/login', {
-          email: formData.email,
-          sifre: formData.sifre
-      });
+      const loginResponse = await loginUser(formData.email, formData.sifre);
       setStoredUser(loginResponse.data);
       navigate('/'); // Ana sayfaya yonlendir
     } catch (err) {

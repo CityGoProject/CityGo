@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { Box, TextField, Button, Typography, Alert, Paper, Link as MuiLink } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
-import api from '../services/api';
-import { setStoredUser } from '../services/auth';
+import { loginUser, setStoredUser } from '../services/auth';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -15,7 +14,7 @@ const LoginPage = () => {
     setError('');
     
     try {
-      const response = await api.post('/auth/login', { email, sifre });
+      const response = await loginUser(email, sifre);
       // Basarili giris sonrasi kullanici bilgisini sakliyoruz
       setStoredUser(response.data);
       navigate('/'); // Ana sayfaya yonlendir
