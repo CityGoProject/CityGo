@@ -1,7 +1,9 @@
 package com.citygo.model;
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
-import jakarta.persistence.*;
+import java.util.ArrayList;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /*
  * =============================================================
@@ -32,52 +34,82 @@ import jakarta.persistence.*;
  *      aracın kapasitesi kadar Koltuk nesnesi ile doldurulmalıdır.
  */
 
+// Veritabanını tablo ile eşleştirme ve Tablo ismini ayarlama
+
 @Entity
 @Table(name = "seferler")
+
 public class Sefer {
 
+    // Her kayıt için otomatik artarak üretilen birincil anahtar
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // Bir araç birden fazla seferde kullanılabilir, ama bir sefer sadece bir araca ait olabilir
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "arac_id")
     private UlasimAraci arac;
-    @Column(name = "kalkis_noktasi", nullable = false)
+    
+    @Column(nullable = false)
     private String kalkisNoktasi;
-    @Column(name = "varis_noktasi", nullable = false)
+    @Column(nullable = false)
     private String varisNoktasi;
 
-    @Column(name = "kalkis_zamani", nullable = false)
-    // Repository ve görev planıyla uyum için tarih alanları LocalDateTime olmalı.
+    @Column(nullable = false)
     private LocalDateTime kalkisZamani;
-    @Column(name = "varis_zamani", nullable = false)
+    @Column(nullable = false)
     private LocalDateTime varisZamani;
 
+    // mappedBy = ilişkiyi Koltuk.java'daki "sefer" alanı yönetiyor
+    // cascade = ALL → sefere ne olursa koltuk'lara da yansı
     @OneToMany(mappedBy = "sefer", cascade = CascadeType.ALL)
     private List<Koltuk> koltuklar;
 
-    public Long getId() {return id;}
-    public void setId(Long id) {this.id = id;}
-
-    public UlasimAraci getArac() {return arac;}
-    public void setArac(UlasimAraci arac) {this.arac = arac;}
-
-    public String getKalkisNoktasi() {return kalkisNoktasi;}
-    public void setKalkisNoktasi(String kalkisNoktasi) {this.kalkisNoktasi = kalkisNoktasi;}
-
-    public String getVarisNoktasi() {return varisNoktasi;}
-    public void setVarisNoktasi(String varisNoktasi) {this.varisNoktasi = varisNoktasi;}
-
-    public LocalDateTime getKalkisZamani() {return kalkisZamani;}
-    public void setKalkisZamani(LocalDateTime kalkisZamani) {this.kalkisZamani = kalkisZamani;}
-
-    public LocalDateTime getVarisZamani() {return varisZamani;}
-    public void setVarisZamani(LocalDateTime varisZamani) {this.varisZamani = varisZamani;}
+    // getter/setter'lar
     
-    public List<Koltuk> getKoltuklar() {return koltuklar;}
-    public void setKoltuklar(List<Koltuk> koltuklar) {this.koltuklar = koltuklar;}
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    // Koltukları Otamatik Doldurma Fonksiyonu Oluşturcağım
+    public UlasimAraci getArac() { return arac; }
+    public void setArac(UlasimAraci arac) { this.arac = arac; }
 
+    public String getKalkisNoktasi() { return kalkisNoktasi; }
+    public void setKalkisNoktasi(String kalkisNoktasi) { this.kalkisNoktasi = kalkisNoktasi; }
+
+    public String getVarisNoktasi() { return varisNoktasi; }
+    public void setVarisNoktasi(String varisNoktasi) { this.varisNoktasi = varisNoktasi; }
+
+    public LocalDateTime getKalkisZamani() { return kalkisZamani; }
+    public void setKalkisZamani(LocalDateTime kalkisZamani) { this.kalkisZamani = kalkisZamani; }
+
+    public LocalDateTime getVarisZamani() { return varisZamani; }
+    public void setVarisZamani(LocalDateTime varisZamani) { this.varisZamani = varisZamani; }
+
+    public List<Koltuk> getKoltuklar() { return koltuklar; }
+    public void setKoltuklar(List<Koltuk> koltuklar) { this.koltuklar = koltuklar; }
+
+    
+    // Sefer oluşturulurken aracın kapasitesi kadar otomatik koltuk üretir
+    public void koltuklariOlustur() {
+    
+        // Araç atanmadan bu metot çağrılırsa hata vermemesi için kontrol
+        if (arac == null)  
+        {
+            throw new IllegalStateException("Önce araç atanmalidir! setArac()");
+        }
+
+        this.koltuklar = new ArrayList<>();
+
+        for (int i = 1; i <= arac.getKapasite(); i++) {
+            Koltuk koltuk = new Koltuk();
+            koltuk.setKoltukNo(i);
+            koltuk.setDolu(false);        // başlangıçta hepsi boş
+            koltuk.setTip(KoltukTipi.STANDART); // varsayılan tip
+            koltuk.setSefer(this);        // bu koltuğun seferi = bu sefer
+            this.koltuklar.add(koltuk);
+        }
+    }
+    
 }

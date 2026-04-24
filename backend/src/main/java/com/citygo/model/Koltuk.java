@@ -1,5 +1,7 @@
 package com.citygo.model;
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 /*
  * =============================================================
@@ -25,28 +27,34 @@ import jakarta.persistence.*;
  * Not: Roadmap'ta "dpieces" yazıyor ama bu alan "dolu" (occupied) olmalı.
  */
 
-@Entity
-@Table(name = "koltuklar")
+@Entity // Veritabanını tablo ile eşleştirme 
+@Table(name = "koltuklar") // Tablo ismi atama
 public class Koltuk {
-
+    
+    // Her kayıt için otomatik artarak üretilen birincil anahtar
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "koltuk_no", nullable = false)
+    @Column(nullable = false)
     private int koltukNo;
 
-    @Column(name = "dolu", nullable = false)
+    @Column(nullable = false)
     private boolean dolu = false; 
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.STRING) // "STANDART" / "PREMIUM" 
     @Column(name = "tip", nullable = false)
     private KoltukTipi tip;
 
+
+    // Bir seferde ÇOK koltuk olabilir, ama bir koltuk sefere BİR sefere aittir
+    // Bu ilişki → ManyToOne 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "sefer_id", nullable = false) 
     private Sefer sefer;
 
+    // getter/setter'lar
 
     public Long getId() {return id; }
     public void setId(Long id) {this.id = id;}
@@ -63,4 +71,5 @@ public class Koltuk {
 
     public Sefer getSefer() {return sefer;}
     public void setSefer(Sefer sefer) {this.sefer = sefer;}
+    
 }

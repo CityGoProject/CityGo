@@ -34,35 +34,45 @@ import jakarta.persistence.*;
  * - Ek alanlar için getter/setter metotları
  */
 
-@Entity
-@DiscriminatorValue("TREN")
+@Entity  // Veritabanını tablo ile eşleştirme 
+@DiscriminatorValue("TREN") // SuperClass'da yazdığımız ayırt edici sutünun değeri
+
 public class Tren extends UlasimAraci{
 
     private String vagonTipi;
     private String hatTipi;
+    
+    // getter/setter'lar
 
     public String getVagonTipi() {return vagonTipi;}
     public void setVagonTipi(String vagonTipi) {this.vagonTipi = vagonTipi;}
 
     public String getHatTipi() {return hatTipi;}
-    // Setter'da eksik noktalı virgül derlemeyi bozuyordu.
     public void setHatTipi(String hatTipi) {this.hatTipi = hatTipi;}
 
     @Override 
-    public String getAracTipi(){return "TREN";}
+    public String getAracTipi() {return "TREN";} // Araç tipi döndürme
 
+
+    // VagonTipi ve HatTipi Kontrolleriyle son fiyat hesaplama
     @Override
     public double hesaplaToplamFiyat(double temelFiyat) {
-        // Java'da string karşılaştırmaları equals ile yapılır; and yerine && kullanılır.
-        if ("BUSINESS".equals(vagonTipi) && "YHT".equals(hatTipi)) {
-            return (temelFiyat * 1.5) * 1.2;
-        } else if ("EKONOMI".equals(vagonTipi) && "YHT".equals(hatTipi)) {
-            return temelFiyat * 1.2;
-        } else if ("BUSINESS".equals(vagonTipi) && "NORMAL".equals(hatTipi)) {
-            return temelFiyat * 1.5;
-        } else {
-            return temelFiyat;
-        }
+        if ( vagonTipi.equals("BUSINESS") && hatTipi.equals("YHT")) 
+            { 
+                return (temelFiyat * 1.5)*1.2;
+            }
+
+        else if (vagonTipi.equals("EKONOMI") && hatTipi.equals("YHT"))
+            {
+                return (temelFiyat)*1.2;
+            }
+
+        else if ( vagonTipi.equals("BUSINESS") && hatTipi.equals("NORMAL"))
+            {
+                return (temelFiyat)*1.5;
+            }
+
+        else {return temelFiyat;}
     }
 
 }

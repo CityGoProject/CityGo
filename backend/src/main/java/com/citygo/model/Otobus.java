@@ -33,23 +33,27 @@ import jakarta.persistence.*;
  * - Ek alanlar için getter/setter metotları
  */
 
-@Entity
-@DiscriminatorValue("OTOBUS")
+@Entity // Veritabanını tablo ile eşleştirme 
+@DiscriminatorValue("OTOBUS") // SuperClass'da yazdığımız ayırt edici sutünun değeri
+
 public class Otobus extends UlasimAraci {
 
     private boolean ikramVar;
     private double ikramBedeli;
 
-    // Alan adı ile getter/setter'daki isimlerin birebir uyuşması gerekiyor.
+    // getter/setter'lar
+
     public void setIkramVar(boolean ikramVar) {this.ikramVar = ikramVar;}
     public boolean getIkramVar() {return ikramVar;}
+    
     public void setIkramBedeli(double ikramBedeli) {this.ikramBedeli = ikramBedeli;} 
     public double getIkramBedeli () {return ikramBedeli;}
 
+    // İkram kontrolü ile son fiyat hesaplama
     @Override 
     public double hesaplaToplamFiyat(double temelFiyat) 
     {
-        if(ikramVar ==  true) 
+        if(ikramVar) 
             {
                 return ikramBedeli + temelFiyat;
             }
@@ -57,5 +61,5 @@ public class Otobus extends UlasimAraci {
     }
 
     @Override
-    public String getAracTipi() {return "OTOBUS";}
+    public String getAracTipi() {return "OTOBUS";} // Araç tipi döndürme
 }
