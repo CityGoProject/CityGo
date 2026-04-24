@@ -1,5 +1,6 @@
 package com.citygo.interfaces;
 import com.citygo.model.Sefer;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /*
@@ -37,8 +38,8 @@ public interface IAranabilir {
     List<Sefer> ara(String kalkis, String varis);
 
     // Güzergah ve tarihe göre arama
-    List<Sefer> ara(String kalkis, String varis, String tarih);
+    List<Sefer> ara(String kalkis, String varis, LocalDateTime tarih);
 
     // Güzergah, tarih ve araç tipine göre arama
-    List<Sefer> ara(String kalkis, String varis, String tarih, String aracTipi);
+    List<Sefer> ara(String kalkis, String varis, LocalDateTime tarih, String aracTipi);
 }

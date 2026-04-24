@@ -1,5 +1,6 @@
 package com.citygo.controller;
 
+import java.time.LocalDateTime;
 import com.citygo.model.Koltuk;
 import com.citygo.model.Sefer;
 import com.citygo.repository.KoltukRepository;
@@ -65,18 +66,18 @@ public class SeferController {
     // Sefer arama — gelen parametreye göre uygun overloaded metot çağrılır
     @GetMapping("/ara")
     public List<Sefer> ara(
-        @RequestParam String kalkis,
-        @RequestParam String varis,
-        @RequestParam(required = false) String tarih,
-        @RequestParam(required = false) String tip
+    @RequestParam String kalkis,
+    @RequestParam String varis,
+    @RequestParam(required = false) LocalDateTime tarih,
+    @RequestParam(required = false) String tip
     ) {
-        if (tarih != null && tip != null) {
-            return aramaService.ara(kalkis, varis, tarih, tip);
-        } else if (tarih != null) {
-            return aramaService.ara(kalkis, varis, tarih);
-        } else {
-            return aramaService.ara(kalkis, varis);
-        }
+    if (tarih != null && tip != null) {
+        return aramaService.ara(kalkis, varis, tarih, tip);
+    } else if (tarih != null) {
+        return aramaService.ara(kalkis, varis, tarih);
+    } else {
+        return aramaService.ara(kalkis, varis);
+    }
     }
 
     // Sefer detayı

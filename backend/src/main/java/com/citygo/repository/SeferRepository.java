@@ -53,5 +53,5 @@ public interface SeferRepository extends JpaRepository<Sefer, Long> {
    List<Sefer> findByArac_AracTipi(String aracTipi);
 
    List<Sefer> findByKalkisNoktasiAndVarisNoktasiAndKalkisZamani(
-    String kalkis, String varis, String kalkisZamani);
+    String kalkis, String varis, LocalDateTime kalkisZamani);
 }
