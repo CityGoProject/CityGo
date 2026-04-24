@@ -33,14 +33,15 @@ public class RezervasyonService implements IRezervasyon {
     public Bilet rezervasyonYap(Long yolcuId, Long seferId, int koltukNo) {
 
         // Yolcu Kontrolü
-        Kullanici yolcu = kullaniciRepository.findById(yolcuId).orElseThrow(() -> new KullaniciBulunamadiException("Yolcu Bulunamadi!"));
-
+        Kullanici kullanici = kullaniciRepository.findById(yolcuId).orElseThrow(() -> new KullaniciBulunamadiException("Yolcu Bulunamadi!"));
+        Yolcu yolcu = (Yolcu) kullanici;
+        
         // Sefer Kontrolü
         Sefer sefer = seferRepository.findById(seferId).orElseThrow(() -> new SeferBulunamadiException("Sefer Bulunamadi!"));
 
         // Koltuk Kontrolü (Sefer + KoltukNo ile)
-        Koltuk koltuk = koltukRepository.findBySeferAndKoltukNo(sefer, koltukNo).orElseThrow(() -> new KoltukBulunamadiException("Koltuk mevcut değil!"));
-
+        Koltuk koltuk = koltukRepository.findBySefer_IdAndKoltukNo(sefer.getId(), koltukNo).orElseThrow(() -> new RuntimeException("Koltuk mevcut degil!"));
+        
         // Koltuk Dolu Mu Kontrolü
         if (koltuk.isDolu()) {
             throw new KapasiteDoluException("Bu Koltuk Zaten Rezerve Edilmiş!");
@@ -51,14 +52,14 @@ public class RezervasyonService implements IRezervasyon {
         koltukRepository.save(koltuk);
 
         // Fiyat Hesaplama
-        double toplamFiyat = sefer.getUlasimAraci().hesaplaToplamFiyat();
-
+        double toplamFiyat = sefer.getArac().hesaplaToplamFiyat(sefer.getArac().getBiletFiyati());
+        
         // Bilet Nesnesi Oluşturma
         Bilet bilet = new Bilet();
         bilet.setYolcu(yolcu);
         bilet.setSefer(sefer);
         bilet.setKoltuk(koltuk);
-        bilet.setFiyat(toplamFiyat);
+        bilet.setOdenenTutar(toplamFiyat);
         bilet.setDurum(BiletDurumu.AKTIF);
 
         // Kaydet ve Döndür
