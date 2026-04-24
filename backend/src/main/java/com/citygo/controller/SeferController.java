@@ -1,10 +1,11 @@
 package com.citygo.controller;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import com.citygo.model.Koltuk;
 import com.citygo.model.Sefer;
 import com.citygo.repository.KoltukRepository;
 import com.citygo.service.AramaService;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -68,10 +69,12 @@ public class SeferController {
     public List<Sefer> ara(
     @RequestParam String kalkis,
     @RequestParam String varis,
-    @RequestParam(required = false) LocalDateTime tarih,
+    // Duzeltme: Frontend sadece tarih gonderiyor, bu yuzden burada LocalDate bekliyoruz.
+    @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate tarih,
     @RequestParam(required = false) String tip
     ) {
-    if (tarih != null && tip != null) {
+    // Duzeltme: Bos tip geldiginde tarihli ama tipsiz aramaya dusmesi gerekiyor.
+    if (tarih != null && tip != null && !tip.isBlank()) {
         return aramaService.ara(kalkis, varis, tarih, tip);
     } else if (tarih != null) {
         return aramaService.ara(kalkis, varis, tarih);
@@ -89,6 +92,8 @@ public class SeferController {
     // Sefere ait koltuklar
     @GetMapping("/{id}/koltuklar")
     public List<Koltuk> koltuklar(@PathVariable Long id) {
+        // Duzeltme: Gecersiz sefer id'sinde bos liste yerine kontrollu 404 donsun.
+        aramaService.seferDetay(id);
         return koltukRepository.findBySefer_Id(id);
     }
 }

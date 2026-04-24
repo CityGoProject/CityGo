@@ -15,6 +15,7 @@ public class GlobalExceptionHandler {
     //Bulunamadı Hataları (404 not found)
     @ExceptionHandler({
         BiletBulunamadiException.class,
+        KoltukBulunamadiException.class,
         KullaniciBulunamadiException.class,
         SeferBulunamadiException.class
     })
@@ -26,7 +27,8 @@ public class GlobalExceptionHandler {
     //Geçersiz İşlem - Tarih Hataları(400 bad request)
     @ExceptionHandler({
         KapasiteDoluException.class,
-        GecersizTarihException.class
+        GecersizTarihException.class,
+        IllegalArgumentException.class
     })
     public ResponseEntity<Object> handleBadRequestExceptions(RuntimeException ex) {
         return createResponse("Hatali İstek", ex.getMessage(), HttpStatus.BAD_REQUEST);

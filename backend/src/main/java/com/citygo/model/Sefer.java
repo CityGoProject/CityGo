@@ -3,7 +3,6 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.ArrayList;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /*
  * =============================================================
@@ -46,8 +45,8 @@ public class Sefer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // Bir araç birden fazla seferde kullanılabilir, ama bir sefer sadece bir araca ait olabilir
-    @JsonIgnore
+    // Duzeltme: Frontend seferle birlikte arac bilgisini de kullaniyor, bu alan JSON'da gelmeli.
+    // Sonsuz dongu riski koltuk tarafinda sefer alanini gizleyerek kontrol ediliyor.
     @ManyToOne
     @JoinColumn(name = "arac_id")
     private UlasimAraci arac;

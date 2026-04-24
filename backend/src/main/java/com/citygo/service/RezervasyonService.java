@@ -34,13 +34,18 @@ public class RezervasyonService implements IRezervasyon {
 
         // Yolcu Kontrolü
         Kullanici kullanici = kullaniciRepository.findById(yolcuId).orElseThrow(() -> new KullaniciBulunamadiException("Yolcu Bulunamadi!"));
-        Yolcu yolcu = (Yolcu) kullanici;
+        // Duzeltme: Yanlis tipte kullaniciyi zorla cast etmek yerine acik hata veriyoruz.
+        if (!(kullanici instanceof Yolcu yolcu)) {
+            throw new IllegalArgumentException("Rezervasyon sadece yolcu hesaplari icin yapilabilir.");
+        }
         
         // Sefer Kontrolü
         Sefer sefer = seferRepository.findById(seferId).orElseThrow(() -> new SeferBulunamadiException("Sefer Bulunamadi!"));
 
         // Koltuk Kontrolü (Sefer + KoltukNo ile)
-        Koltuk koltuk = koltukRepository.findBySefer_IdAndKoltukNo(sefer.getId(), koltukNo).orElseThrow(() -> new RuntimeException("Koltuk mevcut degil!"));
+        // Duzeltme: Koltuk bulunamazsa genel 500 yerine anlamli bir hata donuyoruz.
+        Koltuk koltuk = koltukRepository.findBySefer_IdAndKoltukNo(sefer.getId(), koltukNo)
+            .orElseThrow(() -> new KoltukBulunamadiException("Koltuk mevcut degil!"));
         
         // Koltuk Dolu Mu Kontrolü
         if (koltuk.isDolu()) {

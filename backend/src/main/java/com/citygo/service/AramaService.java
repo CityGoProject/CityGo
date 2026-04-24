@@ -1,11 +1,13 @@
-        package com.citygo.service;
-        import java.time.LocalDateTime;
-        import com.citygo.interfaces.IAranabilir;
-        import com.citygo.model.Sefer;
-        import com.citygo.repository.SeferRepository;
-        import org.springframework.stereotype.Service;
-        import java.util.List;
-        import java.util.stream.Collectors;
+package com.citygo.service;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import com.citygo.exception.SeferBulunamadiException;
+import com.citygo.interfaces.IAranabilir;
+import com.citygo.model.Sefer;
+import com.citygo.repository.SeferRepository;
+import org.springframework.stereotype.Service;
+import java.util.List;
 
         /*
         * =============================================================
@@ -49,47 +51,57 @@
         *         örneğinin temelini oluşturuyor!
         */
 
+@Service
+public class AramaService implements IAranabilir {
 
-        @Service
-        public class AramaService implements IAranabilir {
+    private final SeferRepository seferRepository;
 
-            private final SeferRepository seferRepository;
+    // Constructor injection
+    public AramaService(SeferRepository seferRepository) {
+        this.seferRepository = seferRepository;
+    }
 
-            // Constructor injection
-            public AramaService(SeferRepository seferRepository) {
-                this.seferRepository = seferRepository;
-            }
+    // Sadece güzergaha göre arama
+    @Override
+    public List<Sefer> ara(String kalkis, String varis) {
+        return seferRepository.findByKalkisNoktasiAndVarisNoktasi(kalkis, varis);
+    }
 
-            // Sadece güzergaha göre arama
-            @Override
-            public List<Sefer> ara(String kalkis, String varis) {
-                return seferRepository.findByKalkisNoktasiAndVarisNoktasi(kalkis, varis);
-            }
+    // Güzergah ve tarihe göre arama
+    @Override
+    public List<Sefer> ara(String kalkis, String varis, LocalDate tarih) {
+        // Duzeltme: Kullanici saat secmiyor, bu yuzden tum gunu kapsayan aralikla ariyoruz.
+        LocalDateTime baslangic = tarih.atStartOfDay();
+        LocalDateTime bitis = tarih.atTime(LocalTime.MAX);
 
-            // Güzergah ve tarihe göre arama
-            @Override
-            public List<Sefer> ara(String kalkis, String varis, LocalDateTime tarih) {
-                return seferRepository.findByKalkisNoktasiAndVarisNoktasiAndKalkisZamani( kalkis, varis, tarih);
-                }
+        return seferRepository.findByKalkisNoktasiAndVarisNoktasiAndKalkisZamaniBetween(
+            kalkis,
+            varis,
+            baslangic,
+            bitis
+        );
+    }
 
-            // Güzergah, tarih ve araç tipine göre arama
-            @Override
-            public List<Sefer> ara(String kalkis, String varis, LocalDateTime tarih, String aracTipi) {
-                return seferRepository
-                    .findByKalkisNoktasiAndVarisNoktasiAndKalkisZamani(kalkis, varis, tarih)
-                    .stream()
-                    .filter(sefer -> sefer.getArac().getAracTipi().equals(aracTipi))
-                    .collect(Collectors.toList());
-            }
+    // Güzergah, tarih ve araç tipine göre arama
+    @Override
+    public List<Sefer> ara(String kalkis, String varis, LocalDate tarih, String aracTipi) {
+        // Duzeltme: Once gun filtresi uygulaniyor, sonra tip null guvenli sekilde suzuluyor.
+        return ara(kalkis, varis, tarih)
+            .stream()
+            .filter(sefer -> sefer.getArac() != null)
+            .filter(sefer -> sefer.getArac().getAracTipi().equalsIgnoreCase(aracTipi))
+            .toList();
+    }
 
-            // Tek bir seferin detaylarını getirir
-            public Sefer seferDetay(Long seferId) {
-                return seferRepository.findById(seferId)
-                    .orElseThrow(() -> new RuntimeException("Sefer bulunamadi: " + seferId));
-            }
+    // Tek bir seferin detaylarını getirir
+    public Sefer seferDetay(Long seferId) {
+        // Duzeltme: Bu endpoint bulunamayan seferde 500 degil 404 donmeli.
+        return seferRepository.findById(seferId)
+            .orElseThrow(() -> new SeferBulunamadiException("Sefer bulunamadi: " + seferId));
+    }
 
-            // Tüm seferleri listeler
-            public List<Sefer> tumSeferleriGetir() {
-                return seferRepository.findAll();
-            } 
-        }
+    // Tüm seferleri listeler
+    public List<Sefer> tumSeferleriGetir() {
+        return seferRepository.findAll();
+    }
+}
