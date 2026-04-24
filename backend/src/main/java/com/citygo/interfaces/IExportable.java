@@ -24,3 +24,8 @@ package com.citygo.interfaces;
  * Not: byte[] döndürülmesinin sebebi, Controller'da ResponseEntity<byte[]>
  *      ile dosya indirme (download) response'u oluşturabilmektir.
  */
+public interface IExportable {
+    public byte[] exportJSON();
+
+    public byte[] exportCSV();
+}
