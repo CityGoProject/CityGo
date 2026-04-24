@@ -51,4 +51,7 @@ public interface SeferRepository extends JpaRepository<Sefer, Long> {
     // Sefer → Arac → AracTipi alanına göre arama yapar
     // SELECT * FROM seferler s JOIN ulasim_araclari a ON s.arac_id = a.id
    List<Sefer> findByArac_AracTipi(String aracTipi);
+
+   List<Sefer> findByKalkisNoktasiAndVarisNoktasiAndKalkisZamani(
+    String kalkis, String varis, String kalkisZamani);
 }
