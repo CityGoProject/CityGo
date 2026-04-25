@@ -1,17 +1,25 @@
-import { Box, Typography } from '@mui/material'
+import React from 'react'
+import '../.././css/Footer.css'
 
-/*
- * Ortak footer: Her sayfada aynı küçük proje bilgisini göstermek için var.
- * Böylece her sayfaya ayrı ayrı footer metni yazmamıza gerek kalmaz.
- */
+
+
 function Footer() {
-  return (
-    <Box component="footer" sx={{ borderTop: '1px solid #e6eaf0', py: 3, textAlign: 'center' }}>
-      <Typography variant="body2" color="text.secondary">
-        © 2026 CityGo · CENG106 Nesne Yönelimli Programlama Projesi
-      </Typography>
-    </Box>
-  )
+    const takim = ["Elif Feyza Şengül", "Muhammed Köseoğlu", "Mustafa Mert Çevik", "Ömer Faruk Kara"];
+
+    return (
+        <footer className="footer">
+            <div className="footer-content">
+                <div className="footer-team">
+                    {takim.map((member, index) => (
+                        <span key={index} className={`team-member ${index === 0 ? 'gold' : ''}`}>{member}</span>
+                    ))}
+                </div>
+                <div className="footer-bottom">
+                    &copy; {new Date().getFullYear()} CityGo - Tüm Hakları Saklıdır.
+                </div>
+            </div>
+        </footer>
+    )
 }
 
 export default Footer

@@ -12,8 +12,6 @@ import {
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import Footer from '../components/layout/Footer'
-import Navbar from '../components/layout/Navbar'
 import { cities } from '../services/cities'
 import { getStoredUser } from '../services/auth'
 
@@ -79,12 +77,13 @@ function HomePage() {
     <Box
       sx={{
         minHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
         background: 'linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)',
       }}
     >
-      <Navbar />
 
-      <Box sx={{ px: 3, py: 6 }}>
+      <Box sx={{ flex: 1, px: 3, py: 6 }}>
         <Paper
           elevation={8}
           sx={{
@@ -191,7 +190,6 @@ function HomePage() {
           </Stack>
         </Paper>
       </Box>
-      <Footer />
     </Box>
   )
 }
