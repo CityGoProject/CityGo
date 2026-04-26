@@ -3,355 +3,185 @@
 <head>
 <meta charset="UTF-8">
 <title>CityGo — Milestone Sunumu</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL@20..48,100..700,0..1&display=swap" rel="stylesheet">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap');
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Inter', sans-serif; background: #0f172a; color: #e2e8f0; }
-
-  .slide {
-    width: 960px; height: 540px; margin: 30px auto; padding: 48px 56px;
-    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-    border-radius: 16px; position: relative; overflow: hidden;
-    box-shadow: 0 20px 60px rgba(0,0,0,.5); page-break-after: always;
-  }
-  .slide::before {
-    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
-    background: linear-gradient(90deg, #3b82f6, #8b5cf6, #06b6d4);
-  }
-  .slide-num {
-    position: absolute; bottom: 16px; right: 24px; font-size: 12px;
-    color: #64748b; font-weight: 600;
-  }
-
-  h1 { font-size: 36px; font-weight: 900; background: linear-gradient(135deg, #60a5fa, #a78bfa);
-       -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 8px; }
-  h2 { font-size: 26px; font-weight: 800; color: #f1f5f9; margin-bottom: 16px; }
-  h3 { font-size: 18px; font-weight: 700; color: #93c5fd; margin-bottom: 10px; }
-  p, li { font-size: 15px; line-height: 1.6; color: #cbd5e1; }
-  .subtitle { font-size: 18px; color: #94a3b8; margin-bottom: 24px; }
-
-  table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  th { background: rgba(59,130,246,.15); color: #93c5fd; text-align: left;
-       padding: 8px 12px; font-weight: 700; border-bottom: 2px solid rgba(59,130,246,.3); }
-  td { padding: 7px 12px; border-bottom: 1px solid rgba(255,255,255,.06); color: #cbd5e1; }
-  tr:hover td { background: rgba(255,255,255,.03); }
-
-  .tag { display: inline-block; padding: 3px 10px; border-radius: 99px; font-size: 11px;
-         font-weight: 700; margin: 2px 4px 2px 0; }
-  .tag-blue { background: rgba(59,130,246,.2); color: #60a5fa; }
-  .tag-purple { background: rgba(139,92,246,.2); color: #a78bfa; }
-  .tag-green { background: rgba(34,197,94,.2); color: #4ade80; }
-  .tag-cyan { background: rgba(6,182,212,.2); color: #22d3ee; }
-  .tag-orange { background: rgba(249,115,22,.2); color: #fb923c; }
-
-  .cols { display: flex; gap: 24px; }
-  .col { flex: 1; }
-  .card { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08);
-          border-radius: 12px; padding: 16px; margin-bottom: 12px; }
-  .card h3 { margin-bottom: 6px; }
-  .stat-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-bottom: 16px; }
-  .stat { background: rgba(59,130,246,.08); border: 1px solid rgba(59,130,246,.2);
-          border-radius: 12px; padding: 14px; text-align: center; }
-  .stat .num { font-size: 28px; font-weight: 900; color: #60a5fa; }
-  .stat .label { font-size: 11px; color: #94a3b8; margin-top: 2px; }
-  ul { padding-left: 20px; }
-  li { margin-bottom: 4px; }
-  .check { color: #4ade80; }
-  .title-slide { display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; }
-  .title-slide h1 { font-size: 48px; margin-bottom: 12px; }
-  .title-slide .subtitle { font-size: 22px; }
-  .logo { font-size: 56px; margin-bottom: 16px; }
-
-  @media print {
-    body { background: white; }
-    .slide { box-shadow: none; margin: 0; border-radius: 0; width: 100%; height: 100vh;
-             page-break-after: always; page-break-inside: avoid; }
-  }
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#e5e7eb;color:#1f2937;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.ms{font-family:'Material Symbols Outlined';font-weight:normal;font-style:normal;font-size:22px;vertical-align:-5px;margin-right:5px;color:#2563eb;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24}
+.ms-lg{font-size:52px;vertical-align:middle}
+.slide{width:960px;height:540px;margin:20px auto;padding:40px 50px;background:#fff;border-radius:4px;position:relative;overflow:hidden;box-shadow:0 1px 8px rgba(0,0,0,.07);border:1px solid #d1d5db;page-break-after:always}
+.slide::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:#2563eb}
+.sn{position:absolute;bottom:12px;right:18px;font-size:10px;color:#9ca3af}
+.sf{position:absolute;bottom:12px;left:18px;font-size:10px;color:#9ca3af}
+h1{font-size:36px;font-weight:800;color:#2563eb}
+h2{font-size:22px;font-weight:700;color:#111827;margin-bottom:12px}
+h3{font-size:14px;font-weight:700;color:#374151;margin-bottom:5px}
+p,li{font-size:13px;line-height:1.6;color:#4b5563}
+.sub{font-size:15px;color:#6b7280}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:#f3f4f6;color:#374151;text-align:left;padding:7px 10px;font-weight:600;border-bottom:2px solid #e5e7eb}
+td{padding:6px 10px;border-bottom:1px solid #f3f4f6;color:#4b5563}
+.t{display:inline-block;padding:2px 8px;border-radius:3px;font-size:10px;font-weight:600;margin:1px 2px}
+.tb{background:#dbeafe;color:#1e40af}.tg{background:#d1fae5;color:#065f46}.ta{background:#fef3c7;color:#92400e}.tgr{background:#f3f4f6;color:#374151}.tr{background:#fee2e2;color:#991b1b}
+.cols{display:flex;gap:16px}.col{flex:1}
+.card{background:#f9fafb;border:1px solid #e5e7eb;border-radius:5px;padding:12px;margin-bottom:8px}
+.card-blue{border-left:3px solid #3b82f6}.card-green{border-left:3px solid #10b981}.card-amber{border-left:3px solid #f59e0b}.card-red{border-left:3px solid #ef4444}
+.sr{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px}
+.st{border-radius:5px;padding:10px;text-align:center}
+.st-blue{background:#eff6ff;border:1px solid #bfdbfe}.st-green{background:#ecfdf5;border:1px solid #a7f3d0}.st-amber{background:#fffbeb;border:1px solid #fde68a}.st-gray{background:#f9fafb;border:1px solid #e5e7eb}
+.st .n{font-size:24px;font-weight:800;color:#1f2937}
+.st .l{font-size:10px;color:#6b7280;margin-top:1px}
+ul{padding-left:16px}li{margin-bottom:2px}
+.ok{color:#16a34a}
+.tc{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+.tr2{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap;justify-content:center}
+.chip{display:flex;align-items:center;gap:5px;border-radius:5px;padding:6px 14px;font-size:12px;font-weight:500}
+.chip-1{background:#eff6ff;border:1px solid #bfdbfe;color:#1e40af}.chip-2{background:#ecfdf5;border:1px solid #a7f3d0;color:#065f46}.chip-3{background:#fffbeb;border:1px solid #fde68a;color:#92400e}.chip-4{background:#fef2f2;border:1px solid #fecaca;color:#991b1b}
+code{font-size:11px;background:#f3f4f6;padding:1px 4px;border-radius:2px;color:#374151}
+@media print{body{background:#fff}.slide{box-shadow:none;margin:0;border:none;border-radius:0;width:100%;height:100vh}}
 </style>
 </head>
 <body>
 
-<!-- SLIDE 1: Kapak -->
-<div class="slide title-slide">
-  <div class="logo">🚌</div>
-  <h1>CityGo</h1>
-  <div class="subtitle">Akıllı Ulaşım ve Rezervasyon Sistemi</div>
-  <p style="margin-top:24px; font-size:14px; color:#64748b">
-    CENG106 — Object Oriented Programming Lab<br>
-    Milestone Sunumu · Grup 7 · 26 Nisan 2026
-  </p>
-  <div style="margin-top:24px; display:flex; gap:16px; flex-wrap:wrap; justify-content:center">
-    <span class="tag tag-blue">Mustafa Mert Çevik</span>
-    <span class="tag tag-purple">Muhammed Köseoğlu</span>
-    <span class="tag tag-green">Ömer Faruk Kara</span>
-    <span class="tag tag-cyan">Elif Feyza Şengül</span>
-  </div>
-  <span class="slide-num">1 / 10</span>
+<div class="slide tc">
+<div class="slide-accent"></div>
+<span class="ms ms-lg">directions_bus</span>
+<h1 style="margin-top:10px">CityGo</h1>
+<div class="sub">Akıllı Ulaşım ve Rezervasyon Sistemi</div>
+<p style="margin-top:18px;font-size:12px;color:#9ca3af">CENG106 — Object Oriented Programming Lab<br>Milestone Sunumu · Grup 7 · 26 Nisan 2026</p>
+<div class="tr2">
+<div class="chip chip-1"><span class="ms" style="font-size:16px;color:#3b82f6;margin-right:3px">person</span>Mustafa Mert Çevik</div>
+<div class="chip chip-2"><span class="ms" style="font-size:16px;color:#10b981;margin-right:3px">person</span>Muhammed Köseoğlu</div>
+<div class="chip chip-3"><span class="ms" style="font-size:16px;color:#f59e0b;margin-right:3px">person</span>Ömer Faruk Kara</div>
+<div class="chip chip-4"><span class="ms" style="font-size:16px;color:#ef4444;margin-right:3px">person</span>Elif Feyza Şengül</div>
+</div>
+<span class="sn">1 / 8</span>
 </div>
 
-<!-- SLIDE 2: Proje Nedir -->
 <div class="slide">
-  <h2>📖 Proje Nedir?</h2>
-  <p style="margin-bottom:20px">Farklı ulaşım türlerini (✈️ uçak, 🚆 tren, 🚌 otobüs) tek bir platformda birleştiren Java tabanlı full-stack web uygulaması.</p>
-  <div class="cols">
-    <div class="col">
-      <div class="card">
-        <h3>👤 Yolcu Özellikleri</h3>
-        <ul>
-          <li>Kayıt & giriş (e-posta/şifre)</li>
-          <li>Sefer arama ve filtreleme</li>
-          <li>Görsel koltuk haritasından seçim</li>
-          <li>Bilet alma, görüntüleme, iptal</li>
-        </ul>
-      </div>
-    </div>
-    <div class="col">
-      <div class="card">
-        <h3>🔧 Admin Özellikleri</h3>
-        <ul>
-          <li>Sefer ekleme, güncelleme, silme</li>
-          <li>Kullanıcı ve bilet listeleme</li>
-          <li>Dashboard istatistikleri</li>
-          <li>Veriyi JSON / CSV dışa aktarma</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-  <span class="slide-num">2 / 10</span>
+<h2><span class="ms">info</span> Proje Nedir?</h2>
+<p style="margin-bottom:14px">Farklı ulaşım türlerini (uçak, tren, otobüs) tek bir platformda birleştiren, Java tabanlı full-stack web uygulaması.</p>
+<div class="cols">
+<div class="col"><div class="card card-blue"><h3><span class="ms" style="font-size:16px">person</span> Yolcu Özellikleri</h3><ul><li>Kayıt ve giriş (e-posta / şifre)</li><li>Sefer arama ve filtreleme</li><li>Görsel koltuk haritasından seçim</li><li>Bilet alma, görüntüleme, iptal</li></ul></div></div>
+<div class="col"><div class="card card-amber"><h3><span class="ms" style="font-size:16px">admin_panel_settings</span> Admin Özellikleri</h3><ul><li>Sefer ekleme, güncelleme, silme</li><li>Kullanıcı ve bilet listeleme</li><li>Dashboard istatistikleri</li><li>JSON / CSV dışa aktarma</li></ul></div></div>
+</div>
+<span class="sf">CityGo · Grup 7</span><span class="sn">2 / 8</span>
 </div>
 
-<!-- SLIDE 3: Teknolojiler -->
 <div class="slide">
-  <h2>🛠 Kullanılan Teknolojiler</h2>
-  <div class="cols">
-    <div class="col">
-      <div class="card">
-        <h3>Backend</h3>
-        <p><span class="tag tag-orange">Java 17</span> <span class="tag tag-green">Spring Boot 3.2.5</span></p>
-        <p><span class="tag tag-blue">Spring Data JPA</span> <span class="tag tag-purple">H2 Database</span></p>
-        <p><span class="tag tag-cyan">Maven</span> <span class="tag tag-green">REST API</span></p>
-        <p style="margin-top:10px; font-size:13px">Katmanlı mimari: Controller → Service → Repository → H2 DB</p>
-      </div>
-    </div>
-    <div class="col">
-      <div class="card">
-        <h3>Frontend</h3>
-        <p><span class="tag tag-cyan">React 19</span> <span class="tag tag-blue">MUI 9</span></p>
-        <p><span class="tag tag-purple">Vite 8</span> <span class="tag tag-green">React Router 7</span></p>
-        <p><span class="tag tag-orange">Axios</span></p>
-        <p style="margin-top:10px; font-size:13px">SPA mimarisi: Pages → Components → Services → Backend API</p>
-      </div>
-    </div>
-  </div>
-  <div class="card" style="margin-top:8px">
-    <h3>Araçlar</h3>
-    <p><span class="tag tag-blue">Git & GitHub</span> <span class="tag tag-purple">IntelliJ IDEA</span> <span class="tag tag-green">VS Code</span> <span class="tag tag-cyan">Postman</span> <span class="tag tag-orange">H2 Console</span></p>
-  </div>
-  <span class="slide-num">3 / 10</span>
+<h2><span class="ms">build</span> Kullanılan Teknolojiler</h2>
+<div class="cols">
+<div class="col"><div class="card card-green"><h3><span class="ms" style="font-size:16px">dns</span> Backend</h3><p><span class="t ta">Java 17</span><span class="t tg">Spring Boot 3.2.5</span><span class="t tb">Spring Data JPA</span><span class="t tgr">H2 Database</span><span class="t tgr">Maven</span></p><p style="margin-top:6px;font-size:11px;color:#6b7280">Katmanlı mimari: Controller → Service → Repository → DB</p></div></div>
+<div class="col"><div class="card card-blue"><h3><span class="ms" style="font-size:16px">web</span> Frontend</h3><p><span class="t tb">React 19</span><span class="t tg">MUI 9</span><span class="t ta">Vite 8</span><span class="t tgr">React Router 7</span><span class="t tgr">Axios</span></p><p style="margin-top:6px;font-size:11px;color:#6b7280">SPA: Pages → Components → Services → API</p></div></div>
+</div>
+<div class="card" style="margin-top:4px"><h3><span class="ms" style="font-size:16px">handyman</span> Araçlar</h3><p><span class="t tgr">Git & GitHub</span><span class="t tgr">IntelliJ IDEA</span><span class="t tgr">VS Code</span><span class="t tgr">Postman</span><span class="t tgr">H2 Console</span></p></div>
+<span class="sf">CityGo · Grup 7</span><span class="sn">3 / 8</span>
 </div>
 
-<!-- SLIDE 4: OOP Prensipleri -->
 <div class="slide">
-  <h2>🧬 OOP Prensipleri</h2>
-  <table>
-    <tr><th style="width:28%">Prensip</th><th>Uygulandığı Yer</th></tr>
-    <tr><td><span class="tag tag-blue">Inheritance</span></td>
-        <td><code>UlasimAraci</code> → Ucak, Tren, Otobus &nbsp;|&nbsp; <code>Kullanici</code> → Yolcu, Admin</td></tr>
-    <tr><td><span class="tag tag-purple">Encapsulation</span></td>
-        <td>Tüm entity alanları <code>private</code>, getter/setter ile erişim</td></tr>
-    <tr><td><span class="tag tag-green">Polymorphism (Override)</span></td>
-        <td>Her araç <code>hesaplaToplamFiyat()</code> metodunu kendi mantığıyla geçersiz kılıyor</td></tr>
-    <tr><td><span class="tag tag-cyan">Polymorphism (Overloading)</span></td>
-        <td><code>AramaService</code> — 3 farklı <code>ara()</code> metodu</td></tr>
-    <tr><td><span class="tag tag-orange">Abstraction</span></td>
-        <td>Abstract sınıflar + <code>IRezervasyon</code>, <code>IAranabilir</code>, <code>IExportable</code> interface'leri</td></tr>
-    <tr><td><span class="tag tag-purple">Exception Handling</span></td>
-        <td>6 özel exception + <code>GlobalExceptionHandler</code> (@RestControllerAdvice)</td></tr>
-    <tr><td><span class="tag tag-blue">Interface</span></td>
-        <td>3 interface tanımı, her biri bir servis tarafından implement ediliyor</td></tr>
-  </table>
-  <span class="slide-num">4 / 10</span>
+<h2><span class="ms">account_tree</span> OOP Prensipleri</h2>
+<table>
+<tr><th style="width:25%">Prensip</th><th>Uygulandığı Yer</th></tr>
+<tr><td><span class="t tb">Inheritance</span></td><td><code>UlasimAraci</code> → Ucak, Tren, Otobus · <code>Kullanici</code> → Yolcu, Admin</td></tr>
+<tr><td><span class="t tg">Encapsulation</span></td><td>Tüm entity alanları <code>private</code>, getter/setter ile erişim</td></tr>
+<tr><td><span class="t ta">Polymorphism – Override</span></td><td>Her araç <code>hesaplaToplamFiyat()</code> metodunu kendi mantığıyla geçersiz kılıyor</td></tr>
+<tr><td><span class="t ta">Polymorphism – Overload</span></td><td><code>AramaService</code> — 3 farklı parametreli <code>ara()</code> metodu</td></tr>
+<tr><td><span class="t tgr">Abstraction</span></td><td>Abstract sınıflar + <code>IRezervasyon</code>, <code>IAranabilir</code>, <code>IExportable</code> interface'leri</td></tr>
+<tr><td><span class="t tr">Exception Handling</span></td><td>6 özel exception + <code>GlobalExceptionHandler</code> (@RestControllerAdvice)</td></tr>
+<tr><td><span class="t tb">Interface</span></td><td>3 interface — her biri bir servis tarafından implement ediliyor</td></tr>
+</table>
+<span class="sf">CityGo · Grup 7</span><span class="sn">4 / 8</span>
 </div>
 
-<!-- SLIDE 5: Mimari -->
 <div class="slide">
-  <h2>🏗 Mimari Tasarım</h2>
-  <div class="cols">
-    <div class="col">
-      <div class="card" style="text-align:center">
-        <h3>Frontend (React + MUI)</h3>
-        <p style="font-size:13px">7 Sayfa · Navbar/Footer · Guard Routes</p>
-        <p style="font-size:20px; margin:8px 0">⬇️ REST API (JSON) ⬇️</p>
-        <h3>Controller Katmanı</h3>
-        <p style="font-size:13px">Auth · Sefer · Bilet · Admin · Export</p>
-        <p style="font-size:20px; margin:8px 0">⬇️</p>
-        <h3>Service Katmanı</h3>
-        <p style="font-size:13px">Kullanici · Arama · Rezervasyon · Export</p>
-        <p style="font-size:20px; margin:8px 0">⬇️</p>
-        <h3>Repository + H2 DB</h3>
-        <p style="font-size:13px">5 JPA Repository · Dosya tabanlı veritabanı</p>
-      </div>
-    </div>
-    <div class="col">
-      <div class="card">
-        <h3>Sınıf Hiyerarşisi</h3>
-        <p style="font-size:13px; font-family:monospace; line-height:1.8; white-space:pre">UlasimAraci (abstract)
-├── Ucak    → +havaalanı vergisi
-├── Tren    → +vagon/hat farkı
-└── Otobus  → +ikram bedeli
-
-Kullanici (abstract)
-├── Yolcu   → tcNo, biletler
-└── Admin   → yetki seviyesi</p>
-      </div>
-      <div class="card">
-        <h3>3 Interface</h3>
-        <p style="font-size:13px">IRezervasyon · IAranabilir · IExportable</p>
-      </div>
-    </div>
-  </div>
-  <span class="slide-num">5 / 10</span>
+<h2><span class="ms">group</span> İş Bölümü</h2>
+<table>
+<tr><th>Üye</th><th>Sorumluluk Alanı</th><th>Dosya</th></tr>
+<tr><td style="font-weight:600">Muhammed Köseoğlu</td><td>Proje altyapısı, kullanıcı yönetimi, auth API, frontend auth/admin sayfaları, koordinasyon</td><td>10</td></tr>
+<tr><td style="font-weight:600">Mustafa Mert Çevik</td><td>Ulaşım araçları modeli, sefer arama API'si, repository'ler, seed data</td><td>14</td></tr>
+<tr><td style="font-weight:600">Ömer Faruk Kara</td><td>Frontend geliştirme (tüm sayfalar), admin API, export modülü</td><td>~18</td></tr>
+<tr><td style="font-weight:600">Elif Feyza Şengül</td><td>Bilet/rezervasyon sistemi, exception handling, GlobalExceptionHandler</td><td>12</td></tr>
+</table>
+<div style="margin-top:14px;font-size:12px;color:#6b7280">
+<p><span class="ms ok" style="font-size:16px">check_circle</span> Her üye hem backend hem frontend sürecinde aktif rol almaktadır.</p>
+<p><span class="ms ok" style="font-size:16px">check_circle</span> Görevler modül bazlı — her üye model → repository → service → controller katmanlarının tamamından sorumludur.</p>
+</div>
+<span class="sf">CityGo · Grup 7</span><span class="sn">5 / 8</span>
 </div>
 
-<!-- SLIDE 6: İş Bölümü -->
 <div class="slide">
-  <h2>👥 İş Bölümü</h2>
-  <table>
-    <tr><th>Üye</th><th>Sorumluluk Alanı</th><th>Dosya</th></tr>
-    <tr><td><span class="tag tag-purple">Muhammed Köseoğlu</span></td>
-        <td>Proje altyapısı, kullanıcı yönetimi, auth API, frontend auth/admin sayfaları, koordinasyon</td>
-        <td>10 dosya</td></tr>
-    <tr><td><span class="tag tag-blue">Mustafa Mert Çevik</span></td>
-        <td>Ulaşım araçları modeli, sefer arama API'si, repository'ler, seed data</td>
-        <td>14 dosya</td></tr>
-    <tr><td><span class="tag tag-green">Ömer Faruk Kara</span></td>
-        <td>Frontend geliştirme (tüm sayfalar), admin API, export modülü</td>
-        <td>~18 dosya</td></tr>
-    <tr><td><span class="tag tag-cyan">Elif Feyza Şengül</span></td>
-        <td>Bilet/rezervasyon sistemi, exception handling, GlobalExceptionHandler</td>
-        <td>12 dosya</td></tr>
-  </table>
-  <p style="margin-top:16px; font-size:13px; color:#94a3b8">
-    ✅ Her üye hem backend hem frontend sürecinde aktif rol almaktadır.<br>
-    ✅ Görevler modül bazlı — her üye model → repository → service → controller katmanlarının tamamından sorumludur.
-  </p>
-  <span class="slide-num">6 / 10</span>
+<h2><span class="ms">terminal</span> Backend — Tamamlanan İşler</h2>
+<div class="sr">
+<div class="st st-blue"><div class="n">39</div><div class="l">Java Dosyası</div></div>
+<div class="st st-green"><div class="n">18</div><div class="l">API Endpoint</div></div>
+<div class="st st-amber"><div class="n">12</div><div class="l">Entity / Enum</div></div>
+<div class="st st-gray"><div class="n">3</div><div class="l">Interface</div></div>
+</div>
+<div class="cols">
+<div class="col">
+<h3><span class="ms ok" style="font-size:16px">check_circle</span> Model Katmanı</h3>
+<p style="font-size:11px">UlasimAraci, Ucak, Tren, Otobus, Kullanici, Yolcu, Admin, Sefer, Koltuk, Bilet + 2 Enum</p>
+<h3 style="margin-top:8px"><span class="ms ok" style="font-size:16px">check_circle</span> Service Katmanı</h3>
+<p style="font-size:11px">KullaniciService, AramaService, RezervasyonService, ExportService</p>
+</div>
+<div class="col">
+<h3><span class="ms ok" style="font-size:16px">check_circle</span> Controller Katmanı</h3>
+<p style="font-size:11px">AuthController (3), SeferController (3), BiletController (3), AdminController (7), ExportController (2)</p>
+<h3 style="margin-top:8px"><span class="ms ok" style="font-size:16px">check_circle</span> Exception Handling</h3>
+<p style="font-size:11px">6 özel exception + GlobalExceptionHandler (merkezi hata yönetimi)</p>
+</div>
+</div>
+<span class="sf">CityGo · Grup 7</span><span class="sn">6 / 8</span>
 </div>
 
-<!-- SLIDE 7: Backend Durumu -->
 <div class="slide">
-  <h2>⚙️ Backend — Tamamlanan İşler</h2>
-  <div class="stat-grid">
-    <div class="stat"><div class="num">39</div><div class="label">Java Dosyası</div></div>
-    <div class="stat"><div class="num">18</div><div class="label">API Endpoint</div></div>
-    <div class="stat"><div class="num">12</div><div class="label">Entity/Enum</div></div>
-    <div class="stat"><div class="num">3</div><div class="label">Interface</div></div>
-  </div>
-  <div class="cols">
-    <div class="col">
-      <h3><span class="check">✅</span> Model Katmanı</h3>
-      <p style="font-size:13px">UlasimAraci, Ucak, Tren, Otobus, Kullanici, Yolcu, Admin, Sefer, Koltuk, Bilet + 2 Enum</p>
-      <h3 style="margin-top:12px"><span class="check">✅</span> Service Katmanı</h3>
-      <p style="font-size:13px">KullaniciService, AramaService, RezervasyonService, ExportService</p>
-    </div>
-    <div class="col">
-      <h3><span class="check">✅</span> Controller Katmanı</h3>
-      <p style="font-size:13px">AuthController (3), SeferController (3), BiletController (3), AdminController (7), ExportController (2)</p>
-      <h3 style="margin-top:12px"><span class="check">✅</span> Exception Handling</h3>
-      <p style="font-size:13px">6 özel exception + GlobalExceptionHandler (merkezi hata yönetimi)</p>
-    </div>
-  </div>
-  <span class="slide-num">7 / 10</span>
+<h2><span class="ms">web</span> Frontend — Tamamlanan İşler</h2>
+<div class="sr">
+<div class="st st-blue"><div class="n">7</div><div class="l">Sayfa</div></div>
+<div class="st st-green"><div class="n">7</div><div class="l">API Servisi</div></div>
+<div class="st st-amber"><div class="n">3</div><div class="l">Route Guard</div></div>
+<div class="st st-gray"><div class="n">2</div><div class="l">Layout</div></div>
+</div>
+<table>
+<tr><th>Sayfa</th><th>Özellikler</th><th></th></tr>
+<tr><td>LoginPage</td><td>E-posta/şifre, hata yönetimi, backend kontrol</td><td><span class="ms ok" style="font-size:16px">check_circle</span></td></tr>
+<tr><td>RegisterPage</td><td>Kayıt formu, validasyon, otomatik giriş</td><td><span class="ms ok" style="font-size:16px">check_circle</span></td></tr>
+<tr><td>HomePage</td><td>Autocomplete şehir seçimi, tarih/tip filtresi</td><td><span class="ms ok" style="font-size:16px">check_circle</span></td></tr>
+<tr><td>SearchResultsPage</td><td>Arama sonuçları, sefer kartları</td><td><span class="ms ok" style="font-size:16px">check_circle</span></td></tr>
+<tr><td>SeatSelectionPage</td><td>Görsel koltuk haritası, bilet alma</td><td><span class="ms ok" style="font-size:16px">check_circle</span></td></tr>
+<tr><td>MyTicketsPage</td><td>Bilet listeleme, iptal butonu</td><td><span class="ms ok" style="font-size:16px">check_circle</span></td></tr>
+<tr><td>AdminPanel</td><td>Sefer CRUD, kullanıcılar, biletler, istatistikler, export</td><td><span class="ms ok" style="font-size:16px">check_circle</span></td></tr>
+</table>
+<span class="sf">CityGo · Grup 7</span><span class="sn">7 / 8</span>
 </div>
 
-<!-- SLIDE 8: Frontend Durumu -->
 <div class="slide">
-  <h2>🎨 Frontend — Tamamlanan İşler</h2>
-  <div class="stat-grid">
-    <div class="stat"><div class="num">7</div><div class="label">Sayfa</div></div>
-    <div class="stat"><div class="num">7</div><div class="label">API Servisi</div></div>
-    <div class="stat"><div class="num">3</div><div class="label">Route Guard</div></div>
-    <div class="stat"><div class="num">2</div><div class="label">Layout Bileşeni</div></div>
-  </div>
-  <table>
-    <tr><th>Sayfa</th><th>Özellikler</th><th>Durum</th></tr>
-    <tr><td>LoginPage</td><td>E-posta/şifre, hata yönetimi, backend kontrol</td><td><span class="check">✅</span></td></tr>
-    <tr><td>RegisterPage</td><td>Kayıt formu, validasyon, otomatik giriş</td><td><span class="check">✅</span></td></tr>
-    <tr><td>HomePage</td><td>Autocomplete şehir seçimi, tarih/tip filtresi</td><td><span class="check">✅</span></td></tr>
-    <tr><td>SearchResultsPage</td><td>Arama sonuçları, sefer kartları</td><td><span class="check">✅</span></td></tr>
-    <tr><td>SeatSelectionPage</td><td>Görsel koltuk haritası, bilet alma</td><td><span class="check">✅</span></td></tr>
-    <tr><td>MyTicketsPage</td><td>Bilet listeleme, iptal butonu</td><td><span class="check">✅</span></td></tr>
-    <tr><td>AdminPanel</td><td>Sefer CRUD, kullanıcılar, biletler, istatistikler, export</td><td><span class="check">✅</span></td></tr>
-  </table>
-  <span class="slide-num">8 / 10</span>
+<h2><span class="ms">flag</span> Sonuç ve Sonraki Adımlar</h2>
+<div class="cols">
+<div class="col">
+<div class="card card-amber"><h3><span class="ms" style="font-size:16px">schedule</span> Kalan Görevler (10 Mayıs)</h3><ul style="font-size:12px"><li>Başlangıç verileri (seed data) kodlaması</li><li>UI son rötuşlar ve responsive iyileştirmeler</li><li>Proje raporu yazımı</li><li>Video sunum kaydı (10–15 dk)</li></ul></div>
+<div class="card card-green"><h3><span class="ms ok" style="font-size:16px">verified</span> Mevcut Durum</h3>
+<p style="font-size:11px"><span class="ms ok" style="font-size:14px">check_circle</span> Backend: 39 Java dosyası, 18 endpoint</p>
+<p style="font-size:11px"><span class="ms ok" style="font-size:14px">check_circle</span> Frontend: 7 sayfa, backend entegrasyonu</p>
+<p style="font-size:11px"><span class="ms ok" style="font-size:14px">check_circle</span> OOP prensiplerinin tamamı uygulandı</p>
+<p style="font-size:11px"><span class="ms ok" style="font-size:14px">check_circle</span> Exception handling merkezi yönetim</p>
+</div>
+</div>
+<div class="col"><div class="card" style="height:100%"><h3><span class="ms" style="font-size:16px">bar_chart</span> Proje İstatistikleri</h3>
+<table style="font-size:12px">
+<tr><td>Java dosyası</td><td style="text-align:right;font-weight:700;color:#2563eb">39</td></tr>
+<tr><td>Frontend dosyası</td><td style="text-align:right;font-weight:700;color:#2563eb">~25</td></tr>
+<tr><td>REST endpoint</td><td style="text-align:right;font-weight:700;color:#2563eb">18</td></tr>
+<tr><td>Entity / Model</td><td style="text-align:right;font-weight:700;color:#2563eb">12</td></tr>
+<tr><td>Interface</td><td style="text-align:right;font-weight:700;color:#2563eb">3</td></tr>
+<tr><td>Özel Exception</td><td style="text-align:right;font-weight:700;color:#2563eb">6</td></tr>
+<tr><td>Sayfa bileşeni</td><td style="text-align:right;font-weight:700;color:#2563eb">7</td></tr>
+</table>
+<p style="text-align:center;margin-top:12px;font-size:13px;font-weight:700;color:#2563eb">Projenin ~%90'ı tamamlandı</p>
+</div></div>
+</div>
+<span class="sf">CityGo · Grup 7</span><span class="sn">8 / 8</span>
 </div>
 
-<!-- SLIDE 9: Veritabanı -->
-<div class="slide">
-  <h2>🗃 Veritabanı Tasarımı</h2>
-  <p class="subtitle" style="font-size:15px">H2 Gömülü İlişkisel Veritabanı — Dosya Tabanlı Mod · JPA/Hibernate ORM</p>
-  <table>
-    <tr><th>Tablo</th><th>Açıklama</th><th>Temel Alanlar</th></tr>
-    <tr><td><code>kullanicilar</code></td><td>Yolcu ve Admin (SINGLE_TABLE)</td><td>id, ad, soyad, email, sifre, telefon, rol</td></tr>
-    <tr><td><code>ulasimaraci</code></td><td>Uçak, Tren, Otobüs (SINGLE_TABLE)</td><td>id, firma, model, kapasite, biletFiyati, arac_tipi</td></tr>
-    <tr><td><code>seferler</code></td><td>Sefer bilgileri</td><td>id, arac_id, kalkisNoktasi, varisNoktasi, kalkis/varisZamani</td></tr>
-    <tr><td><code>koltuklar</code></td><td>Koltuk bilgileri</td><td>id, sefer_id, koltukNo, dolu, tip</td></tr>
-    <tr><td><code>biletler</code></td><td>Bilet/Rezervasyon</td><td>id, yolcu_id, sefer_id, koltuk_id, tutar, tarih, durum</td></tr>
-  </table>
-  <div class="card" style="margin-top:16px">
-    <h3>API Endpoint Özeti — 18 Endpoint</h3>
-    <p style="font-size:13px">
-      <strong>Auth:</strong> POST /register, /login, /logout &nbsp;|&nbsp;
-      <strong>Sefer:</strong> GET /ara, /{id}, /{id}/koltuklar<br>
-      <strong>Bilet:</strong> POST /, GET /benim, PUT /{id}/iptal &nbsp;|&nbsp;
-      <strong>Admin:</strong> CRUD /seferler, /kullanicilar, /biletler, /istatistikler<br>
-      <strong>Export:</strong> GET /biletler/json, /biletler/csv
-    </p>
-  </div>
-  <span class="slide-num">9 / 10</span>
-</div>
-
-<!-- SLIDE 10: Sonraki Adımlar -->
-<div class="slide title-slide" style="justify-content:flex-start; padding-top:48px; text-align:left; align-items:flex-start">
-  <h2>🎯 Sonraki Adımlar & Sonuç</h2>
-  <div class="cols" style="width:100%; margin-top:16px">
-    <div class="col">
-      <div class="card">
-        <h3>Kalan Görevler (→ 10 Mayıs)</h3>
-        <ul style="font-size:13px">
-          <li>Başlangıç verileri (seed data) kodlaması</li>
-          <li>UI son rötuşlar ve responsive iyileştirmeler</li>
-          <li>Proje raporu yazımı</li>
-          <li>Video sunum kaydı (10–15 dk)</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h3>Proje Durumu</h3>
-        <p style="font-size:13px"><span class="check">✅</span> Backend: 39 Java dosyası, 18 endpoint — tamamlandı</p>
-        <p style="font-size:13px"><span class="check">✅</span> Frontend: 7 sayfa, backend entegrasyonu — tamamlandı</p>
-        <p style="font-size:13px"><span class="check">✅</span> OOP prensiplerinin tamamı uygulandı</p>
-        <p style="font-size:13px"><span class="check">✅</span> Exception handling merkezi olarak yönetiliyor</p>
-      </div>
-    </div>
-    <div class="col">
-      <div class="card" style="height:100%">
-        <h3>Proje İstatistikleri</h3>
-        <table style="font-size:13px">
-          <tr><td>Java dosyası</td><td style="text-align:right; font-weight:800; color:#60a5fa">39</td></tr>
-          <tr><td>Frontend dosyası</td><td style="text-align:right; font-weight:800; color:#60a5fa">~25</td></tr>
-          <tr><td>REST endpoint</td><td style="text-align:right; font-weight:800; color:#60a5fa">18</td></tr>
-          <tr><td>Entity/Model</td><td style="text-align:right; font-weight:800; color:#60a5fa">12</td></tr>
-          <tr><td>Interface</td><td style="text-align:right; font-weight:800; color:#60a5fa">3</td></tr>
-          <tr><td>Özel Exception</td><td style="text-align:right; font-weight:800; color:#60a5fa">6</td></tr>
-          <tr><td>Sayfa bileşeni</td><td style="text-align:right; font-weight:800; color:#60a5fa">7</td></tr>
-        </table>
-        <p style="text-align:center; margin-top:16px; font-size:20px">🚀</p>
-        <p style="text-align:center; font-size:14px; font-weight:700; color:#60a5fa">Projenin ~%90'ı tamamlandı</p>
-      </div>
-    </div>
-  </div>
-  <span class="slide-num">10 / 10</span>
-</div>
-
-</body>
-</html>
+</body></html>
