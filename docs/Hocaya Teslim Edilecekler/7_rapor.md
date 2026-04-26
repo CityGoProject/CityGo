@@ -3,7 +3,8 @@
 # Proje Milestone Raporu
 
 **Grup:** 7  
-**Tarih:** 26 Nisan 2026
+**Tarih:** 26 Nisan 2026  
+**GitHub:** https://github.com/CityGoProject/CityGo
 
 ---
 
