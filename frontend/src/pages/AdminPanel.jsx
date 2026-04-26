@@ -15,8 +15,6 @@ import {
   Typography,
 } from '@mui/material'
 import { useCallback, useEffect, useState } from 'react'
-import Footer from '../components/layout/Footer'
-import Navbar from '../components/layout/Navbar'
 import {
   createTrip,
   deleteTrip,
@@ -182,7 +180,6 @@ function AdminPanel() {
 
   return (
     <Box sx={{ minHeight: '100vh', backgroundColor: '#f6f8fb' }}>
-      <Navbar />
       <Box sx={{ maxWidth: 1100, mx: 'auto', px: 3, py: 5 }}>
         <Stack spacing={3}>
           <Paper sx={{ p: 3, borderRadius: 3 }} variant="outlined">
@@ -329,7 +326,6 @@ function AdminPanel() {
           )}
         </Stack>
       </Box>
-      <Footer />
 
       <Dialog open={tripDialogOpen} onClose={closeTripDialog} fullWidth maxWidth="sm">
         <DialogTitle>{editingTrip ? 'Sefer Düzenle' : 'Yeni Sefer Ekle'}</DialogTitle>

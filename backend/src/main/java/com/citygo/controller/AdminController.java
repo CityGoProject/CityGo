@@ -9,9 +9,7 @@ import com.citygo.repository.BiletRepository;
 import com.citygo.repository.SeferRepository;
 import com.citygo.repository.UlasimAraciRepository;
 import com.citygo.repository.KullaniciRepository;
-import com.citygo.service.AramaService;
 import com.citygo.service.KullaniciService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -83,23 +81,29 @@ import java.util.Optional;
 @CrossOrigin(origins = "http://localhost:5173")
 public class AdminController {
 
-    @Autowired
-    private AramaService aramaService;
+    private static final String KEY_ARAC_ID = "aracId";
+    private static final String KEY_KALKIS_NOKTASI = "kalkisNoktasi";
+    private static final String KEY_VARIS_NOKTASI = "varisNoktasi";
+    private static final String KEY_KALKIS_ZAMANI = "kalkisZamani";
+    private static final String KEY_VARIS_ZAMANI = "varisZamani";
 
-    @Autowired
-    private KullaniciService kullaniciService;
+    private final KullaniciService kullaniciService;
+    private final BiletRepository biletRepository;
+    private final SeferRepository seferRepository;
+    private final UlasimAraciRepository ulasimAraciRepository;
+    private final KullaniciRepository kullaniciRepository;
 
-    @Autowired
-    private BiletRepository biletRepository;
-
-    @Autowired
-    private SeferRepository seferRepository;
-
-    @Autowired
-    private UlasimAraciRepository ulasimAraciRepository;
-
-    @Autowired
-    private KullaniciRepository kullaniciRepository;
+    public AdminController(KullaniciService kullaniciService,
+                           BiletRepository biletRepository,
+                           SeferRepository seferRepository,
+                           UlasimAraciRepository ulasimAraciRepository,
+                           KullaniciRepository kullaniciRepository) {
+        this.kullaniciService = kullaniciService;
+        this.biletRepository = biletRepository;
+        this.seferRepository = seferRepository;
+        this.ulasimAraciRepository = ulasimAraciRepository;
+        this.kullaniciRepository = kullaniciRepository;
+    }
 
     // Tüm seferleri listele
     @GetMapping("/seferler")
@@ -109,13 +113,13 @@ public class AdminController {
 
     // Yeni sefer oluştur + koltukları otomatik oluştur
     @PostMapping("/seferler")
-    public ResponseEntity<?> seferEkle(@RequestBody Map<String, String> body) {
+    public ResponseEntity<Object> seferEkle(@RequestBody Map<String, String> body) {
         try {
-            Long aracId = Long.parseLong(body.get("aracId"));
-            String kalkisNoktasi = body.get("kalkisNoktasi");
-            String varisNoktasi = body.get("varisNoktasi");
-            String kalkisZamaniStr = body.get("kalkisZamani");
-            String varisZamaniStr = body.get("varisZamani");
+            Long aracId = Long.parseLong(body.get(KEY_ARAC_ID));
+            String kalkisNoktasi = body.get(KEY_KALKIS_NOKTASI);
+            String varisNoktasi = body.get(KEY_VARIS_NOKTASI);
+            String kalkisZamaniStr = body.get(KEY_KALKIS_ZAMANI);
+            String varisZamaniStr = body.get(KEY_VARIS_ZAMANI);
 
             Optional<UlasimAraci> aracOpt = ulasimAraciRepository.findById(aracId);
             if (aracOpt.isPresent()) {
@@ -143,7 +147,7 @@ public class AdminController {
 
     // Mevcut seferi güncelle
     @PutMapping("/seferler/{id}")
-    public ResponseEntity<?> seferGuncelle(@PathVariable Long id, @RequestBody Map<String, String> body) {
+    public ResponseEntity<Object> seferGuncelle(@PathVariable Long id, @RequestBody Map<String, String> body) {
         try {
             Optional<Sefer> seferOpt = seferRepository.findById(id);
             if (seferOpt.isEmpty()) {
@@ -151,20 +155,20 @@ public class AdminController {
             }
             Sefer sefer = seferOpt.get();
 
-            if (body.containsKey("aracId")) {
-                Long aracId = Long.parseLong(body.get("aracId"));
+            if (body.containsKey(KEY_ARAC_ID)) {
+                Long aracId = Long.parseLong(body.get(KEY_ARAC_ID));
                 Optional<UlasimAraci> aracOpt = ulasimAraciRepository.findById(aracId);
                 aracOpt.ifPresent(sefer::setArac);
             }
 
-            if (body.containsKey("kalkisNoktasi"))
-                sefer.setKalkisNoktasi(body.get("kalkisNoktasi"));
-            if (body.containsKey("varisNoktasi"))
-                sefer.setVarisNoktasi(body.get("varisNoktasi"));
-            if (body.containsKey("kalkisZamani"))
-                sefer.setKalkisZamani(LocalDateTime.parse(body.get("kalkisZamani")));
-            if (body.containsKey("varisZamani"))
-                sefer.setVarisZamani(LocalDateTime.parse(body.get("varisZamani")));
+            if (body.containsKey(KEY_KALKIS_NOKTASI))
+                sefer.setKalkisNoktasi(body.get(KEY_KALKIS_NOKTASI));
+            if (body.containsKey(KEY_VARIS_NOKTASI))
+                sefer.setVarisNoktasi(body.get(KEY_VARIS_NOKTASI));
+            if (body.containsKey(KEY_KALKIS_ZAMANI))
+                sefer.setKalkisZamani(LocalDateTime.parse(body.get(KEY_KALKIS_ZAMANI)));
+            if (body.containsKey(KEY_VARIS_ZAMANI))
+                sefer.setVarisZamani(LocalDateTime.parse(body.get(KEY_VARIS_ZAMANI)));
 
             Sefer guncellenen = seferRepository.save(sefer);
             return ResponseEntity.ok(guncellenen);
@@ -176,7 +180,7 @@ public class AdminController {
 
     // Seferi sil
     @DeleteMapping("/seferler/{id}")
-    public ResponseEntity<?> seferSil(@PathVariable Long id) {
+    public ResponseEntity<Object> seferSil(@PathVariable Long id) {
         try {
             if (!seferRepository.existsById(id)) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("hata", "Sefer bulunamadı"));
@@ -203,7 +207,7 @@ public class AdminController {
 
     // Dashboard istatistikleri
     @GetMapping("/istatistikler")
-    public ResponseEntity<?> istatistikleriGetir() {
+    public ResponseEntity<Object> istatistikleriGetir() {
         try {
             Map<String, Object> stats = new HashMap<>();
             stats.put("toplamSefer", seferRepository.count());

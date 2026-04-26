@@ -1,8 +1,6 @@
 import { Alert, Box, Button, CircularProgress, Paper, Stack, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import Footer from '../components/layout/Footer'
-import Navbar from '../components/layout/Navbar'
 import SeatMap from '../components/seats/SeatMap'
 import { getStoredUser } from '../services/auth'
 import { createTicket } from '../services/ticketService'
@@ -69,9 +67,8 @@ function SeatSelectionPage() {
   }
 
   return (
-    <Box sx={{ minHeight: '100vh', backgroundColor: '#f6f8fb' }}>
-      <Navbar />
-      <Box sx={{ maxWidth: 980, mx: 'auto', px: 3, py: 5 }}>
+    <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', backgroundColor: '#f6f8fb' }}>
+      <Box sx={{ flex: 1, maxWidth: 980, mx: 'auto', px: 3, py: 5 }}>
         <Stack spacing={3}>
           <Paper sx={{ p: 3, borderRadius: 3 }} variant="outlined">
             <Typography variant="h4" fontWeight={800}>
@@ -120,7 +117,6 @@ function SeatSelectionPage() {
           )}
         </Stack>
       </Box>
-      <Footer />
     </Box>
   )
 }

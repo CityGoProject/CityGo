@@ -1,8 +1,6 @@
 import { Alert, Box, Button, CircularProgress, Paper, Stack, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { Link as RouterLink, useNavigate, useSearchParams } from 'react-router-dom'
-import Footer from '../components/layout/Footer'
-import Navbar from '../components/layout/Navbar'
 import TripCard from '../components/trips/TripCard'
 import { searchTrips } from '../services/tripService'
 
@@ -41,9 +39,8 @@ function SearchResultsPage() {
   }, [kalkis, varis, tarih, tip, navigate])
 
   return (
-    <Box sx={{ minHeight: '100vh', backgroundColor: '#f6f8fb' }}>
-      <Navbar />
-      <Box sx={{ maxWidth: 980, mx: 'auto', px: 3, py: 5 }}>
+    <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', backgroundColor: '#f6f8fb' }}>
+      <Box sx={{ flex: 1, maxWidth: 980, mx: 'auto', px: 3, py: 5 }}>
         <Stack spacing={3}>
           <Paper sx={{ p: 3, borderRadius: 3 }} variant="outlined">
             {/* Arama kriterleri URL'den okunuyor; sayfa yenilense bile sonuç ekranı aynı kalır. */}
@@ -83,7 +80,6 @@ function SearchResultsPage() {
           ))}
         </Stack>
       </Box>
-      <Footer />
     </Box>
   )
 }
