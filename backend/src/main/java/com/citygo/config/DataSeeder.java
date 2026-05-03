@@ -5,6 +5,7 @@ import com.citygo.repository.UlasimAraciRepository;
 import com.citygo.repository.SeferRepository;
 import com.citygo.repository.KoltukRepository;
 import com.citygo.repository.KullaniciRepository;
+import com.citygo.repository.BiletRepository;
 import com.citygo.service.KullaniciService;
 
 import org.slf4j.Logger;
@@ -74,57 +75,47 @@ public class DataSeeder implements CommandLineRunner {
     private final KoltukRepository koltukRepository;
     private final KullaniciRepository kullaniciRepository;
     private final KullaniciService kullaniciService;
-
+    private final BiletRepository biletRepository;
 
     public DataSeeder(UlasimAraciRepository araciRepository, SeferRepository seferRepository,
             KoltukRepository koltukRepository, KullaniciRepository kullaniciRepository,
-            KullaniciService kullaniciService) {
+            KullaniciService kullaniciService, BiletRepository biletRepository) {
         this.araciRepository = araciRepository;
         this.seferRepository = seferRepository;
         this.koltukRepository = koltukRepository;
         this.kullaniciRepository = kullaniciRepository;
         this.kullaniciService = kullaniciService;
+        this.biletRepository = biletRepository;
     }
-
 
     @Override
     public void run(String... args) throws Exception {
-        if (kullaniciRepository.count() > 0) {
-            log.info("Veritabanı zaten dolu, seed etmiyoruz!");
-            return;
-        }
-        log.info("Seed Başlıyor!");
+        log.info("Veritabanı temizleniyor...");
+        biletRepository.deleteAll();
+        koltukRepository.deleteAll();
+        seferRepository.deleteAll();
+        araciRepository.deleteAll();
+        kullaniciRepository.deleteAll();
+        log.info("Veritabanı temizlendi.");
 
+        log.info("Seed işlemi başlıyor...");
         seedAdminKullanici();
         seedYolcuKullanici();
         seedUlasimAraclari();
         seedSeferler();
-        seedKoltuklar();
-
         log.info("Seed Başarı ile Tamamlandı!");
     }
 
     private void seedAdminKullanici() {
-        Admin admin = new Admin();
-        admin.setAd("Admin");
-        admin.setSoyad("CityGo");
-        admin.setEmail("admin@citygo.com");
-        admin.setSifre(kullaniciService.sifreHashle("admin123"));
-        admin.setYetki("SUPER_ADMIN");
-
-        admin.setTelefon("05000000000");
+        String hashedSifre = kullaniciService.sifreHashle("admin123");
+        Admin admin = new Admin(null, "Admin", "CityGo", "admin@citygo.com", hashedSifre, "05000000000", "SUPER_ADMIN");
         kullaniciRepository.save(admin);
         log.info("ADMIN OLUŞTURULDU: {}", admin.getEmail());
     }
 
     private void seedYolcuKullanici() {
-        Yolcu yolcu = new Yolcu();
-        yolcu.setAd("Yolcu");
-        yolcu.setSoyad("Yolcu");
-        yolcu.setEmail("yolcu@citygo.com");
-        yolcu.setSifre(kullaniciService.sifreHashle("yolcu123"));
-        yolcu.setTelefon("05000000001");
-
+        String hashedSifre = kullaniciService.sifreHashle("yolcu123");
+        Yolcu yolcu = new Yolcu(null, "Yolcu", "Yolcu", "yolcu@citygo.com", hashedSifre, "05000000001", "12345678901");
         kullaniciRepository.save(yolcu);
         log.info("YOLCU OLUŞTURULDU: {}", yolcu.getEmail());
     }
@@ -132,69 +123,49 @@ public class DataSeeder implements CommandLineRunner {
     private void seedUlasimAraclari() {
         log.info("Ulaşım araçları oluşturuluyor...");
 
-        Ucak ucak = new Ucak();
-        ucak.setFirma("THY");
-        ucak.setModel("Boeing 737");
-        ucak.setKapasite(180);
-        ucak.setBiletFiyati(1500.0);
-        ucak.setHavaalani("IST");
-        ucak.setHavaalaniVergiOrani(0.15);
+        Ucak ucak = new Ucak(null, "THY", "Boeing 737", 180, 1500.0, 0.15, "IST");
         araciRepository.save(ucak);
 
-        Tren tren = new Tren();
-        tren.setFirma("TCDD");
-        tren.setModel("YHT");
-        tren.setKapasite(300);
-        tren.setBiletFiyati(450.0);
-        tren.setHatTipi("YHT");
-        tren.setVagonTipi("BUSINESS");
+        Tren tren = new Tren(null, "TCDD", "YHT", 300, 450.0, "BUSINESS", "YHT");
         araciRepository.save(tren);
 
-        Otobus otobus = new Otobus();
-        otobus.setFirma("Metro Turizm");
-        otobus.setModel("Mercedes Travego");
-        otobus.setKapasite(40);
-        otobus.setBiletFiyati(600.0);
-        otobus.setIkramVar(true);
-        otobus.setIkramBedeli(50.0);
+        Otobus otobus = new Otobus(null, "Metro Turizm", "Mercedes Travego", 40, 600.0, true, 50.0);
         araciRepository.save(otobus);
 
         log.info("Ulaşım araçları kaydedildi.");
     }
 
     private void seedSeferler() {
-        log.info("Seferler oluşturuluyor...");
+        log.info("Şehirler arası seferler ve koltuklar döngü ile oluşturuluyor (10 Büyükşehir)...");
         List<UlasimAraci> araclar = araciRepository.findAll();
+        String[] sehirler = {
+            "İstanbul", "Ankara", "İzmir", "Bursa", "Antalya", "Adana", "Konya", "Gaziantep", "Şanlıurfa", "Kocaeli"
+        };
 
+        int gunOfset = 1;
         for (UlasimAraci arac : araclar) {
-            // İstanbul -> Ankara
-            Sefer s1 = new Sefer();
-            s1.setArac(arac);
-            s1.setKalkisNoktasi("İstanbul");
-            s1.setVarisNoktasi("Ankara");
-            s1.setKalkisZamani(LocalDateTime.now().plusDays(2).withHour(10).withMinute(0));
-            s1.setVarisZamani(s1.getKalkisZamani().plusHours(1));
-            seferRepository.save(s1);
+            for (String kalkis : sehirler) {
+                for (String varis : sehirler) {
+                    if (!kalkis.equals(varis)) {
+                        // Her araç için her şehir kombinasyonuna sefer ekle
+                        Sefer sefer = new Sefer(null, arac, kalkis, varis,
+                                LocalDateTime.now().plusDays(gunOfset).withHour(10).withMinute(0),
+                                LocalDateTime.now().plusDays(gunOfset).withHour(12).withMinute(0), null);
+                        
+                        // Koltukları otomatik oluştur (Sefer.java içindeki mantık)
+                        sefer.koltuklariOlustur();
+                        
+                        // Sefer kaydedilirken koltuklar da CascadeType.ALL sayesinde kaydedilir
+                        seferRepository.save(sefer);
 
-            // Ankara -> İstanbul
-            Sefer s2 = new Sefer();
-            s2.setArac(arac);
-            s2.setKalkisNoktasi("Ankara");
-            s2.setVarisNoktasi("İstanbul");
-            s2.setKalkisZamani(LocalDateTime.now().plusDays(3).withHour(14).withMinute(30));
-            s2.setVarisZamani(s2.getKalkisZamani().plusHours(1));
-            seferRepository.save(s2);
+                        // Zamanları biraz dağıtalım
+                        gunOfset = (gunOfset % 7) + 1;
+                    }
+                }
+            }
         }
-        log.info("Seferler kaydedildi.");
+        log.info("Tüm şehirler arası seferler ve koltuklar kaydedildi.");
     }
 
-    private void seedKoltuklar() {
-        log.info("Koltuklar oluşturuluyor...");
-        List<Sefer> seferler = seferRepository.findAll();
-        for (Sefer sefer : seferler) {
-            sefer.koltuklariOlustur();
-            seferRepository.save(sefer);
-        }
-        log.info("Koltuklar kaydedildi.");
-    }
+
 }

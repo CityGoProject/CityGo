@@ -17,6 +17,16 @@ public class Yolcu extends Kullanici {
     @JsonIgnore
     private List<Bilet> biletler = new ArrayList<>();
 
+    public Yolcu(Long id, String ad, String soyad, String email, String sifre, String telefon, String tcNo) {
+        super(id, ad, soyad, email, sifre, telefon);
+        this.tcNo = tcNo;
+    }
+
+    public Yolcu() {
+        super();
+        this.biletler = new ArrayList<>();
+    }
+
     public String getTcNo() {
         return tcNo;
     }

@@ -1,8 +1,8 @@
 package com.citygo.model;
+
 import jakarta.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 
 /*
  * =============================================================
@@ -28,11 +28,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  * Not: Roadmap'ta "dpieces" yazıyor ama bu alan "dolu" (occupied) olmalı.
  */
 
-@Entity // Veritabanını tablo ile eşleştirme 
+@Entity // Veritabanını tablo ile eşleştirme
 @Table(name = "koltuklar") // Tablo ismi atama
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class Koltuk {
-    
+
     // Her kayıt için otomatik artarak üretilen birincil anahtar
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,36 +42,70 @@ public class Koltuk {
     private int koltukNo;
 
     @Column(nullable = false)
-    private boolean dolu = false; 
+    private boolean dolu = false;
 
-    @Enumerated(EnumType.STRING) // "STANDART" / "PREMIUM" 
+    @Enumerated(EnumType.STRING) // "STANDART" / "PREMIUM"
     @Column(name = "tip", nullable = false)
     private KoltukTipi tip;
 
-
     // Bir seferde ÇOK koltuk olabilir, ama bir koltuk sefere BİR sefere aittir
-    // Bu ilişki → ManyToOne 
+    // Bu ilişki → ManyToOne
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "sefer_id", nullable = false) 
+    @JoinColumn(name = "sefer_id", nullable = false)
     private Sefer sefer;
+
+    public Koltuk() {
+    }
+
+    public Koltuk(Long id, int koltukNo, boolean dolu, KoltukTipi tip, Sefer sefer) {
+        this.id = id;
+        this.koltukNo = koltukNo;
+        this.dolu = dolu;
+        this.tip = tip;
+        this.sefer = sefer;
+    }
 
     // getter/setter'lar
 
-    public Long getId() {return id; }
-    public void setId(Long id) {this.id = id;}
+    public Long getId() {
+        return id;
+    }
 
-    public int getKoltukNo() {return koltukNo;}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public void setKoltukNo(int koltukNo) {this.koltukNo = koltukNo;}
+    public int getKoltukNo() {
+        return koltukNo;
+    }
 
-    public boolean isDolu() {return dolu;}
-    public void setDolu(boolean dolu) {this.dolu = dolu;}
+    public void setKoltukNo(int koltukNo) {
+        this.koltukNo = koltukNo;
+    }
 
-    public KoltukTipi getTip() {return tip;}
-    public void setTip(KoltukTipi tip) {this.tip = tip;}
+    public boolean isDolu() {
+        return dolu;
+    }
 
-    public Sefer getSefer() {return sefer;}
-    public void setSefer(Sefer sefer) {this.sefer = sefer;}
-    
+    public void setDolu(boolean dolu) {
+        this.dolu = dolu;
+    }
+
+    public KoltukTipi getTip() {
+        return tip;
+    }
+
+    public void setTip(KoltukTipi tip) {
+        this.tip = tip;
+    }
+
+    public Sefer getSefer() {
+        return sefer;
+    }
+
+    public void setSefer(Sefer sefer) {
+        this.sefer = sefer;
+    }
+
 }

@@ -7,14 +7,14 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "kullanicilar")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)  // Yolcu ve Admin ayni tabloda tutuluyor
-@DiscriminatorColumn(name = "rol")  // tabloda "rol" kolonu ile YOLCU/ADMIN ayrimi yapiliyor
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE) // Yolcu ve Admin ayni tabloda tutuluyor
+@DiscriminatorColumn(name = "rol") // tabloda "rol" kolonu ile YOLCU/ADMIN ayrimi yapiliyor
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public abstract class Kullanici {
     // Yolcu ve Admin bu siniftan miras alacak, o yuzden abstract
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)  // id otomatik artiyor (1, 2, 3...)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // id otomatik artiyor (1, 2, 3...)
     private Long id;
 
     @NotBlank(message = "Ad boş olamaz")
@@ -24,14 +24,28 @@ public abstract class Kullanici {
     private String soyad;
 
     @Email(message = "Geçerli bir email adresi giriniz.")
-    @Column(unique = true)  // ayni emailden iki tane olamaz
+    @Column(unique = true) // ayni emailden iki tane olamaz
     @NotBlank(message = "email boş olamaz")
     private String email;
 
     @NotBlank(message = "Şifre boş olamaz")
     private String sifre;
 
-    private String telefon;  // zorunlu degil, opsiyonel
+    private String telefon; // zorunlu degil, opsiyonel
+
+    public Kullanici(Long id, String ad, String soyad, String email, String sifre, String telefon) {
+        super();
+        this.id = id;
+        this.ad = ad;
+        this.soyad = soyad;
+        this.email = email;
+        this.sifre = sifre;
+        this.telefon = telefon;
+    }
+
+    public Kullanici() {
+
+    }
 
     // --- Getter ve Setter'lar ---
 

@@ -1,4 +1,5 @@
 package com.citygo.model;
+
 import jakarta.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.time.LocalDateTime;
@@ -38,7 +39,7 @@ import java.util.ArrayList;
 
 @Entity
 @Table(name = "seferler")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class Sefer {
 
     // Her kayıt için otomatik artarak üretilen birincil anahtar
@@ -46,12 +47,14 @@ public class Sefer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // Duzeltme: Frontend seferle birlikte arac bilgisini de kullaniyor, bu alan JSON'da gelmeli.
-    // Sonsuz dongu riski koltuk tarafinda sefer alanini gizleyerek kontrol ediliyor.
+    // Duzeltme: Frontend seferle birlikte arac bilgisini de kullaniyor, bu alan
+    // JSON'da gelmeli.
+    // Sonsuz dongu riski koltuk tarafinda sefer alanini gizleyerek kontrol
+    // ediliyor.
     @ManyToOne
     @JoinColumn(name = "arac_id")
     private UlasimAraci arac;
-    
+
     @Column(nullable = false)
     private String kalkisNoktasi;
     @Column(nullable = false)
@@ -67,36 +70,83 @@ public class Sefer {
     @OneToMany(mappedBy = "sefer", cascade = CascadeType.ALL)
     private List<Koltuk> koltuklar;
 
+    public Sefer() {
+    }
+
+    public Sefer(Long id, UlasimAraci arac, String kalkisNoktasi, String varisNoktasi, LocalDateTime kalkisZamani,
+            LocalDateTime varisZamani, List<Koltuk> koltuklar) {
+        this.id = id;
+        this.arac = arac;
+        this.kalkisNoktasi = kalkisNoktasi;
+        this.varisNoktasi = varisNoktasi;
+        this.kalkisZamani = kalkisZamani;
+        this.varisZamani = varisZamani;
+        this.koltuklar = koltuklar;
+    }
+
     // getter/setter'lar
-    
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
 
-    public UlasimAraci getArac() { return arac; }
-    public void setArac(UlasimAraci arac) { this.arac = arac; }
+    public Long getId() {
+        return id;
+    }
 
-    public String getKalkisNoktasi() { return kalkisNoktasi; }
-    public void setKalkisNoktasi(String kalkisNoktasi) { this.kalkisNoktasi = kalkisNoktasi; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public String getVarisNoktasi() { return varisNoktasi; }
-    public void setVarisNoktasi(String varisNoktasi) { this.varisNoktasi = varisNoktasi; }
+    public UlasimAraci getArac() {
+        return arac;
+    }
 
-    public LocalDateTime getKalkisZamani() { return kalkisZamani; }
-    public void setKalkisZamani(LocalDateTime kalkisZamani) { this.kalkisZamani = kalkisZamani; }
+    public void setArac(UlasimAraci arac) {
+        this.arac = arac;
+    }
 
-    public LocalDateTime getVarisZamani() { return varisZamani; }
-    public void setVarisZamani(LocalDateTime varisZamani) { this.varisZamani = varisZamani; }
+    public String getKalkisNoktasi() {
+        return kalkisNoktasi;
+    }
 
-    public List<Koltuk> getKoltuklar() { return koltuklar; }
-    public void setKoltuklar(List<Koltuk> koltuklar) { this.koltuklar = koltuklar; }
+    public void setKalkisNoktasi(String kalkisNoktasi) {
+        this.kalkisNoktasi = kalkisNoktasi;
+    }
 
-    
+    public String getVarisNoktasi() {
+        return varisNoktasi;
+    }
+
+    public void setVarisNoktasi(String varisNoktasi) {
+        this.varisNoktasi = varisNoktasi;
+    }
+
+    public LocalDateTime getKalkisZamani() {
+        return kalkisZamani;
+    }
+
+    public void setKalkisZamani(LocalDateTime kalkisZamani) {
+        this.kalkisZamani = kalkisZamani;
+    }
+
+    public LocalDateTime getVarisZamani() {
+        return varisZamani;
+    }
+
+    public void setVarisZamani(LocalDateTime varisZamani) {
+        this.varisZamani = varisZamani;
+    }
+
+    public List<Koltuk> getKoltuklar() {
+        return koltuklar;
+    }
+
+    public void setKoltuklar(List<Koltuk> koltuklar) {
+        this.koltuklar = koltuklar;
+    }
+
     // Sefer oluşturulurken aracın kapasitesi kadar otomatik koltuk üretir
     public void koltuklariOlustur() {
-    
+
         // Araç atanmadan bu metot çağrılırsa hata vermemesi için kontrol
-        if (arac == null)  
-        {
+        if (arac == null) {
             throw new IllegalStateException("Önce araç atanmalidir! setArac()");
         }
 
@@ -105,11 +155,11 @@ public class Sefer {
         for (int i = 1; i <= arac.getKapasite(); i++) {
             Koltuk koltuk = new Koltuk();
             koltuk.setKoltukNo(i);
-            koltuk.setDolu(false);        // başlangıçta hepsi boş
+            koltuk.setDolu(false); // başlangıçta hepsi boş
             koltuk.setTip(KoltukTipi.STANDART); // varsayılan tip
-            koltuk.setSefer(this);        // bu koltuğun seferi = bu sefer
+            koltuk.setSefer(this); // bu koltuğun seferi = bu sefer
             this.koltuklar.add(koltuk);
         }
     }
-    
+
 }

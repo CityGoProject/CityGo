@@ -1,7 +1,7 @@
 package com.citygo.model;
+
 import jakarta.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 
 /*
  * =============================================================
@@ -43,17 +43,16 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  * - Tüm alanlar için public getter ve setter metotları yazılacak
  */
 
-
 // Veritabanını tablo ile eşleştirme ve Tablo ismini ayarlama
-@Entity 
-@Table(name="ulasimaraci") 
- 
+@Entity
+@Table(name = "ulasimaraci")
+
 // Inheritance Stratejisi : Tüm alt sınıfları tek tablo ile saklama
 // Tabloda arac_tipi sutunu ile ayırt eder.
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE) 
-@DiscriminatorColumn(name="arac_tipi") 
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public abstract class  UlasimAraci {
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "arac_tipi")
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+public abstract class UlasimAraci {
 
     // Her kayıt için otomatik artarak üretilen birincil anahtar
     @Id
@@ -64,39 +63,75 @@ public abstract class  UlasimAraci {
 
     @Column(nullable = false)
     private String firma;
-    
+
     @Column(nullable = false)
-    private String model;       
-    
+    private String model;
+
     @Column(nullable = false)
     private int kapasite;
-    
+
     @Column(nullable = false)
     private double biletFiyati;
-    
+
+    public UlasimAraci(Long id, String firma, String model, int kapasite, double biletFiyati) {
+        this.id = id;
+        this.firma = firma;
+        this.model = model;
+        this.kapasite = kapasite;
+        this.biletFiyati = biletFiyati;
+    }
+
+    public UlasimAraci() {
+    }
+
     // getter/setter'lar
-    public Long getId() {return id;}
-    public void setId(Long id) {this.id = id;}
-    
-    public String getFirma () {return firma;}
-    public void setFirma(String firma) {this.firma = firma;}
-    
-    public String getModel() {return model;}
-    public void setModel(String model) {this.model = model;}
-    
-    public int getKapasite() {return kapasite;}
-    public void setKapasite(int kapasite) {this.kapasite = kapasite;}
+    public Long getId() {
+        return id;
+    }
 
-    public double getBiletFiyati() {return biletFiyati;}
-    public void setBiletFiyati(double biletFiyati) {this.biletFiyati = biletFiyati;}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    // --- Abstract Metodlar --- 
+    public String getFirma() {
+        return firma;
+    }
 
-    // Her Ulaşım Türünün kendi fiyatını hesaplaması (Uçak → havaalin vergisi, Tren → Business ve YHT, Otobüs → İkram Bedeli)
+    public void setFirma(String firma) {
+        this.firma = firma;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public int getKapasite() {
+        return kapasite;
+    }
+
+    public void setKapasite(int kapasite) {
+        this.kapasite = kapasite;
+    }
+
+    public double getBiletFiyati() {
+        return biletFiyati;
+    }
+
+    public void setBiletFiyati(double biletFiyati) {
+        this.biletFiyati = biletFiyati;
+    }
+
+    // --- Abstract Metodlar ---
+
+    // Her Ulaşım Türünün kendi fiyatını hesaplaması (Uçak → havaalin vergisi, Tren
+    // → Business ve YHT, Otobüs → İkram Bedeli)
     public abstract double hesaplaToplamFiyat(double temelFiyat);
+
     // Alt sınıflar kendi araç tipini döndürür ("UCAK","TREN","OTOBUS")
     public abstract String getAracTipi();
-    
-} 
 
-
+}

@@ -1,5 +1,7 @@
 package com.citygo.model;
 
+import java.util.ArrayList;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -8,6 +10,20 @@ import jakarta.persistence.*;
 public class Admin extends Kullanici {
 
     private String yetki; // süper admin veya moderatör gibi..
+
+    public Admin(Long id, String ad, String soyad, String email, String sifre, String telefon, String yetki) {
+        super(id, ad, soyad, email, sifre, telefon);
+        this.yetki = yetki;
+    }
+
+    public Admin(String yetki) {
+        super();
+        this.yetki = yetki;
+    }
+
+    public Admin() {
+        super();
+    }
 
     public String getYetki() {
         return yetki;

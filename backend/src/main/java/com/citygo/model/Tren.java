@@ -1,4 +1,5 @@
 package com.citygo.model;
+
 import jakarta.persistence.*;
 
 /*
@@ -34,45 +35,65 @@ import jakarta.persistence.*;
  * - Ek alanlar için getter/setter metotları
  */
 
-@Entity  // Veritabanını tablo ile eşleştirme 
+@Entity // Veritabanını tablo ile eşleştirme
 @DiscriminatorValue("TREN") // SuperClass'da yazdığımız ayırt edici sutünun değeri
 
-public class Tren extends UlasimAraci{
+public class Tren extends UlasimAraci {
 
     private String vagonTipi;
     private String hatTipi;
-    
+
+    public Tren() {
+    }
+
+    public Tren(Long id, String firma, String model, int kapasite, double biletFiyati, String vagonTipi,
+            String hatTipi) {
+        super(id, firma, model, kapasite, biletFiyati);
+        this.vagonTipi = vagonTipi;
+        this.hatTipi = hatTipi;
+    }
+
     // getter/setter'lar
 
-    public String getVagonTipi() {return vagonTipi;}
-    public void setVagonTipi(String vagonTipi) {this.vagonTipi = vagonTipi;}
+    public String getVagonTipi() {
+        return vagonTipi;
+    }
 
-    public String getHatTipi() {return hatTipi;}
-    public void setHatTipi(String hatTipi) {this.hatTipi = hatTipi;}
+    public void setVagonTipi(String vagonTipi) {
+        this.vagonTipi = vagonTipi;
+    }
 
-    @Override 
-    public String getAracTipi() {return "TREN";} // Araç tipi döndürme
+    public String getHatTipi() {
+        return hatTipi;
+    }
 
+    public void setHatTipi(String hatTipi) {
+        this.hatTipi = hatTipi;
+    }
+
+    @Override
+    public String getAracTipi() {
+        return "TREN";
+    } // Araç tipi döndürme
 
     // VagonTipi ve HatTipi Kontrolleriyle son fiyat hesaplama
     @Override
     public double hesaplaToplamFiyat(double temelFiyat) {
-        if ( vagonTipi.equals("BUSINESS") && hatTipi.equals("YHT")) 
-            { 
-                return (temelFiyat * 1.5)*1.2;
-            }
+        if (vagonTipi.equals("BUSINESS") && hatTipi.equals("YHT")) {
+            return (temelFiyat * 1.5) * 1.2;
+        }
 
-        else if (vagonTipi.equals("EKONOMI") && hatTipi.equals("YHT"))
-            {
-                return (temelFiyat)*1.2;
-            }
+        else if (vagonTipi.equals("EKONOMI") && hatTipi.equals("YHT")) {
+            return (temelFiyat) * 1.2;
+        }
 
-        else if ( vagonTipi.equals("BUSINESS") && hatTipi.equals("NORMAL"))
-            {
-                return (temelFiyat)*1.5;
-            }
+        else if (vagonTipi.equals("BUSINESS") && hatTipi.equals("NORMAL")) {
+            return (temelFiyat) * 1.5;
+        }
 
-        else {return temelFiyat;}
+        else {
+            return temelFiyat;
+        }
     }
 
 }

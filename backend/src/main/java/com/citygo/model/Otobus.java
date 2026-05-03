@@ -1,4 +1,5 @@
 package com.citygo.model;
+
 import jakarta.persistence.*;
 
 /*
@@ -33,7 +34,7 @@ import jakarta.persistence.*;
  * - Ek alanlar için getter/setter metotları
  */
 
-@Entity // Veritabanını tablo ile eşleştirme 
+@Entity // Veritabanını tablo ile eşleştirme
 @DiscriminatorValue("OTOBUS") // SuperClass'da yazdığımız ayırt edici sutünun değeri
 
 public class Otobus extends UlasimAraci {
@@ -41,25 +42,46 @@ public class Otobus extends UlasimAraci {
     private boolean ikramVar;
     private double ikramBedeli;
 
+    public Otobus() {
+    }
+
+    public Otobus(Long id, String firma, String model, int kapasite, double biletFiyati, boolean ikramVar,
+            double ikramBedeli) {
+        super(id, firma, model, kapasite, biletFiyati);
+        this.ikramVar = ikramVar;
+        this.ikramBedeli = ikramBedeli;
+    }
+
     // getter/setter'lar
 
-    public void setIkramVar(boolean ikramVar) {this.ikramVar = ikramVar;}
-    public boolean getIkramVar() {return ikramVar;}
-    
-    public void setIkramBedeli(double ikramBedeli) {this.ikramBedeli = ikramBedeli;} 
-    public double getIkramBedeli () {return ikramBedeli;}
+    public void setIkramVar(boolean ikramVar) {
+        this.ikramVar = ikramVar;
+    }
+
+    public boolean getIkramVar() {
+        return ikramVar;
+    }
+
+    public void setIkramBedeli(double ikramBedeli) {
+        this.ikramBedeli = ikramBedeli;
+    }
+
+    public double getIkramBedeli() {
+        return ikramBedeli;
+    }
 
     // İkram kontrolü ile son fiyat hesaplama
-    @Override 
-    public double hesaplaToplamFiyat(double temelFiyat) 
-    {
-        if(ikramVar) 
-            {
-                return ikramBedeli + temelFiyat;
-            }
-        else {return temelFiyat;}
+    @Override
+    public double hesaplaToplamFiyat(double temelFiyat) {
+        if (ikramVar) {
+            return ikramBedeli + temelFiyat;
+        } else {
+            return temelFiyat;
+        }
     }
 
     @Override
-    public String getAracTipi() {return "OTOBUS";} // Araç tipi döndürme
+    public String getAracTipi() {
+        return "OTOBUS";
+    } // Araç tipi döndürme
 }
