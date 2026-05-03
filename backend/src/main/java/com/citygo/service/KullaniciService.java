@@ -62,7 +62,7 @@ public class KullaniciService {
 
     // sifreleri duz metin olarak degil, SHA-256 hash olarak kaydediyoruz
     // boylece veritabanini biri gorse bile sifreleri okuyamaz
-    private String sifreHashle(String sifre) {
+    public String sifreHashle(String sifre) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             byte[] hash = digest.digest(sifre.getBytes(StandardCharsets.UTF_8));

@@ -1,6 +1,7 @@
 package com.citygo.model;
 import jakarta.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
 /*
@@ -29,6 +30,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity // Veritabanını tablo ile eşleştirme 
 @Table(name = "koltuklar") // Tablo ismi atama
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Koltuk {
     
     // Her kayıt için otomatik artarak üretilen birincil anahtar

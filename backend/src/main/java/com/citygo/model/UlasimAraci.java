@@ -1,5 +1,6 @@
 package com.citygo.model;
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
 /*
@@ -51,7 +52,7 @@ import jakarta.persistence.*;
 // Tabloda arac_tipi sutunu ile ayırt eder.
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE) 
 @DiscriminatorColumn(name="arac_tipi") 
-
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public abstract class  UlasimAraci {
 
     // Her kayıt için otomatik artarak üretilen birincil anahtar

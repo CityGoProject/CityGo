@@ -1,5 +1,6 @@
 package com.citygo.model;
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.ArrayList;
@@ -37,7 +38,7 @@ import java.util.ArrayList;
 
 @Entity
 @Table(name = "seferler")
-
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Sefer {
 
     // Her kayıt için otomatik artarak üretilen birincil anahtar

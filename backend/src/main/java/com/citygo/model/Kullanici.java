@@ -3,11 +3,13 @@ package com.citygo.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "kullanicilar")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)  // Yolcu ve Admin ayni tabloda tutuluyor
 @DiscriminatorColumn(name = "rol")  // tabloda "rol" kolonu ile YOLCU/ADMIN ayrimi yapiliyor
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public abstract class Kullanici {
     // Yolcu ve Admin bu siniftan miras alacak, o yuzden abstract
 

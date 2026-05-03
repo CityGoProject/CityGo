@@ -1,10 +1,12 @@
 package com.citygo.model;
 
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.time.LocalDateTime;
 
    @Entity //veritabanında biletler tablosuna eşlenir.
    @Table(name = "biletler")
+   @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 
    public class Bilet{
 
