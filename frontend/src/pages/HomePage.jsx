@@ -79,7 +79,11 @@ function HomePage() {
         minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
-        background: 'linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)',
+        backgroundImage: 'url("/indir.png")',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        backgroundAttachment: 'fixed',
       }}
     >
 
@@ -96,7 +100,7 @@ function HomePage() {
         >
           <Stack spacing={3}>
             <Box>
-              <Typography variant="overline" color="primary" fontWeight={700}>
+              <Typography variant="overline" color="red" fontWeight={700}>
                 CityGo
               </Typography>
               <Typography variant="h3" fontWeight={800}>

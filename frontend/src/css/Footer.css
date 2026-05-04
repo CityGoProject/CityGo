@@ -1,41 +1,67 @@
 .footer {
-    background-color: #1a1a1a;
+    background-color: #0f172a;
+    /* Daha derin, premium bir koyu ton */
     color: #e2e8f0;
-    padding: 1rem 1rem;
-    /* Padding azaltıldı */
+    padding: 0.5rem 0.5rem 0.25rem 0.5rem;
     width: 100%;
-    /* margin-top: auto; kaldırıldı çünkü artık flex layout ile alta yapıştırılıyor */
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .footer-content {
-    max-width: 1200px;
-    margin: 0 auto;
+    width: 100%;
+    margin-left: 15px;
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
+    /* Alt satıra geçebilmesi için şart */
+    justify-content: space-between;
+    /* Logo solda, Takım sağda */
     align-items: center;
     gap: 1rem;
-    /* Boşluk azaltıldı */
+}
+
+.footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    /* width: 40px; kaldırıldı, içeriğe göre genişlemeli */
+}
+
+.footer-logo-image {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 8px rgba(205, 127, 50, 0.3));
+}
+
+.footer-title {
+    font-size: 1rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 0;
 }
 
 .footer-team {
     display: flex;
+    margin-right: 15px;
     flex-wrap: wrap;
-    justify-content: center;
-    gap: 1.2rem;
+    justify-content: flex-end;
+    /* Sağ tarafa yasla */
+    gap: 1rem;
 }
 
 .team-member {
-    font-size: 0.85rem;
-    /* Font küçültüldü */
+    font-size: 0.9rem;
     font-weight: 500;
     color: #94a3b8;
-    transition: color 0.3s ease;
-    cursor: default;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
 }
 
 .team-member:hover {
-    color: #3b82f6;
+    color: rgb(205, 127, 50);
 }
 
 .team-member.gold {
@@ -48,11 +74,10 @@
 }
 
 .footer-bottom {
-    font-size: 0.75rem;
-    /* Font küçültüldü */
-    color: #64748b;
+    font-size: 0.8rem;
+    color: #475569;
     border-top: 1px solid rgba(255, 255, 255, 0.05);
-    padding-top: 1rem;
     width: 100%;
+    /* Bu sayede tek başına alt satıra iner */
     text-align: center;
 }
