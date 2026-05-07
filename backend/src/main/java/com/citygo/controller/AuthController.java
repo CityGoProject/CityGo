@@ -1,8 +1,11 @@
 package com.citygo.controller;
 
-import com.citygo.model.Kullanici;
+import com.citygo.dto.AuthResponse;
+import com.citygo.dto.LoginRequest;
+import com.citygo.dto.RegisterRequest;
 import com.citygo.model.Yolcu;
 import com.citygo.service.KullaniciService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,32 +21,24 @@ public class AuthController {
     private KullaniciService kullaniciService;
 
     @PostMapping("/register")
-    public ResponseEntity<?> kayitOl(@RequestBody Map<String, String> body) {
-        try {
-            Yolcu yolcu = kullaniciService.kayitOl(
-                    body.get("ad"),
-                    body.get("soyad"),
-                    body.get("email"),
-                    body.get("sifre"),
-                    body.get("telefon"),
-                    body.get("tcNo"));
-            return ResponseEntity.status(HttpStatus.CREATED).body(yolcu);
-        } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(Map.of("hata", e.getMessage()));
-        }
+    public ResponseEntity<AuthResponse> kayitOl(@Valid @RequestBody RegisterRequest request) {
+        // Duzeltme: Map yerine DTO + @Valid kullaniyoruz ve sifre icermeyen
+        // AuthResponse donuyoruz.
+        Yolcu yolcu = kullaniciService.kayitOl(
+                request.ad(),
+                request.soyad(),
+                request.email(),
+                request.sifre(),
+                request.telefon(),
+                request.tcNo());
+        return ResponseEntity.status(HttpStatus.CREATED).body(AuthResponse.from(yolcu));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> girisYap(@RequestBody Map<String, String> body) {
-        try {
-            Kullanici kullanici = kullaniciService.girisYap(
-                    body.get("email"),
-                    body.get("sifre"));
-            return ResponseEntity.ok(kullanici);
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body(Map.of("hata", e.getMessage()));
-        }
+    public ResponseEntity<AuthResponse> girisYap(@Valid @RequestBody LoginRequest request) {
+        return ResponseEntity.ok(AuthResponse.from(kullaniciService.girisYap(
+                request.email(),
+                request.sifre())));
     }
 
     @PostMapping("/logout")

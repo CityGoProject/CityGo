@@ -79,15 +79,16 @@ public class Tren extends UlasimAraci {
     // VagonTipi ve HatTipi Kontrolleriyle son fiyat hesaplama
     @Override
     public double hesaplaToplamFiyat(double temelFiyat) {
-        if (vagonTipi.equals("BUSINESS") && hatTipi.equals("YHT")) {
+        // Duzeltme: Null degerlerde fiyat hesaplama NullPointerException firlatmasin.
+        if ("BUSINESS".equals(vagonTipi) && "YHT".equals(hatTipi)) {
             return (temelFiyat * 1.5) * 1.2;
         }
 
-        else if (vagonTipi.equals("EKONOMI") && hatTipi.equals("YHT")) {
+        else if ("EKONOMI".equals(vagonTipi) && "YHT".equals(hatTipi)) {
             return (temelFiyat) * 1.2;
         }
 
-        else if (vagonTipi.equals("BUSINESS") && hatTipi.equals("NORMAL")) {
+        else if ("BUSINESS".equals(vagonTipi) && "NORMAL".equals(hatTipi)) {
             return (temelFiyat) * 1.5;
         }
 

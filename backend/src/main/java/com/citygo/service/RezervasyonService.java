@@ -78,6 +78,12 @@ public class RezervasyonService implements IRezervasyon {
         // Bilet Kontrolü
         Bilet bilet = biletRepository.findById(biletId).orElseThrow(() -> new BiletBulunamadiException("Bilet Bulunamadi!"));
 
+        if (bilet.getDurum() != BiletDurumu.AKTIF) {
+            // Duzeltme: Iptal edilmis/kullanilmis bilet tekrar iptal edilip koltugu
+            // baska aktif biletten koparamasin.
+            throw new IllegalArgumentException("Sadece aktif biletler iptal edilebilir.");
+        }
+
         // Bilet Durumunu IPTAL_EDILDI Yap
         bilet.setDurum(BiletDurumu.IPTAL_EDILDI);
 

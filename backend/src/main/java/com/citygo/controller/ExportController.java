@@ -1,5 +1,6 @@
 package com.citygo.controller;
 
+import com.citygo.service.KullaniciService;
 import com.citygo.service.ExportService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -48,13 +49,17 @@ import org.springframework.web.bind.annotation.*;
 public class ExportController {
 
     private final ExportService exportService;
+    private final KullaniciService kullaniciService;
 
-    public ExportController(ExportService exportService) {
+    public ExportController(ExportService exportService, KullaniciService kullaniciService) {
         this.exportService = exportService;
+        this.kullaniciService = kullaniciService;
     }
 
     @GetMapping("/biletler/json")
-    public ResponseEntity<byte[]> exportJson() {
+    public ResponseEntity<byte[]> exportJson(@RequestHeader("X-User-Id") Long adminId) {
+        // Duzeltme: Tum bilet verisini indiren endpoint sadece admin tarafindan kullanilsin.
+        kullaniciService.adminKullaniciBul(adminId);
         byte[] jsonData = exportService.exportJSON();
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_JSON)
@@ -63,7 +68,8 @@ public class ExportController {
     }
 
     @GetMapping("/biletler/csv")
-    public ResponseEntity<byte[]> exportCsv() {
+    public ResponseEntity<byte[]> exportCsv(@RequestHeader("X-User-Id") Long adminId) {
+        kullaniciService.adminKullaniciBul(adminId);
         byte[] csvData = exportService.exportCSV();
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType("text/csv"))

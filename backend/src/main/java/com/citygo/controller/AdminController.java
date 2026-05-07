@@ -1,5 +1,6 @@
 package com.citygo.controller;
 
+import com.citygo.dto.TripRequest;
 import com.citygo.model.Sefer;
 import com.citygo.model.Bilet;
 import com.citygo.model.Kullanici;
@@ -10,15 +11,14 @@ import com.citygo.repository.SeferRepository;
 import com.citygo.repository.UlasimAraciRepository;
 import com.citygo.repository.KullaniciRepository;
 import com.citygo.service.KullaniciService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
-import java.util.Optional;
 
 /*
  * =============================================================
@@ -81,12 +81,6 @@ import java.util.Optional;
 @CrossOrigin(origins = "http://localhost:5173")
 public class AdminController {
 
-    private static final String KEY_ARAC_ID = "aracId";
-    private static final String KEY_KALKIS_NOKTASI = "kalkisNoktasi";
-    private static final String KEY_VARIS_NOKTASI = "varisNoktasi";
-    private static final String KEY_KALKIS_ZAMANI = "kalkisZamani";
-    private static final String KEY_VARIS_ZAMANI = "varisZamani";
-
     private final KullaniciService kullaniciService;
     private final BiletRepository biletRepository;
     private final SeferRepository seferRepository;
@@ -107,119 +101,129 @@ public class AdminController {
 
     // Tüm seferleri listele
     @GetMapping("/seferler")
-    public List<Sefer> tumSeferleriGetir() {
+    public List<Sefer> tumSeferleriGetir(@RequestHeader("X-User-Id") Long adminId) {
+        requireAdmin(adminId);
         return seferRepository.findAll();
+    }
+
+    @GetMapping("/araclar")
+    public List<UlasimAraci> araclariListele(@RequestHeader("X-User-Id") Long adminId) {
+        // Duzeltme: Frontend artik araci ID ezberletmek yerine listeden sectirebilir.
+        requireAdmin(adminId);
+        return ulasimAraciRepository.findAll();
     }
 
     // Yeni sefer oluştur + koltukları otomatik oluştur
     @PostMapping("/seferler")
-    public ResponseEntity<Object> seferEkle(@RequestBody Map<String, String> body) {
-        try {
-            Long aracId = Long.parseLong(body.get(KEY_ARAC_ID));
-            String kalkisNoktasi = body.get(KEY_KALKIS_NOKTASI);
-            String varisNoktasi = body.get(KEY_VARIS_NOKTASI);
-            String kalkisZamaniStr = body.get(KEY_KALKIS_ZAMANI);
-            String varisZamaniStr = body.get(KEY_VARIS_ZAMANI);
+    public ResponseEntity<Sefer> seferEkle(@RequestHeader("X-User-Id") Long adminId,
+                                           @Valid @RequestBody TripRequest request) {
+        requireAdmin(adminId);
+        validateTripRequest(request);
 
-            Optional<UlasimAraci> aracOpt = ulasimAraciRepository.findById(aracId);
-            if (aracOpt.isPresent()) {
-                UlasimAraci arac = aracOpt.get();
-                Sefer sefer = new Sefer();
-                sefer.setArac(arac);
-                sefer.setKalkisNoktasi(kalkisNoktasi);
-                sefer.setVarisNoktasi(varisNoktasi);
-                sefer.setKalkisZamani(LocalDateTime.parse(kalkisZamaniStr));
-                sefer.setVarisZamani(LocalDateTime.parse(varisZamaniStr));
+        UlasimAraci arac = ulasimAraciRepository.findById(request.aracId())
+                .orElseThrow(() -> new IllegalArgumentException("Ulaşım aracı bulunamadı"));
 
-                // Koltukları araç kapasitesine göre üret
-                sefer.koltuklariOlustur();
+        Sefer sefer = new Sefer();
+        applyTripRequest(sefer, request, arac);
+        sefer.koltuklariOlustur();
 
-                Sefer kaydedilenSefer = seferRepository.save(sefer);
-                return ResponseEntity.status(HttpStatus.CREATED).body(kaydedilenSefer);
-            } else {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("hata", "Ulaşım aracı bulunamadı"));
-            }
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(Map.of("hata", "Sefer eklenirken hata: " + e.getMessage()));
-        }
+        Sefer kaydedilenSefer = seferRepository.save(sefer);
+        return ResponseEntity.status(HttpStatus.CREATED).body(kaydedilenSefer);
     }
 
     // Mevcut seferi güncelle
     @PutMapping("/seferler/{id}")
-    public ResponseEntity<Object> seferGuncelle(@PathVariable Long id, @RequestBody Map<String, String> body) {
-        try {
-            Optional<Sefer> seferOpt = seferRepository.findById(id);
-            if (seferOpt.isEmpty()) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("hata", "Sefer bulunamadı"));
-            }
-            Sefer sefer = seferOpt.get();
+    public ResponseEntity<Sefer> seferGuncelle(@RequestHeader("X-User-Id") Long adminId,
+                                               @PathVariable Long id,
+                                               @Valid @RequestBody TripRequest request) {
+        requireAdmin(adminId);
+        validateTripRequest(request);
 
-            if (body.containsKey(KEY_ARAC_ID)) {
-                Long aracId = Long.parseLong(body.get(KEY_ARAC_ID));
-                Optional<UlasimAraci> aracOpt = ulasimAraciRepository.findById(aracId);
-                aracOpt.ifPresent(sefer::setArac);
-            }
+        Sefer sefer = seferRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Sefer bulunamadı"));
+        UlasimAraci yeniArac = ulasimAraciRepository.findById(request.aracId())
+                .orElseThrow(() -> new IllegalArgumentException("Ulaşım aracı bulunamadı"));
 
-            if (body.containsKey(KEY_KALKIS_NOKTASI))
-                sefer.setKalkisNoktasi(body.get(KEY_KALKIS_NOKTASI));
-            if (body.containsKey(KEY_VARIS_NOKTASI))
-                sefer.setVarisNoktasi(body.get(KEY_VARIS_NOKTASI));
-            if (body.containsKey(KEY_KALKIS_ZAMANI))
-                sefer.setKalkisZamani(LocalDateTime.parse(body.get(KEY_KALKIS_ZAMANI)));
-            if (body.containsKey(KEY_VARIS_ZAMANI))
-                sefer.setVarisZamani(LocalDateTime.parse(body.get(KEY_VARIS_ZAMANI)));
-
-            Sefer guncellenen = seferRepository.save(sefer);
-            return ResponseEntity.ok(guncellenen);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(Map.of("hata", "Güncelleme hatası: " + e.getMessage()));
+        boolean aracDegisiyor = sefer.getArac() == null || !sefer.getArac().getId().equals(yeniArac.getId());
+        if (aracDegisiyor && !biletRepository.findBySefer_Id(id).isEmpty()) {
+            // Duzeltme: Biletli seferin araci degisirse koltuk/bilet iliskileri bozulur.
+            throw new IllegalArgumentException("Bileti olan seferin aracı değiştirilemez.");
         }
+
+        applyTripRequest(sefer, request, yeniArac);
+        if (aracDegisiyor) {
+            sefer.koltuklariOlustur();
+        }
+
+        return ResponseEntity.ok(seferRepository.save(sefer));
     }
 
     // Seferi sil
     @DeleteMapping("/seferler/{id}")
-    public ResponseEntity<Object> seferSil(@PathVariable Long id) {
-        try {
-            if (!seferRepository.existsById(id)) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("hata", "Sefer bulunamadı"));
-            }
-            seferRepository.deleteById(id);
-            return ResponseEntity.ok(Map.of("mesaj", "Sefer başarıyla silindi"));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(Map.of("hata", "Silme hatası"));
+    public ResponseEntity<Object> seferSil(@RequestHeader("X-User-Id") Long adminId, @PathVariable Long id) {
+        requireAdmin(adminId);
+        if (!seferRepository.existsById(id)) {
+            throw new IllegalArgumentException("Sefer bulunamadı");
         }
+
+        boolean aktifBiletVar = biletRepository.findBySefer_Id(id).stream()
+                .anyMatch(bilet -> bilet.getDurum() == BiletDurumu.AKTIF);
+        if (aktifBiletVar) {
+            // Duzeltme: Aktif bileti olan sefer silinirse kullanici bileti anlamsiz kalir.
+            throw new IllegalArgumentException("Aktif bileti olan sefer silinemez.");
+        }
+
+        seferRepository.deleteById(id);
+        return ResponseEntity.ok(Map.of("mesaj", "Sefer başarıyla silindi"));
     }
 
     // Tüm kullanıcıları listele
     @GetMapping("/kullanicilar")
-    public List<Kullanici> kullanicilariListele() {
+    public List<Kullanici> kullanicilariListele(@RequestHeader("X-User-Id") Long adminId) {
+        requireAdmin(adminId);
         return kullaniciService.tumKullanicilariGetir();
     }
 
     // Tüm biletleri listele
     @GetMapping("/biletler")
-    public List<Bilet> biletleriListele() {
+    public List<Bilet> biletleriListele(@RequestHeader("X-User-Id") Long adminId) {
+        requireAdmin(adminId);
         return biletRepository.findAll();
     }
 
     // Dashboard istatistikleri
     @GetMapping("/istatistikler")
-    public ResponseEntity<Object> istatistikleriGetir() {
-        try {
-            Map<String, Object> stats = new HashMap<>();
-            stats.put("toplamSefer", seferRepository.count());
-            stats.put("toplamBilet", biletRepository.count());
-            stats.put("aktifBilet", biletRepository.countByDurum(BiletDurumu.AKTIF));
-            stats.put("iptalBilet", biletRepository.countByDurum(BiletDurumu.IPTAL_EDILDI));
-            stats.put("toplamKullanici", kullaniciRepository.count());
+    public ResponseEntity<Object> istatistikleriGetir(@RequestHeader("X-User-Id") Long adminId) {
+        requireAdmin(adminId);
+        Map<String, Object> stats = new HashMap<>();
+        stats.put("toplamSefer", seferRepository.count());
+        stats.put("toplamBilet", biletRepository.count());
+        stats.put("aktifBilet", biletRepository.countByDurum(BiletDurumu.AKTIF));
+        stats.put("iptalBilet", biletRepository.countByDurum(BiletDurumu.IPTAL_EDILDI));
+        stats.put("toplamKullanici", kullaniciRepository.count());
 
-            return ResponseEntity.ok(stats);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(Map.of("hata", "İstatistikler alınamadı"));
+        return ResponseEntity.ok(stats);
+    }
+
+    private void requireAdmin(Long adminId) {
+        kullaniciService.adminKullaniciBul(adminId);
+    }
+
+    private void validateTripRequest(TripRequest request) {
+        if (request.kalkisNoktasi().equalsIgnoreCase(request.varisNoktasi())) {
+            throw new IllegalArgumentException("Kalkış ve varış noktası aynı olamaz.");
         }
+
+        if (!request.varisZamani().isAfter(request.kalkisZamani())) {
+            throw new IllegalArgumentException("Varış zamanı kalkış zamanından sonra olmalıdır.");
+        }
+    }
+
+    private void applyTripRequest(Sefer sefer, TripRequest request, UlasimAraci arac) {
+        sefer.setArac(arac);
+        sefer.setKalkisNoktasi(request.kalkisNoktasi());
+        sefer.setVarisNoktasi(request.varisNoktasi());
+        sefer.setKalkisZamani(request.kalkisZamani());
+        sefer.setVarisZamani(request.varisZamani());
     }
 }

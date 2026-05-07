@@ -1,6 +1,7 @@
 package com.citygo.model;
 
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -67,7 +68,8 @@ public class Sefer {
 
     // mappedBy = ilişkiyi Koltuk.java'daki "sefer" alanı yönetiyor
     // cascade = ALL → sefere ne olursa koltuk'lara da yansı
-    @OneToMany(mappedBy = "sefer", cascade = CascadeType.ALL)
+    @JsonIgnore // Duzeltme: Sefer listelerinde binlerce koltuk JSON'a eklenip cevabi sisirmesin.
+    @OneToMany(mappedBy = "sefer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Koltuk> koltuklar;
 
     public Sefer() {

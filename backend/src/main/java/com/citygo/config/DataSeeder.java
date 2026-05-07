@@ -90,20 +90,41 @@ public class DataSeeder implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        log.info("Veritabanı temizleniyor...");
-        biletRepository.deleteAll();
-        koltukRepository.deleteAll();
-        seferRepository.deleteAll();
-        araciRepository.deleteAll();
-        kullaniciRepository.deleteAll();
-        log.info("Veritabanı temizlendi.");
+        // Duzeltme: Uygulama her acildiginda tum veriyi silmek biletleri ve
+        // kullanici kayitlarini yok ediyordu. Artik seed yalnizca eksikse eklenir.
+        log.info("Seed kontrolü başlıyor...");
+        seedKullanicilarEksikse();
+        seedUlasimAraclariEksikse();
+        seedSeferlerEksikse();
+        log.info("Seed kontrolü tamamlandı.");
+    }
 
-        log.info("Seed işlemi başlıyor...");
+    private void seedKullanicilarEksikse() {
+        if (kullaniciRepository.count() > 0) {
+            log.info("Kullanıcı verisi mevcut, kullanıcı seed atlandı.");
+            return;
+        }
+
         seedAdminKullanici();
         seedYolcuKullanici();
+    }
+
+    private void seedUlasimAraclariEksikse() {
+        if (araciRepository.count() > 0) {
+            log.info("Ulaşım aracı verisi mevcut, araç seed atlandı.");
+            return;
+        }
+
         seedUlasimAraclari();
+    }
+
+    private void seedSeferlerEksikse() {
+        if (seferRepository.count() > 0) {
+            log.info("Sefer verisi mevcut, sefer seed atlandı.");
+            return;
+        }
+
         seedSeferler();
-        log.info("Seed Başarı ile Tamamlandı!");
     }
 
     private void seedAdminKullanici() {

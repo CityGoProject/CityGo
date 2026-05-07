@@ -3,6 +3,7 @@ package com.citygo.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -29,6 +30,7 @@ public abstract class Kullanici {
     private String email;
 
     @NotBlank(message = "Şifre boş olamaz")
+    @JsonIgnore // Duzeltme: Kullanici entity'si donse bile sifre hash'i JSON'a sizmasin.
     private String sifre;
 
     private String telefon; // zorunlu degil, opsiyonel

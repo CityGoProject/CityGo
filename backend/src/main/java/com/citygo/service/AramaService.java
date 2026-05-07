@@ -64,12 +64,14 @@ public class AramaService implements IAranabilir {
     // Sadece güzergaha göre arama
     @Override
     public List<Sefer> ara(String kalkis, String varis) {
+        validateRoute(kalkis, varis);
         return seferRepository.findByKalkisNoktasiAndVarisNoktasi(kalkis, varis);
     }
 
     // Güzergah ve tarihe göre arama
     @Override
     public List<Sefer> ara(String kalkis, String varis, LocalDate tarih) {
+        validateRoute(kalkis, varis);
         // Duzeltme: Kullanici saat secmiyor, bu yuzden tum gunu kapsayan aralikla ariyoruz.
         LocalDateTime baslangic = tarih.atStartOfDay();
         LocalDateTime bitis = tarih.atTime(LocalTime.MAX);
@@ -103,5 +105,12 @@ public class AramaService implements IAranabilir {
     // Tüm seferleri listeler
     public List<Sefer> tumSeferleriGetir() {
         return seferRepository.findAll();
+    }
+
+    private void validateRoute(String kalkis, String varis) {
+        if (kalkis.equalsIgnoreCase(varis)) {
+            // Duzeltme: Ayni sehir aramalari anlamsiz sonuc uretmesin.
+            throw new IllegalArgumentException("Kalkış ve varış noktası aynı olamaz.");
+        }
     }
 }

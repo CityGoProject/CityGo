@@ -1,7 +1,9 @@
 package com.citygo.controller;
 
+import com.citygo.dto.CreateTicketRequest;
 import com.citygo.model.Bilet;
 import com.citygo.service.RezervasyonService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,13 +27,10 @@ public class BiletController {
 
 
     @PostMapping // POST /api/biletler - Bilet satın alma
-    public ResponseEntity<Bilet> biletAl(@RequestBody Map<String, Object> request) {
+    public ResponseEntity<Bilet> biletAl(@Valid @RequestBody CreateTicketRequest request) {
 
-        Long yolcuId = ((Number) request.get("yolcuId")).longValue();
-        Long seferId = ((Number) request.get("seferId")).longValue();
-        Integer koltukNo = (Integer) request.get("koltukNo");
-
-        Bilet yeniBilet = rezervasyonService.rezervasyonYap(yolcuId, seferId, koltukNo);
+        // Duzeltme: Map cast hatalari yerine DTO + @Valid ile kontrollu istek aliyoruz.
+        Bilet yeniBilet = rezervasyonService.rezervasyonYap(request.yolcuId(), request.seferId(), request.koltukNo());
 
         return new ResponseEntity<>(yeniBilet, HttpStatus.CREATED);
     }

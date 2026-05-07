@@ -2,8 +2,11 @@ package com.citygo.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
@@ -11,6 +14,8 @@ import java.util.Map;
 
 @RestControllerAdvice // tüm controllerdeki hataları dinleyen merkez, bu hatayı yakalayacak metodu arar.
 public class GlobalExceptionHandler {
+
+    private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     //Bulunamadı Hataları (404 not found)
     @ExceptionHandler({
@@ -34,10 +39,27 @@ public class GlobalExceptionHandler {
         return createResponse("Hatali İstek", ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(KimlikDogrulamaException.class)
+    public ResponseEntity<Object> handleAuthExceptions(KimlikDogrulamaException ex) {
+        return createResponse("Yetkisiz", ex.getMessage(), HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Object> handleValidationExceptions(MethodArgumentNotValidException ex) {
+        // Duzeltme: DTO validasyon hatalari 500 yerine okunabilir 400 cevabi donsun.
+        String mesaj = ex.getBindingResult().getFieldErrors().stream()
+                .findFirst()
+                .map(error -> error.getDefaultMessage())
+                .orElse("Geçersiz istek");
+        return createResponse("Hatali İstek", mesaj, HttpStatus.BAD_REQUEST);
+    }
+
 
     //Genel Beklenmedik Hatalar (500 internal server error)
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Object> handleGeneralExceptions(Exception ex) {
+        // Duzeltme: Kullaniciya sade hata donerken detaylari logluyoruz.
+        log.error("Beklenmeyen sunucu hatasi", ex);
         return createResponse("Sunucu Hatasi", " Beklenmeyen bir hata olustu.", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 

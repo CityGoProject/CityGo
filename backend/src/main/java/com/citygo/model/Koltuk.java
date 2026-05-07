@@ -38,6 +38,9 @@ public class Koltuk {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Version
+    private Long version; // Duzeltme: Es zamanli rezervasyonlarda optimistic locking devreye girsin.
+
     @Column(nullable = false)
     private int koltukNo;
 
@@ -74,6 +77,14 @@ public class Koltuk {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
     }
 
     public int getKoltukNo() {
