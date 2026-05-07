@@ -85,4 +85,10 @@ class AramaServiceTest {
 
         assertThrows(SeferBulunamadiException.class, () -> aramaService.seferDetay(99L));
     }
+
+    @Test
+    void ayniKalkisVeVarisIcinAramaReddedilir() {
+        // Duzeltme: Kullanici ayni sehir aradiginda repository'e anlamsiz sorgu gitmesin.
+        assertThrows(IllegalArgumentException.class, () -> aramaService.ara("Ankara", "ankara"));
+    }
 }

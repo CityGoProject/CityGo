@@ -2,6 +2,9 @@ package com.citygo.service;
 
 import com.citygo.exception.KoltukBulunamadiException;
 import com.citygo.model.Admin;
+import com.citygo.model.Bilet;
+import com.citygo.model.BiletDurumu;
+import com.citygo.model.Koltuk;
 import com.citygo.model.Sefer;
 import com.citygo.model.Yolcu;
 import com.citygo.repository.BiletRepository;
@@ -17,6 +20,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -56,5 +61,20 @@ class RezervasyonServiceTest {
         when(koltukRepository.findBySefer_IdAndKoltukNo(2L, 3)).thenReturn(Optional.empty());
 
         assertThrows(KoltukBulunamadiException.class, () -> rezervasyonService.rezervasyonYap(1L, 2L, 3));
+    }
+
+    @Test
+    void iptalEdilmisBiletTekrarIptalEdilemez() {
+        Bilet bilet = new Bilet();
+        Koltuk koltuk = new Koltuk();
+        bilet.setKoltuk(koltuk);
+        bilet.setDurum(BiletDurumu.IPTAL_EDILDI);
+
+        when(biletRepository.findById(10L)).thenReturn(Optional.of(bilet));
+
+        // Duzeltme: Tekrar iptal koltugu yanlislikla bosa cikarmamali.
+        assertThrows(IllegalArgumentException.class, () -> rezervasyonService.rezervasyonIptal(10L));
+        verify(koltukRepository, never()).save(koltuk);
+        verify(biletRepository, never()).save(bilet);
     }
 }
