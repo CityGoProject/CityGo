@@ -21,6 +21,7 @@ public record RegisterRequest(
         @NotBlank(message = "Telefon boş olamaz")
         String telefon,
 
+        @NotBlank(message = "TC kimlik no boş olamaz")
         @Pattern(regexp = "\\d{11}", message = "TC kimlik no 11 haneli olmalıdır")
         String tcNo
 ) {

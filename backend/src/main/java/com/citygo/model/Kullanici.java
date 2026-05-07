@@ -33,6 +33,7 @@ public abstract class Kullanici {
     @JsonIgnore // Duzeltme: Kullanici entity'si donse bile sifre hash'i JSON'a sizmasin.
     private String sifre;
 
+    @Column(unique = true) // Duzeltme: iki kullanici ayni telefon numarasi ile kayit olamaz.
     private String telefon; // zorunlu degil, opsiyonel
 
     public Kullanici(Long id, String ad, String soyad, String email, String sifre, String telefon) {

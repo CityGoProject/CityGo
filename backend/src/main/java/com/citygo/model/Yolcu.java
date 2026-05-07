@@ -10,6 +10,7 @@ import java.util.List;
 
 public class Yolcu extends Kullanici {
 
+    @Column(unique = true) // Duzeltme: iki yolcu ayni TC kimlik numarasi ile kayit olamaz.
     private String tcNo;
 
     @OneToMany(mappedBy = "yolcu", cascade = CascadeType.ALL)

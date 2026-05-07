@@ -39,7 +39,9 @@ const RegisterPage = () => {
         return;
       }
 
-      setError(err.response?.data?.hata || 'Kayıt sırasında bir hata oluştu. Bilgileri kontrol edin.');
+      // Duzeltme: Backend artik telefon/TC gibi alanlar icin detayli mesaj donuyor;
+      // kullaniciya genel baslik yerine asil sebebi gosteriyoruz.
+      setError(err.response?.data?.mesaj || err.response?.data?.hata || 'Kayıt sırasında bir hata oluştu. Bilgileri kontrol edin.');
     }
   };
 

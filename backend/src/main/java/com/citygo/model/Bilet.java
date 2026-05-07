@@ -22,7 +22,10 @@ public class Bilet {
     @JoinColumn(name = "sefer_id", nullable = false)
     private Sefer sefer;
 
-    @OneToOne(fetch = FetchType.LAZY) // her bilet tek bir spesifik koltuğa atanır.
+    // Duzeltme: Iptal edilen bilet gecmis kayit olarak ayni koltugu tutmaya devam eder.
+    // Bu yuzden koltuk iliskisi OneToOne degil ManyToOne olmali; aktif doluluk
+    // kontrolu Koltuk.dolu ve RezervasyonService tarafinda yapiliyor.
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "koltuk_id", nullable = false)
     private Koltuk koltuk;
 
@@ -131,7 +134,7 @@ public class Bilet {
  * - id: Long → @Id, @GeneratedValue
  * - yolcu: Yolcu → @ManyToOne — Bilet sahibi yolcu
  * - sefer: Sefer → @ManyToOne — Hangi sefer
- * - koltuk: Koltuk → @OneToOne — Hangi koltuk
+ * - koltuk: Koltuk → @ManyToOne — Hangi koltuk
  * - odenenTutar: double → Ödenen toplam tutar (hesaplaToplamFiyat ile)
  * - olusturmaTarihi: LocalDate → Bilet oluşturulma tarihi
  * - durum: BiletDurumu → @Enumerated(EnumType.STRING)

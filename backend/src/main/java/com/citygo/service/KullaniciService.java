@@ -29,6 +29,14 @@ public class KullaniciService {
         if (kullaniciRepository.existsByEmail(email)) {
             throw new IllegalArgumentException("Bu email adresi zaten kayıtlı: " + email);
         }
+        if (kullaniciRepository.existsByTelefon(telefon)) {
+            // Duzeltme: iki farkli kullanici ayni telefon ile kayit olamamali.
+            throw new IllegalArgumentException("Bu telefon numarası zaten kayıtlı: " + telefon);
+        }
+        if (kullaniciRepository.existsByTcNo(tcNo)) {
+            // Duzeltme: iki yolcu ayni TC kimlik numarasi ile kayit olamamali.
+            throw new IllegalArgumentException("Bu TC kimlik numarası zaten kayıtlı.");
+        }
 
         Yolcu yolcu = new Yolcu();
         yolcu.setAd(ad);
