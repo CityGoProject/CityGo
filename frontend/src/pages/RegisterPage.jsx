@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, TextField, Button, Typography, Alert, Paper, Link as MuiLink, Grid } from '@mui/material';
+import { Box, TextField, Button, Typography, Alert, Paper, Link as MuiLink } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import { loginUser, registerUser, setStoredUser } from '../services/auth';
 
@@ -67,9 +67,19 @@ const RegisterPage = () => {
 
         {error && <Alert severity="error" sx={{ mb: 3 }}>{error}</Alert>}
 
-        <form onSubmit={handleRegister} sx={{ padding: 2 }}>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
+        <Box component="form" onSubmit={handleRegister}>
+          <Box
+            sx={{
+              // Duzeltme: MUI Grid surum farkindan dolayi inputlar sola dayaniyordu.
+              // CSS grid ile form alanlarini kartin icinde merkezli ve tutarli hizaliyoruz.
+              display: 'grid',
+              gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' },
+              gap: 2,
+              justifyItems: 'center',
+              width: '100%',
+            }}
+          >
+            <Box sx={{ width: '100%' }}>
               <TextField
                 fullWidth
                 label="Ad"
@@ -78,8 +88,8 @@ const RegisterPage = () => {
                 value={formData.ad}
                 onChange={handleChange}
               />
-            </Grid>
-            <Grid item xs={12} sm={6}>
+            </Box>
+            <Box sx={{ width: '100%' }}>
               <TextField
                 fullWidth
                 label="Soyad"
@@ -88,8 +98,8 @@ const RegisterPage = () => {
                 value={formData.soyad}
                 onChange={handleChange}
               />
-            </Grid>
-            <Grid item xs={12}>
+            </Box>
+            <Box sx={{ width: '100%', gridColumn: '1 / -1' }}>
               <TextField
                 fullWidth
                 label="E-posta"
@@ -99,8 +109,8 @@ const RegisterPage = () => {
                 value={formData.email}
                 onChange={handleChange}
               />
-            </Grid>
-            <Grid item xs={12}>
+            </Box>
+            <Box sx={{ width: '100%', gridColumn: '1 / -1' }}>
               <TextField
                 fullWidth
                 label="Şifre"
@@ -110,8 +120,8 @@ const RegisterPage = () => {
                 value={formData.sifre}
                 onChange={handleChange}
               />
-            </Grid>
-            <Grid item xs={12} sm={6}>
+            </Box>
+            <Box sx={{ width: '100%' }}>
               <TextField
                 fullWidth
                 label="Telefon"
@@ -120,8 +130,8 @@ const RegisterPage = () => {
                 value={formData.telefon}
                 onChange={handleChange}
               />
-            </Grid>
-            <Grid item xs={12} sm={6}>
+            </Box>
+            <Box sx={{ width: '100%' }}>
               <TextField
                 fullWidth
                 label="TC Kimlik No"
@@ -130,8 +140,8 @@ const RegisterPage = () => {
                 value={formData.tcNo}
                 onChange={handleChange}
               />
-            </Grid>
-          </Grid>
+            </Box>
+          </Box>
 
           <Button
             type="submit"
@@ -162,7 +172,7 @@ const RegisterPage = () => {
               Giriş Yap
             </MuiLink>
           </Typography>
-        </form>
+        </Box>
       </Paper>
     </Box >
   );
