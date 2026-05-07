@@ -324,7 +324,7 @@ CityGo/
 
 | Görev | Sorumlu | Öncelik |
 |-------|---------|---------|
-| Başlangıç verileri (seed data) kodlaması | Mustafa Mert | Yüksek |
+| Seed data'nın veri silmeden çalışması ve demo verilerinin korunması | Mustafa Mert | Tamamlandı |
 | UI son rötuşlar ve responsive tasarım iyileştirmeleri | Ömer Faruk | Orta |
 | Proje raporu yazımı | Tüm Ekip | Yüksek |
 | Video sunum kaydı (10–15 dk) | Tüm Ekip | Yüksek |

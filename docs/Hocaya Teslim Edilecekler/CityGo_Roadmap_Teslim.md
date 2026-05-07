@@ -69,10 +69,10 @@ Projenin temel amacı, Nesne Yönelimli Programlama (OOP) prensiplerinin tamamı
 | Backend Framework | Spring Boot | 3.x | REST API geliştirme, bağımlılık yönetimi | Endüstri standardı Java framework'ü; otomatik konfigürasyon sayesinde hızlı geliştirme imkânı; gömülü sunucu ile tek komutla çalıştırılabilirlik |
 | ORM | Spring Data JPA (Hibernate) | - | Nesne-ilişkisel eşleme, veritabanı işlemleri | SQL yazmadan Java nesneleri üzerinden veritabanı işlemleri yapabilme; Spring Boot ile sorunsuz entegrasyon |
 | Veritabanı | H2 Database (Dosya Tabanlı) | 2.x | Gömülü ilişkisel veritabanı, kurulum gerektirmez | Harici kurulum gerektirmemesi sayesinde projeyi inceleyen kişinin tek komutla çalıştırabilmesi; Spring Boot ile birinci sınıf entegrasyon; dosya tabanlı modda verilerin kalıcı saklanması |
-| Frontend | React | 18.x | Kullanıcı arayüzü geliştirme | Bileşen tabanlı mimarisi sayesinde modüler ve yeniden kullanılabilir UI geliştirme; geniş ekosistem ve topluluk desteği |
-| UI Kütüphanesi | MUI (Material UI) | 5.x | Hazır, profesyonel UI bileşenleri | Google'ın Material Design standartlarına uygun hazır bileşenler sunması; tutarlı ve profesyonel görünüm sağlaması; geliştirme süresini kısaltması |
+| Frontend | React | 19.x | Kullanıcı arayüzü geliştirme | Bileşen tabanlı mimarisi sayesinde modüler ve yeniden kullanılabilir UI geliştirme; geniş ekosistem ve topluluk desteği |
+| UI Kütüphanesi | MUI (Material UI) | 9.x | Hazır, profesyonel UI bileşenleri | Google'ın Material Design standartlarına uygun hazır bileşenler sunması; tutarlı ve profesyonel görünüm sağlaması; geliştirme süresini kısaltması |
 | Build Aracı | Maven | - | Backend bağımlılık ve derleme yönetimi | Java projelerinde standart build aracı olması; bağımlılık yönetimini otomatikleştirmesi |
-| Build Aracı (Frontend) | Vite | - | Frontend geliştirme sunucusu ve derleme | Geleneksel araçlara kıyasla çok daha hızlı geliştirme sunucusu; React ile sorunsuz çalışması |
+| Build Aracı (Frontend) | Vite | 8.x | Frontend geliştirme sunucusu ve derleme | Geleneksel araçlara kıyasla çok daha hızlı geliştirme sunucusu; React ile sorunsuz çalışması |
 | Versiyon Kontrolü | Git & GitHub | - | Kaynak kod yönetimi ve iş birliği | 4 kişilik ekip çalışmasında branch bazlı paralel geliştirme yapabilme; kod değişikliklerini takip edebilme |
 | API İletişimi | REST API (JSON) | - | Frontend-backend arası veri alışverişi | Platform bağımsız, hafif ve yaygın iletişim standardı; JSON formatının okunabilir ve kolay işlenebilir olması |
 
@@ -226,7 +226,7 @@ H2 gömülü ilişkisel veritabanı dosya tabanlı modda kullanılacak olup, Spr
 | Tablo Adı | Açıklama | Temel Alanlar |
 |-----------|----------|---------------|
 | kullanicilar | Tüm kullanıcı bilgileri (Yolcu ve Admin) | id, ad, soyad, email, sifre, telefon, rol |
-| ulasim_araclari | Ulaşım araçları (Uçak, Tren, Otobüs) | id, firma, model, kapasite, fiyat, arac_tipi, tip_ozel_alanlar |
+| ulasimaraci | Ulaşım araçları (Uçak, Tren, Otobüs) | id, firma, model, kapasite, fiyat, arac_tipi, tip_ozel_alanlar |
 | seferler | Sefer bilgileri | id, arac_id, kalkis, varis, kalkis_zamani, varis_zamani |
 | koltuklar | Koltuk bilgileri | id, sefer_id, koltuk_no, dolu, tip |
 | biletler | Bilet/Rezervasyon bilgileri | id, yolcu_id, sefer_id, koltuk_id, tutar, tarih, durum |

@@ -6,8 +6,8 @@
 
 [![Java](https://img.shields.io/badge/Java-17-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)](https://openjdk.org/)
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.x-6DB33F?style=for-the-badge&logo=springboot&logoColor=white)](https://spring.io/projects/spring-boot)
-[![React](https://img.shields.io/badge/React-18.x-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
-[![MUI](https://img.shields.io/badge/MUI-5.x-007FFF?style=for-the-badge&logo=mui&logoColor=white)](https://mui.com/)
+[![React](https://img.shields.io/badge/React-19.x-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
+[![MUI](https://img.shields.io/badge/MUI-9.x-007FFF?style=for-the-badge&logo=mui&logoColor=white)](https://mui.com/)
 [![H2 Database](https://img.shields.io/badge/H2-Database-0000BB?style=for-the-badge)](https://www.h2database.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
 
@@ -72,9 +72,9 @@ Proje, OOP'nin beş temel prensibini (Kalıtım, Kapsülleme, Çok Biçimlilik, 
 ### Frontend
 | Teknoloji | Versiyon | Kullanım Amacı |
 |-----------|----------|----------------|
-| React | 18.x | Kullanıcı arayüzü geliştirme |
-| MUI (Material UI) | 5.x | Hazır, profesyonel UI bileşenleri |
-| Vite | — | Geliştirme sunucusu ve derleme |
+| React | 19.x | Kullanıcı arayüzü geliştirme |
+| MUI (Material UI) | 9.x | Hazır, profesyonel UI bileşenleri |
+| Vite | 8.x | Geliştirme sunucusu ve derleme |
 
 ### Araçlar
 | Araç | Kullanım Amacı |
@@ -239,6 +239,7 @@ mvn spring-boot:run
 
 > Backend varsayılan olarak `http://localhost:8080` adresinde çalışacaktır.  
 > H2 Console: `http://localhost:8080/h2-console`
+> Veritabanı dosyası aynı anda başka bir Java/H2 süreci tarafından tutuluyorsa o süreci kapatın.
 
 #### 3. Frontend'i çalıştırın
 
@@ -251,6 +252,7 @@ npm run dev
 ```
 
 > Frontend varsayılan olarak `http://localhost:5173` adresinde çalışacaktır.
+> API adresini değiştirmek için `frontend/.env.example` dosyasını `.env` olarak kopyalayıp `VITE_API_BASE_URL` değerini güncelleyin.
 
 ### Varsayılan Kullanıcılar (Seed Data)
 
@@ -259,7 +261,7 @@ npm run dev
 | Admin | admin@citygo.com | admin123 |
 | Yolcu | yolcu@citygo.com | yolcu123 |
 
-> ⚠️ Bu bilgiler seed data yüklendikten sonra geçerli olacaktır.
+> ⚠️ Seed data yalnızca ilgili tablolar boşsa eklenir; uygulama yeniden başladığında mevcut kullanıcı, bilet ve seferler silinmez.
 
 ---
 
@@ -290,6 +292,7 @@ npm run dev
 | Metot | Endpoint | Açıklama |
 |-------|----------|----------|
 | `GET` | `/api/admin/seferler` | Tüm seferleri listele |
+| `GET` | `/api/admin/araclar` | Tüm ulaşım araçlarını listele |
 | `POST` | `/api/admin/seferler` | Yeni sefer ekle |
 | `PUT` | `/api/admin/seferler/{id}` | Sefer güncelle |
 | `DELETE` | `/api/admin/seferler/{id}` | Sefer sil |
@@ -314,7 +317,7 @@ H2 gömülü ilişkisel veritabanı, **dosya tabanlı modda** çalışmaktadır.
 | Tablo | Açıklama |
 |-------|----------|
 | `kullanicilar` | Yolcu ve Admin bilgileri |
-| `ulasim_araclari` | Uçak, Tren, Otobüs bilgileri |
+| `ulasimaraci` | Uçak, Tren, Otobüs bilgileri |
 | `seferler` | Sefer bilgileri |
 | `koltuklar` | Koltuk bilgileri ve durumları |
 | `biletler` | Bilet/Rezervasyon bilgileri |
@@ -325,7 +328,7 @@ Uygulama çalışırken tarayıcınızdan şu adrese giderek veritabanını ince
 
 ```
 URL:      http://localhost:8080/h2-console
-JDBC URL: jdbc:h2:file:./data/citygo
+JDBC URL: jdbc:h2:file:./data/citygo;AUTO_SERVER=TRUE
 Username: sa
 Password: (boş bırakın)
 ```
@@ -339,9 +342,9 @@ Password: (boş bırakın)
 cd backend
 mvn test
 
-# Frontend testlerini çalıştırma
+# Frontend derlemesini kontrol etme
 cd frontend
-npm test
+npm run build
 ```
 
 ---

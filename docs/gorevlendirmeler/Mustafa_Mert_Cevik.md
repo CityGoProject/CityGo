@@ -94,7 +94,7 @@ backend/
 | 14 | `AramaService.java` | IAranabilir'i implement et | `@Service`, `implements IAranabilir`. 3 overloaded metodu repository çağrılarıyla doldur. Ek metotlar: `seferDetay()`, `tumSeferleriGetir()`. |
 | 15 | `SeferController.java` | REST Controller | `@RestController`, `@RequestMapping("/api/seferler")`. Endpoint'ler: `GET /ara`, `GET /{id}`, `GET /{id}/koltuklar`. |
 
-**Bu haftanın çıktısı:** Postman'dan `/api/seferler/ara?kalkis=Istanbul&varis=Ankara` çalışmalı. H2 Console'da `ulasim_araclari`, `seferler`, `koltuklar` tabloları görülmeli.
+**Bu haftanın çıktısı:** Postman'dan `/api/seferler/ara?kalkis=Istanbul&varis=Ankara` çalışmalı. H2 Console'da `ulasimaraci`, `seferler`, `koltuklar` tabloları görülmeli.
 
 ---
 

@@ -69,10 +69,10 @@ Projenin temel amacı, Nesne Yönelimli Programlama (OOP) prensiplerinin tamamı
 | Backend Framework | Spring Boot | 3.x | REST API geliştirme, bağımlılık yönetimi |
 | ORM | Spring Data JPA (Hibernate) | - | Nesne-ilişkisel eşleme, veritabanı işlemleri |
 | Veritabanı | H2 Database (Dosya Tabanlı) | 2.x | Gömülü ilişkisel veritabanı, kurulum gerektirmez |
-| Frontend | React | 18.x | Kullanıcı arayüzü geliştirme |
-| UI Kütüphanesi | MUI (Material UI) | 5.x | Hazır, profesyonel UI bileşenleri |
+| Frontend | React | 19.x | Kullanıcı arayüzü geliştirme |
+| UI Kütüphanesi | MUI (Material UI) | 9.x | Hazır, profesyonel UI bileşenleri |
 | Build Aracı | Maven | - | Backend bağımlılık ve derleme yönetimi |
-| Build Aracı (Frontend) | Vite | - | Frontend geliştirme sunucusu ve derleme |
+| Build Aracı (Frontend) | Vite | 8.x | Frontend geliştirme sunucusu ve derleme |
 | Versiyon Kontrolü | Git & GitHub | - | Kaynak kod yönetimi ve iş birliği |
 | API İletişimi | REST API (JSON) | - | Frontend-backend arası veri alışverişi |
 
@@ -212,7 +212,7 @@ Proje, **katmanlı mimari (Layered Architecture)** prensibiyle tasarlanmıştır
 │─────────────────────────│     │─────────────────────────│
 │ - id: Long               │     │   AKTIF                 │
 │ - koltukNo: int           │     │   IPTAL_EDILDI          │
-│ - dpieces: boolean        │     │   KULLANILDI            │
+│ - dolu: boolean        │     │   KULLANILDI            │
 │ - tip: KoltukTipi         │     └─────────────────────────┘
 └─────────────────────────┘
 ```
@@ -226,9 +226,9 @@ H2 gömülü ilişkisel veritabanı dosya tabanlı modda kullanılacak olup, Spr
 | Tablo Adı | Açıklama | Temel Alanlar |
 |-----------|----------|---------------|
 | kullanicilar | Tüm kullanıcı bilgileri (Yolcu ve Admin) | id, ad, soyad, email, sifre, telefon, rol |
-| ulasim_araclari | Ulaşım araçları (Uçak, Tren, Otobüs) | id, firma, model, kapasite, fiyat, arac_tipi, tip_ozel_alanlar |
+| ulasimaraci | Ulaşım araçları (Uçak, Tren, Otobüs) | id, firma, model, kapasite, fiyat, arac_tipi, tip_ozel_alanlar |
 | seferler | Sefer bilgileri | id, arac_id, kalkis, varis, kalkis_zamani, varis_zamani |
-| koltuklar | Koltuk bilgileri | id, sefer_id, koltuk_no, dpieces, tip |
+| koltuklar | Koltuk bilgileri | id, sefer_id, koltuk_no, dolu, tip |
 | biletler | Bilet/Rezervasyon bilgileri | id, yolcu_id, sefer_id, koltuk_id, tutar, tarih, durum |
 
 ### 4.5 Kullanıcı Arayüzü Tasarımı
