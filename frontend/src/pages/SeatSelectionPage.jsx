@@ -103,6 +103,7 @@ function SeatSelectionPage() {
                     koltuklar={seats}
                     selectedSeat={selectedSeat}
                     onSeatSelect={setSelectedSeat}
+                    vehicleType={trip?.arac?.aracTipi}
                   />
                 </Box>
 

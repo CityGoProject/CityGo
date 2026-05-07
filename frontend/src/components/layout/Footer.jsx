@@ -1,8 +1,6 @@
 import React from 'react'
 import '../.././css/Footer.css'
-import Logo from '../../../public/favicon.png'
-
-
+const logoPath = '/favicon.png' // Duzeltme: public dosyasi Vite'ta mutlak path ile kullanilir.
 
 function Footer() {
     const takim = ["Elif Feyza Şengül", "Muhammed Köseoğlu", "Mustafa Mert Çevik", "Ömer Faruk Kara"];
@@ -12,7 +10,7 @@ function Footer() {
 
             <div className="footer-content">
                 <div className="footer-logo">
-                    <img src={Logo} alt="CityGo Logo" className="footer-logo-image" />
+                    <img src={logoPath} alt="CityGo Logo" className="footer-logo-image" />
                     <h2 className="footer-title">CityGo</h2>
                 </div>
                 <div className="footer-team">

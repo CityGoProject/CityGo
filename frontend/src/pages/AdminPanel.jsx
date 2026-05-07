@@ -7,9 +7,15 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  MenuItem,
   Paper,
   Stack,
   Tab,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
   Tabs,
   TextField,
   Typography,
@@ -22,6 +28,7 @@ import {
   getAllTickets,
   getAllTrips,
   getAllUsers,
+  getAllVehicles,
   updateTrip,
 } from '../services/adminService'
 import { exportTicketsAsCsv, exportTicketsAsJson } from '../services/exportService'
@@ -56,10 +63,22 @@ function JsonPreview({ data, emptyText }) {
   )
 }
 
+function formatDateTime(value) {
+  if (!value) {
+    return '-'
+  }
+
+  return new Intl.DateTimeFormat('tr-TR', {
+    dateStyle: 'medium',
+    timeStyle: 'short',
+  }).format(new Date(value))
+}
+
 function AdminPanel() {
   const [activeTab, setActiveTab] = useState(0)
   const [stats, setStats] = useState(null)
   const [trips, setTrips] = useState([])
+  const [vehicles, setVehicles] = useState([])
   const [users, setUsers] = useState([])
   const [tickets, setTickets] = useState([])
   const [loading, setLoading] = useState(true)
@@ -78,15 +97,17 @@ function AdminPanel() {
        * Admin panelde birkaç liste aynı anda lazım. Promise.all ile hepsini
        * paralel çekiyoruz; biri hazır değilse kullanıcıya net hata gösteriyoruz.
        */
-      const [statsResponse, tripsResponse, usersResponse, ticketsResponse] = await Promise.all([
+      const [statsResponse, tripsResponse, vehiclesResponse, usersResponse, ticketsResponse] = await Promise.all([
         getAdminStats(),
         getAllTrips(),
+        getAllVehicles(),
         getAllUsers(),
         getAllTickets(),
       ])
 
       setStats(statsResponse.data)
       setTrips(Array.isArray(tripsResponse.data) ? tripsResponse.data : [])
+      setVehicles(Array.isArray(vehiclesResponse.data) ? vehiclesResponse.data : [])
       setUsers(Array.isArray(usersResponse.data) ? usersResponse.data : [])
       setTickets(Array.isArray(ticketsResponse.data) ? ticketsResponse.data : [])
     } catch (err) {
@@ -138,8 +159,8 @@ function AdminPanel() {
 
     const payload = {
       ...tripForm,
-      // Backend yorumunda aracId sayısal bekleniyor. Boşsa hiç göndermiyoruz.
-      aracId: tripForm.aracId ? Number(tripForm.aracId) : undefined,
+      // Duzeltme: Backend DTO aracId'yi sayi bekliyor; UI select string deger uretir.
+      aracId: Number(tripForm.aracId),
     }
 
     try {
@@ -269,7 +290,7 @@ function AdminPanel() {
                             #{trip.id} · {trip.kalkisNoktasi} → {trip.varisNoktasi}
                           </Typography>
                           <Typography variant="body2" color="text.secondary">
-                            {trip.kalkisZamani || 'Kalkış tarihi bekleniyor'} - {trip.varisZamani || 'varış tarihi bekleniyor'}
+                            {formatDateTime(trip.kalkisZamani)} - {formatDateTime(trip.varisZamani)}
                           </Typography>
                         </Box>
                         <Stack direction="row" spacing={1}>
@@ -291,7 +312,32 @@ function AdminPanel() {
                   <Typography variant="h6" fontWeight={800}>
                     Kullanıcılar
                   </Typography>
-                  <JsonPreview data={users} emptyText="Kullanıcı bulunamadı." />
+                  {/* Duzeltme: Admin panel artik ham JSON yerine okunabilir tablo gosteriyor. */}
+                  {!users.length && <Alert severity="info">Kullanıcı bulunamadı.</Alert>}
+                  {!!users.length && (
+                    <Table size="small">
+                      <TableHead>
+                        <TableRow>
+                          <TableCell>ID</TableCell>
+                          <TableCell>Ad Soyad</TableCell>
+                          <TableCell>Email</TableCell>
+                          <TableCell>Telefon</TableCell>
+                          <TableCell>Rol</TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {users.map((user) => (
+                          <TableRow key={user.id}>
+                            <TableCell>{user.id}</TableCell>
+                            <TableCell>{[user.ad, user.soyad].filter(Boolean).join(' ')}</TableCell>
+                            <TableCell>{user.email}</TableCell>
+                            <TableCell>{user.telefon || '-'}</TableCell>
+                            <TableCell>{user.yetki ? 'ADMIN' : 'YOLCU'}</TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  )}
                 </Stack>
               )}
 
@@ -300,7 +346,39 @@ function AdminPanel() {
                   <Typography variant="h6" fontWeight={800}>
                     Biletler
                   </Typography>
-                  <JsonPreview data={tickets} emptyText="Bilet bulunamadı." />
+                  {!tickets.length && <Alert severity="info">Bilet bulunamadı.</Alert>}
+                  {!!tickets.length && (
+                    <Table size="small">
+                      <TableHead>
+                        <TableRow>
+                          <TableCell>ID</TableCell>
+                          <TableCell>Yolcu</TableCell>
+                          <TableCell>Sefer</TableCell>
+                          <TableCell>Koltuk</TableCell>
+                          <TableCell>Tutar</TableCell>
+                          <TableCell>Durum</TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {tickets.map((ticket) => (
+                          <TableRow key={ticket.id}>
+                            <TableCell>{ticket.id}</TableCell>
+                            <TableCell>
+                              {[ticket.yolcu?.ad, ticket.yolcu?.soyad].filter(Boolean).join(' ') || '-'}
+                            </TableCell>
+                            <TableCell>
+                              {ticket.sefer
+                                ? `${ticket.sefer.kalkisNoktasi} → ${ticket.sefer.varisNoktasi}`
+                                : '-'}
+                            </TableCell>
+                            <TableCell>{ticket.koltuk?.koltukNo || '-'}</TableCell>
+                            <TableCell>{ticket.odenenTutar ?? '-'} TL</TableCell>
+                            <TableCell>{ticket.durum || '-'}</TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  )}
                 </Stack>
               )}
 
@@ -310,7 +388,7 @@ function AdminPanel() {
                     Dışa Aktarma
                   </Typography>
                   <Typography color="text.secondary">
-                    Backend export endpointleri hazır olduğunda bilet verileri indirilecek.
+                    Bilet verilerini sadece admin yetkisiyle JSON veya CSV olarak indirebilirsin.
                   </Typography>
                   <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
                     <Button variant="contained" onClick={exportTicketsAsJson}>
@@ -333,14 +411,20 @@ function AdminPanel() {
           <DialogContent>
             <Stack spacing={2} sx={{ pt: 1 }}>
               <TextField
-                label="Araç ID"
+                select
+                label="Araç"
                 name="aracId"
-                type="number"
                 value={tripForm.aracId}
                 onChange={handleTripFormChange}
                 required
                 fullWidth
-              />
+              >
+                {vehicles.map((vehicle) => (
+                  <MenuItem key={vehicle.id} value={vehicle.id}>
+                    #{vehicle.id} · {vehicle.aracTipi || 'ARAÇ'} · {vehicle.firma} {vehicle.model}
+                  </MenuItem>
+                ))}
+              </TextField>
               <TextField
                 label="Kalkış Noktası"
                 name="kalkisNoktasi"

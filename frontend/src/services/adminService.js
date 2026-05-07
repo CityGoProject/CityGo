@@ -19,6 +19,10 @@ export function getAllTrips() {
   return api.get('/admin/seferler')
 }
 
+export function getAllVehicles() {
+  return api.get('/admin/araclar')
+}
+
 export function createTrip(payload) {
   return api.post('/admin/seferler', payload)
 }

@@ -1,5 +1,6 @@
 import {
   Autocomplete,
+  Alert,
   Box,
   Button,
   IconButton,
@@ -32,6 +33,7 @@ function HomePage() {
     tarih: '',
     tip: '',
   })
+  const [error, setError] = useState('')
 
   const handleChange = (event) => {
     setFormData((current) => ({
@@ -57,6 +59,13 @@ function HomePage() {
 
   const handleSearch = (event) => {
     event.preventDefault()
+    setError('')
+
+    if (formData.kalkis.toLocaleLowerCase('tr-TR') === formData.varis.toLocaleLowerCase('tr-TR')) {
+      // Duzeltme: Backend'e anlamsiz ayni sehir aramasi gondermeden kullaniciyi uyar.
+      setError('Kalkış ve varış aynı şehir olamaz.')
+      return
+    }
 
     const params = new URLSearchParams()
     params.set('kalkis', formData.kalkis)
@@ -114,6 +123,7 @@ function HomePage() {
             <Box component="form" onSubmit={handleSearch}>
               {/* Bu form HomePage'i placeholder olmaktan çıkarıp gerçek sefer arama ekranı yapar. */}
               <Stack spacing={2}>
+                {error && <Alert severity="error">{error}</Alert>}
                 <Stack
                   direction={{ xs: 'column', md: 'row' }}
                   spacing={2}
