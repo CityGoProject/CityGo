@@ -12,7 +12,7 @@ const LoginPage = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     setError('');
-    
+
     try {
       const response = await loginUser(email, sifre);
       // Basarili giris sonrasi kullanici bilgisini sakliyoruz
@@ -34,11 +34,16 @@ const LoginPage = () => {
 
   return (
     <Box sx={{
-      height: '100vh',
+      minHeight: '100vh',
       display: 'flex',
+      flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center',
-      background: 'linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)' // Premium gradyan arkaplan
+      backgroundImage: 'url("/login.png")',
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat',
+      backgroundAttachment: 'fixed', // Premium gradyan arkaplan
     }}>
       <Paper elevation={10} sx={{ p: 5, borderRadius: 3, width: '100%', maxWidth: 400, bgcolor: 'rgba(255, 255, 255, 0.95)' }}>
         <Typography variant="h4" fontWeight="bold" color="primary" gutterBottom align="center">
@@ -74,29 +79,29 @@ const LoginPage = () => {
             autoComplete="current-password"
             sx={{ mb: 3 }}
           />
-          
+
           <Button
             type="submit"
             fullWidth
             variant="contained"
             size="large"
-            sx={{ 
-                py: 1.5, 
-                mb: 3, 
-                borderRadius: 2, 
-                textTransform: 'none', 
-                fontSize: '1.1rem',
-                boxShadow: 4,
-                '&:hover': {
-                  transform: 'translateY(-2px)',
-                  boxShadow: 6,
-                  transition: 'all 0.2s'
-                }
+            sx={{
+              py: 1.5,
+              mb: 3,
+              borderRadius: 2,
+              textTransform: 'none',
+              fontSize: '1.1rem',
+              boxShadow: 4,
+              '&:hover': {
+                transform: 'translateY(-2px)',
+                boxShadow: 6,
+                transition: 'all 0.2s'
+              }
             }}
           >
             Giriş Yap
           </Button>
-          
+
           <Typography align="center" variant="body2">
             Hesabınız yok mu?{' '}
             <MuiLink component={Link} to="/register" color="primary" underline="hover">

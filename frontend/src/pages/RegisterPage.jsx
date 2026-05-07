@@ -22,7 +22,7 @@ const RegisterPage = () => {
   const handleRegister = async (e) => {
     e.preventDefault();
     setError('');
-    
+
     try {
       await registerUser(formData);
       // Kayit basariliysa otomatik giris yapalim
@@ -47,10 +47,15 @@ const RegisterPage = () => {
     <Box sx={{
       minHeight: '100vh',
       display: 'flex',
+      flexDirection: 'column',
+      backgroundImage: 'url("/register.png")',
+      backgroundSize: 'cover',
       alignItems: 'center',
+      padding: 5,
       justifyContent: 'center',
-      py: 4,
-      background: 'linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)'
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat',
+      backgroundAttachment: 'fixed',
     }}>
       <Paper elevation={10} sx={{ p: 5, borderRadius: 3, width: '100%', maxWidth: 500, bgcolor: 'rgba(255, 255, 255, 0.95)' }}>
         <Typography variant="h4" fontWeight="bold" color="primary" gutterBottom align="center">
@@ -62,7 +67,7 @@ const RegisterPage = () => {
 
         {error && <Alert severity="error" sx={{ mb: 3 }}>{error}</Alert>}
 
-        <form onSubmit={handleRegister}>
+        <form onSubmit={handleRegister} sx={{ padding: 2 }}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -127,30 +132,30 @@ const RegisterPage = () => {
               />
             </Grid>
           </Grid>
-          
+
           <Button
             type="submit"
             fullWidth
             variant="contained"
             size="large"
-            sx={{ 
-                mt: 4, 
-                mb: 3, 
-                py: 1.5,
-                borderRadius: 2, 
-                textTransform: 'none', 
-                fontSize: '1.1rem',
-                boxShadow: 4,
-                '&:hover': {
-                  transform: 'translateY(-2px)',
-                  boxShadow: 6,
-                  transition: 'all 0.2s'
-                }
+            sx={{
+              mt: 4,
+              mb: 3,
+              py: 1.5,
+              borderRadius: 2,
+              textTransform: 'none',
+              fontSize: '1.1rem',
+              boxShadow: 4,
+              '&:hover': {
+                transform: 'translateY(-2px)',
+                boxShadow: 6,
+                transition: 'all 0.2s'
+              }
             }}
           >
             Kayıt Ol
           </Button>
-          
+
           <Typography align="center" variant="body2">
             Zaten hesabınız var mı?{' '}
             <MuiLink component={Link} to="/login" color="primary" underline="hover">
@@ -159,7 +164,7 @@ const RegisterPage = () => {
           </Typography>
         </form>
       </Paper>
-    </Box>
+    </Box >
   );
 };
 

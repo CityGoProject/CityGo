@@ -28,7 +28,7 @@ function Navbar() {
           component={RouterLink}
           to="/"
           variant="h6"
-          sx={{ color: 'primary.main', fontWeight: 800, textDecoration: 'none', mr: 'auto' }}
+          sx={{ color: 'rgba(54, 121, 245, 0.63)', fontWeight: 800, textDecoration: 'none', mr: 'auto' }}
         >
           CityGo
         </Typography>

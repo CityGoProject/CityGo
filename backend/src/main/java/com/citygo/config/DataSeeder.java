@@ -129,7 +129,7 @@ public class DataSeeder implements CommandLineRunner {
         Tren tren = new Tren(null, "TCDD", "YHT", 300, 450.0, "BUSINESS", "YHT");
         araciRepository.save(tren);
 
-        Otobus otobus = new Otobus(null, "Metro Turizm", "Mercedes Travego", 40, 600.0, true, 50.0);
+        Otobus otobus = new Otobus(null, "Metro Turizm", "Anadolu Isuzu", 40, 600.0, true, 50.0);
         araciRepository.save(otobus);
 
         log.info("Ulaşım araçları kaydedildi.");
@@ -139,7 +139,7 @@ public class DataSeeder implements CommandLineRunner {
         log.info("Şehirler arası seferler ve koltuklar döngü ile oluşturuluyor (10 Büyükşehir)...");
         List<UlasimAraci> araclar = araciRepository.findAll();
         String[] sehirler = {
-            "İstanbul", "Ankara", "İzmir", "Bursa", "Antalya", "Adana", "Konya", "Gaziantep", "Şanlıurfa", "Kocaeli"
+                "İstanbul", "Ankara", "İzmir", "Bursa", "Antalya", "Adana", "Konya", "Gaziantep", "Şanlıurfa", "Kocaeli"
         };
 
         int gunOfset = 1;
@@ -151,10 +151,10 @@ public class DataSeeder implements CommandLineRunner {
                         Sefer sefer = new Sefer(null, arac, kalkis, varis,
                                 LocalDateTime.now().plusDays(gunOfset).withHour(10).withMinute(0),
                                 LocalDateTime.now().plusDays(gunOfset).withHour(12).withMinute(0), null);
-                        
+
                         // Koltukları otomatik oluştur (Sefer.java içindeki mantık)
                         sefer.koltuklariOlustur();
-                        
+
                         // Sefer kaydedilirken koltuklar da CascadeType.ALL sayesinde kaydedilir
                         seferRepository.save(sefer);
 
@@ -166,6 +166,5 @@ public class DataSeeder implements CommandLineRunner {
         }
         log.info("Tüm şehirler arası seferler ve koltuklar kaydedildi.");
     }
-
 
 }

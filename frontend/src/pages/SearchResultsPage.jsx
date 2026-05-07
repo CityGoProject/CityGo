@@ -39,7 +39,7 @@ function SearchResultsPage() {
   }, [kalkis, varis, tarih, tip, navigate])
 
   return (
-    <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', backgroundColor: '#f6f8fb' }}>
+    <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', backgroundImage: 'url("/bilet ekranı.png")' }}>
       <Box sx={{ flex: 1, maxWidth: 980, mx: 'auto', px: 3, py: 5 }}>
         <Stack spacing={3}>
           <Paper sx={{ p: 3, borderRadius: 3 }} variant="outlined">
@@ -71,13 +71,22 @@ function SearchResultsPage() {
             </Alert>
           )}
 
-          {!loading && trips.map((trip) => (
-            <TripCard
-              key={trip.id}
-              sefer={trip}
-              onSelect={(selectedTrip) => navigate(`/seat-selection/${selectedTrip.id}`)}
-            />
-          ))}
+          <Box
+            sx={{
+              display: 'grid',
+              gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr', md: '1fr 1fr 1fr' },
+              gap: 2,
+            }}
+          >
+            {!loading &&
+              trips.map((trip) => (
+                <TripCard
+                  key={trip.id}
+                  sefer={trip}
+                  onSelect={(selectedTrip) => navigate(`/seat-selection/${selectedTrip.id}`)}
+                />
+              ))}
+          </Box>
         </Stack>
       </Box>
     </Box>

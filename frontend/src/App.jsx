@@ -1,13 +1,12 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
+import HomePage from './pages/HomePage'
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
-import HomePage from './pages/HomePage'
 import SearchResultsPage from './pages/SearchResultsPage'
 import SeatSelectionPage from './pages/SeatSelectionPage'
 import MyTicketsPage from './pages/MyTicketsPage'
 import AdminPanel from './pages/AdminPanel'
 import { getStoredUser, isAdminUser } from './services/auth'
-import './App.css'
 import Footer from './components/layout/Footer'
 import Navbar from './components/layout/Navbar'
 
@@ -15,7 +14,7 @@ function ProtectedRoute({ children }) {
   const user = getStoredUser()
 
   if (!user) {
-    // Oturum yoksa auth sayfasına yönlendirerek entegrasyonu görünür kılıyoruz.
+
     return <Navigate to="/login" replace />
   }
 
@@ -34,11 +33,6 @@ function PublicOnlyRoute({ children }) {
 
 function AdminRoute({ children }) {
   const user = getStoredUser()
-
-  /*
-   * Admin paneli ayrı guard ile korunuyor. Backend güvenliği ayrıca yazılmalı;
-   * bu kontrol frontend'de yanlışlıkla panelin görünmesini engeller.
-   */
   if (!user) {
     return <Navigate to="/login" replace />
   }
@@ -51,10 +45,7 @@ function AdminRoute({ children }) {
 }
 
 function App() {
-  /*
-   * Rebase sırasında uzak repoda eski Menu/Footer layout'u geldi.
-   * Burada yeni sayfa bazlı routing korunuyor; Navbar/Footer artık sayfaların içinde.
-   */
+
   return (
     <>
       <Navbar />

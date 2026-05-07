@@ -79,7 +79,7 @@ function HomePage() {
         minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
-        backgroundImage: 'url("/indir.png")',
+        backgroundImage: 'url("/home.png")',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
@@ -130,10 +130,10 @@ function HomePage() {
                   />
 
                   <IconButton
-                    color="primary"
+                    color="#1f6f54"
                     onClick={handleSwapCities}
                     sx={{
-                      bgcolor: 'primary.light',
+                      bgcolor: '#0284C7',
                       color: 'white',
                       '&:hover': { bgcolor: 'primary.main' },
                     }}
@@ -166,8 +166,6 @@ function HomePage() {
                     type="date"
                     value={formData.tarih}
                     onChange={handleChange}
-                    // MUI'nin yeni sürümünde InputLabelProps DOM'a sızabiliyor.
-                    // slotProps ile label'ı güvenli şekilde küçültüyoruz.
                     slotProps={{ inputLabel: { shrink: true } }}
                   />
 
@@ -185,7 +183,7 @@ function HomePage() {
                     ))}
                   </TextField>
 
-                  <Button type="submit" variant="contained" size="large" sx={{ height: 56 }}>
+                  <Button type="submit" variant="contained" size="large" sx={{ color: 'white', bgcolor: '#0284C7', height: 56, borderRadius: 6 }}>
                     Sefer Ara
                   </Button>
                 </Box>

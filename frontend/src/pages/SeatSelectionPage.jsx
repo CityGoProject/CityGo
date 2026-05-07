@@ -60,7 +60,12 @@ function SeatSelectionPage() {
       })
       navigate('/my-tickets')
     } catch (err) {
-      setError(err.response?.data?.hata || err.response?.data?.mesaj || 'Bilet oluşturulamadı.')
+      const errorMsg = err.response?.data?.hata || err.response?.data?.mesaj || 'Bilet oluşturulamadı.'
+      if (errorMsg.includes('Yolcu Bulunamadi')) {
+        setError('Oturumunuzun süresi dolmuş veya veritabanı sıfırlanmış olabilir. Lütfen ÇIKIŞ yapıp tekrar GİRİŞ yapın.')
+      } else {
+        setError(errorMsg)
+      }
     } finally {
       setSaving(false)
     }
@@ -89,27 +94,59 @@ function SeatSelectionPage() {
 
           {!loading && (
             <Paper sx={{ p: 3, borderRadius: 3 }} variant="outlined">
-              <Stack spacing={3}>
-                <SeatMap
-                  koltuklar={seats}
-                  selectedSeat={selectedSeat}
-                  onSeatSelect={setSelectedSeat}
-                />
+              <Stack spacing={4}>
+                <Box>
+                  <Typography variant="h6" gutterBottom fontWeight={700}>
+                    Koltuk Planı
+                  </Typography>
+                  <SeatMap
+                    koltuklar={seats}
+                    selectedSeat={selectedSeat}
+                    onSeatSelect={setSelectedSeat}
+                  />
+                </Box>
 
                 <Stack
-                  direction={{ xs: 'column', sm: 'row' }}
-                  spacing={2}
-                  sx={{ alignItems: 'center' }}
+                  direction={{ xs: 'column', md: 'row' }}
+                  spacing={3}
+                  sx={{ 
+                    alignItems: 'center', 
+                    p: 2, 
+                    bgcolor: 'primary.main', 
+                    color: 'white', 
+                    borderRadius: 3,
+                    boxShadow: '0 4px 20px rgba(2, 132, 199, 0.2)'
+                  }}
                 >
-                  <Typography color="text.secondary" sx={{ mr: 'auto' }}>
-                    Seçili koltuk: {selectedSeat?.koltukNo || 'Yok'}
-                  </Typography>
+                  <Box sx={{ mr: 'auto' }}>
+                    <Typography variant="body2" sx={{ opacity: 0.9 }}>Seçili Koltuk</Typography>
+                    <Typography variant="h5" fontWeight={900}>
+                      {selectedSeat?.koltukNo || '--'}
+                    </Typography>
+                  </Box>
+                  
+                  <Box sx={{ textAlign: { xs: 'center', md: 'right' } }}>
+                    <Typography variant="body2" sx={{ opacity: 0.9 }}>Toplam Tutar</Typography>
+                    <Typography variant="h5" fontWeight={900}>
+                      {selectedSeat ? `${trip?.arac?.biletFiyati || 0} TL` : '0 TL'}
+                    </Typography>
+                  </Box>
+
                   <Button
                     variant="contained"
+                    size="large"
                     disabled={!selectedSeat || saving}
                     onClick={handleCreateTicket}
+                    sx={{ 
+                      bgcolor: 'white', 
+                      color: 'primary.main',
+                      px: 4,
+                      fontWeight: 800,
+                      '&:hover': { bgcolor: '#f0f0f0' },
+                      '&.Mui-disabled': { bgcolor: 'rgba(255,255,255,0.3)', color: 'white' }
+                    }}
                   >
-                    {saving ? 'Bilet Alınıyor...' : 'Bileti Al'}
+                    {saving ? 'Bilet Alınıyor...' : 'ÖDEME YAP VE BİLETİ AL'}
                   </Button>
                 </Stack>
               </Stack>

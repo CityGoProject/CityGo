@@ -72,9 +72,18 @@ function MyTicketsPage() {
             <Alert severity="info">Henüz biletin bulunmuyor.</Alert>
           )}
 
-          {!loading && tickets.map((ticket) => (
-            <TicketCard key={ticket.id} bilet={ticket} onCancel={handleCancel} />
-          ))}
+          <Box
+            sx={{
+              display: 'grid',
+              gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr', md: '1fr 1fr 1fr' },
+              gap: 2,
+            }}
+          >
+            {!loading &&
+              tickets.map((ticket) => (
+                <TicketCard key={ticket.id} bilet={ticket} onCancel={handleCancel} />
+              ))}
+          </Box>
         </Stack>
       </Box>
     </Box>
