@@ -39,6 +39,7 @@ public class Koltuk {
     private Long id;
 
     @Version
+    @Column(nullable = false)
     private Long version; // Duzeltme: Es zamanli rezervasyonlarda optimistic locking devreye girsin.
 
     @Column(nullable = false)

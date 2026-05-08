@@ -10,6 +10,7 @@ import com.citygo.service.KullaniciService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
@@ -76,16 +77,18 @@ public class DataSeeder implements CommandLineRunner {
     private final KullaniciRepository kullaniciRepository;
     private final KullaniciService kullaniciService;
     private final BiletRepository biletRepository;
+    private final JdbcTemplate jdbcTemplate;
 
     public DataSeeder(UlasimAraciRepository araciRepository, SeferRepository seferRepository,
             KoltukRepository koltukRepository, KullaniciRepository kullaniciRepository,
-            KullaniciService kullaniciService, BiletRepository biletRepository) {
+            KullaniciService kullaniciService, BiletRepository biletRepository, JdbcTemplate jdbcTemplate) {
         this.araciRepository = araciRepository;
         this.seferRepository = seferRepository;
         this.koltukRepository = koltukRepository;
         this.kullaniciRepository = kullaniciRepository;
         this.kullaniciService = kullaniciService;
         this.biletRepository = biletRepository;
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     @Override
@@ -96,7 +99,18 @@ public class DataSeeder implements CommandLineRunner {
         seedKullanicilarEksikse();
         seedUlasimAraclariEksikse();
         seedSeferlerEksikse();
+        eskiKoltukVersiyonlariniDuzelt();
         log.info("Seed kontrolü tamamlandı.");
+    }
+
+    private void eskiKoltukVersiyonlariniDuzelt() {
+        // Duzeltme: @Version kolonu sonradan eklendigi icin eski H2 kayitlarinda
+        // version NULL kalabiliyor. Hibernate bilet alirken bu NULL degeri
+        // artiramadigi icin "Sunucu Hatasi" olusuyordu.
+        int guncellenen = jdbcTemplate.update("update koltuklar set version = 0 where version is null");
+        if (guncellenen > 0) {
+            log.info("{} eski koltuk versiyonu 0 olarak duzeltildi.", guncellenen);
+        }
     }
 
     private void seedKullanicilarEksikse() {

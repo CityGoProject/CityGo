@@ -52,6 +52,13 @@ public class RezervasyonService implements IRezervasyon {
             throw new KapasiteDoluException("Bu Koltuk Zaten Rezerve Edilmiş!");
         }
 
+        if (koltuk.getVersion() == null) {
+            // Duzeltme: @Version alani eski veritabaninda NULL kaldiysa Hibernate
+            // commit sirasinda versiyonu artiramaz. Rezervasyon oncesi guvenli
+            // baslangic degeri veriyoruz.
+            koltuk.setVersion(0L);
+        }
+
         // Koltuğu Dolu Olarak İşaretleme
         koltuk.setDolu(true);
         koltukRepository.save(koltuk);

@@ -5,6 +5,7 @@ import com.citygo.model.Admin;
 import com.citygo.model.Bilet;
 import com.citygo.model.BiletDurumu;
 import com.citygo.model.Koltuk;
+import com.citygo.model.Otobus;
 import com.citygo.model.Sefer;
 import com.citygo.model.Yolcu;
 import com.citygo.repository.BiletRepository;
@@ -19,7 +20,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -61,6 +64,30 @@ class RezervasyonServiceTest {
         when(koltukRepository.findBySefer_IdAndKoltukNo(2L, 3)).thenReturn(Optional.empty());
 
         assertThrows(KoltukBulunamadiException.class, () -> rezervasyonService.rezervasyonYap(1L, 2L, 3));
+    }
+
+    @Test
+    void eskiKoltukVersionNullIseRezervasyonOncesiSifirlanir() {
+        Yolcu yolcu = new Yolcu();
+        Sefer sefer = new Sefer();
+        sefer.setId(2L);
+        sefer.setArac(new Otobus(null, "Metro", "Test", 40, 500.0, false, 0.0));
+
+        Koltuk koltuk = new Koltuk();
+        koltuk.setKoltukNo(3);
+        koltuk.setDolu(false);
+        koltuk.setVersion(null);
+
+        when(kullaniciRepository.findById(1L)).thenReturn(Optional.of(yolcu));
+        when(seferRepository.findById(2L)).thenReturn(Optional.of(sefer));
+        when(koltukRepository.findBySefer_IdAndKoltukNo(2L, 3)).thenReturn(Optional.of(koltuk));
+        when(biletRepository.save(any(Bilet.class))).thenAnswer(invocation -> invocation.getArgument(0));
+
+        // Duzeltme: Eski DB'deki NULL version degeri bilet alirken commit hatasi uretmemeli.
+        rezervasyonService.rezervasyonYap(1L, 2L, 3);
+
+        assertEquals(0L, koltuk.getVersion());
+        verify(koltukRepository).save(koltuk);
     }
 
     @Test

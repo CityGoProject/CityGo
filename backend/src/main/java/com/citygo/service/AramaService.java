@@ -76,11 +76,25 @@ public class AramaService implements IAranabilir {
         LocalDateTime baslangic = tarih.atStartOfDay();
         LocalDateTime bitis = tarih.atTime(LocalTime.MAX);
 
-        return seferRepository.findByKalkisNoktasiAndVarisNoktasiAndKalkisZamaniBetween(
+        List<Sefer> sonuc = seferRepository.findByKalkisNoktasiAndVarisNoktasiAndKalkisZamaniBetween(
             kalkis,
             varis,
             baslangic,
             bitis
+        );
+
+        if (!sonuc.isEmpty()) {
+            return sonuc;
+        }
+
+        // Duzeltme: Seed verileri demo icin sinirli tarih araliginda oldugundan
+        // hoca daha ileri bir tarih sectiginde ekran tamamen bos kalmasin.
+        // Secilen gunde sefer yoksa ayni guzergahin bugunden sonraki en yakin
+        // seferlerini donduruyoruz.
+        return seferRepository.findByKalkisNoktasiAndVarisNoktasiAndKalkisZamaniAfterOrderByKalkisZamaniAsc(
+            kalkis,
+            varis,
+            LocalDateTime.now()
         );
     }
 

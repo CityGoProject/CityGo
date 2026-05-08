@@ -47,6 +47,11 @@ public interface SeferRepository extends JpaRepository<Sefer, Long> {
     // SELECT * FROM seferler WHERE kalkis_noktasi = ? AND varis_noktasi = ?
     List<Sefer> findByKalkisNoktasiAndVarisNoktasiAndKalkisZamaniBetween(String kalkis, String varis,LocalDateTime baslangic, LocalDateTime bitis);
 
+    // Duzeltme: Secilen gunde sefer yoksa demo akisi bos kalmasin diye ayni
+    // guzergahin siradaki gelecek seferlerini buluyoruz.
+    List<Sefer> findByKalkisNoktasiAndVarisNoktasiAndKalkisZamaniAfterOrderByKalkisZamaniAsc(
+        String kalkis, String varis, LocalDateTime kalkisZamani);
+
     List<Sefer> findByKalkisNoktasiAndVarisNoktasiAndKalkisZamani(
     String kalkis, String varis, LocalDateTime kalkisZamani);
 }
