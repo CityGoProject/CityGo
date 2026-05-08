@@ -3,7 +3,9 @@ package com.citygo.service;
 import com.citygo.exception.SeferBulunamadiException;
 import com.citygo.model.Otobus;
 import com.citygo.model.Sefer;
+import com.citygo.model.Ucak;
 import com.citygo.repository.SeferRepository;
+import com.citygo.repository.UlasimAraciRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -21,6 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -29,6 +32,9 @@ class AramaServiceTest {
 
     @Mock
     private SeferRepository seferRepository;
+
+    @Mock
+    private UlasimAraciRepository ulasimAraciRepository;
 
     @InjectMocks
     private AramaService aramaService;
@@ -60,9 +66,9 @@ class AramaServiceTest {
     }
 
     @Test
-    void secilenGundeSeferYoksaGelecekSeferlereDuser() {
+    void secilenGundeSeferYoksaDemoSeferOlusturur() {
         LocalDate tarih = LocalDate.of(2026, 6, 1);
-        Sefer yakinGelecekSefer = new Sefer();
+        Otobus otobus = new Otobus(null, "Metro", "Test", 40, 500.0, false, 0.0);
 
         when(seferRepository.findByKalkisNoktasiAndVarisNoktasiAndKalkisZamaniBetween(
             "İstanbul",
@@ -70,18 +76,44 @@ class AramaServiceTest {
             tarih.atStartOfDay(),
             tarih.atTime(LocalTime.MAX)
         )).thenReturn(List.of());
-        when(seferRepository.findByKalkisNoktasiAndVarisNoktasiAndKalkisZamaniAfterOrderByKalkisZamaniAsc(
-            org.mockito.ArgumentMatchers.eq("İstanbul"),
-            org.mockito.ArgumentMatchers.eq("Ankara"),
-            any(LocalDateTime.class)
-        )).thenReturn(List.of(yakinGelecekSefer));
+        when(ulasimAraciRepository.findAll()).thenReturn(List.of(otobus));
+        when(seferRepository.save(any(Sefer.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
         // Duzeltme: Demo verisi sinirli tarih araligindaysa ileri tarih aramasi
-        // tamamen bos kalmasin, ayni guzergahin yaklasan seferleri gelsin.
+        // tamamen bos kalmasin, secilen tarihe sefer ve koltuk uretilsin.
         List<Sefer> sonuc = aramaService.ara("İstanbul", "Ankara", tarih);
 
         assertEquals(1, sonuc.size());
-        assertSame(yakinGelecekSefer, sonuc.get(0));
+        assertSame(otobus, sonuc.get(0).getArac());
+        assertEquals(tarih.atTime(10, 0), sonuc.get(0).getKalkisZamani());
+        assertEquals(40, sonuc.get(0).getKoltuklar().size());
+        verify(seferRepository).save(any(Sefer.class));
+    }
+
+    @Test
+    void secilenAracTipiYoksaOAracTipiIcinDemoSeferOlusturur() {
+        LocalDate tarih = LocalDate.of(2026, 6, 1);
+        Otobus otobus = new Otobus(null, "Metro", "Test", 40, 500.0, false, 0.0);
+        Ucak ucak = new Ucak(null, "THY", "Boeing", 180, 1500.0, 0.15, "IST");
+
+        when(seferRepository.findByKalkisNoktasiAndVarisNoktasiAndKalkisZamaniBetween(
+            "İstanbul",
+            "Ankara",
+            tarih.atStartOfDay(),
+            tarih.atTime(LocalTime.MAX)
+        )).thenReturn(List.of());
+        when(ulasimAraciRepository.findAll())
+            .thenReturn(List.of(otobus))
+            .thenReturn(List.of(otobus, ucak));
+        when(seferRepository.save(any(Sefer.class))).thenAnswer(invocation -> invocation.getArgument(0));
+
+        // Duzeltme: Kullanici ozellikle ucak sectiyse mevcut demo seferleri otobus
+        // olsa bile ucak seferi uretilsin.
+        List<Sefer> sonuc = aramaService.ara("İstanbul", "Ankara", tarih, "UCAK");
+
+        assertEquals(1, sonuc.size());
+        assertSame(ucak, sonuc.get(0).getArac());
+        verify(seferRepository, times(2)).save(any(Sefer.class));
     }
 
     @Test
