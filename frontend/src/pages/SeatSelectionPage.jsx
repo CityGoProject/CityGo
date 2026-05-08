@@ -2,7 +2,7 @@ import { Alert, Box, Button, CircularProgress, Paper, Stack, Typography } from '
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import SeatMap from '../components/seats/SeatMap'
-import { getStoredUser } from '../services/auth'
+import { getStoredUser, isAdminUser } from '../services/auth'
 import { createTicket } from '../services/ticketService'
 import { getTripById, getTripSeats } from '../services/tripService'
 
@@ -10,6 +10,7 @@ function SeatSelectionPage() {
   const { seferId } = useParams()
   const navigate = useNavigate()
   const user = getStoredUser()
+  const adminUser = isAdminUser(user)
   const [trip, setTrip] = useState(null)
   const [seats, setSeats] = useState([])
   const [selectedSeat, setSelectedSeat] = useState(null)
@@ -44,6 +45,11 @@ function SeatSelectionPage() {
   }, [seferId])
 
   const handleCreateTicket = async () => {
+    if (adminUser) {
+      setError('Admin hesabı ile bilet alınamaz. Bilet almak için yolcu hesabıyla giriş yapın.')
+      return
+    }
+
     if (!selectedSeat) {
       setError('Lütfen bir koltuk seçin.')
       return
@@ -60,7 +66,7 @@ function SeatSelectionPage() {
       })
       navigate('/my-tickets')
     } catch (err) {
-      const errorMsg = err.response?.data?.hata || err.response?.data?.mesaj || 'Bilet oluşturulamadı.'
+      const errorMsg = err.response?.data?.mesaj || err.response?.data?.hata || 'Bilet oluşturulamadı.'
       if (errorMsg.includes('Yolcu Bulunamadi')) {
         setError('Oturumunuzun süresi dolmuş veya veritabanı sıfırlanmış olabilir. Lütfen ÇIKIŞ yapıp tekrar GİRİŞ yapın.')
       } else {
@@ -91,6 +97,12 @@ function SeatSelectionPage() {
           )}
 
           {error && <Alert severity="error">{error}</Alert>}
+
+          {adminUser && (
+            <Alert severity="warning">
+              Admin hesabı yönetim içindir; bilet alma işlemini yolcu hesabıyla deneyin.
+            </Alert>
+          )}
 
           {!loading && (
             <Paper sx={{ p: 3, borderRadius: 3 }} variant="outlined">
@@ -136,7 +148,7 @@ function SeatSelectionPage() {
                   <Button
                     variant="contained"
                     size="large"
-                    disabled={!selectedSeat || saving}
+                    disabled={!selectedSeat || saving || adminUser}
                     onClick={handleCreateTicket}
                     sx={{ 
                       bgcolor: 'white', 
