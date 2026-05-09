@@ -164,4 +164,12 @@ public class Sefer {
         }
     }
 
+    // Duzeltme: Frontend'in hesaplanmis son fiyati (vergi, ikram dahil) gormesi saglanir.
+    public double getBiletFiyati() {
+        if (arac == null) {
+            return 0;
+        }
+        return arac.hesaplaToplamFiyat(arac.getBiletFiyati());
+    }
+
 }

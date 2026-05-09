@@ -50,7 +50,7 @@ const RegisterPage = () => {
       minHeight: '100vh',
       display: 'flex',
       flexDirection: 'column',
-      backgroundImage: 'url("/register.png")',
+      backgroundImage: 'url("/register.jpg")',
       backgroundSize: 'cover',
       alignItems: 'center',
       padding: 5,
