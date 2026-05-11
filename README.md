@@ -5,8 +5,8 @@
 ### Akıllı Ulaşım ve Rezervasyon Sistemi
 
 [![Java](https://img.shields.io/badge/Java-17-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)](https://openjdk.org/)
-[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.x-6DB33F?style=for-the-badge&logo=springboot&logoColor=white)](https://spring.io/projects/spring-boot)
-[![React](https://img.shields.io/badge/React-19.x-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.2.5-6DB33F?style=for-the-badge&logo=springboot&logoColor=white)](https://spring.io/projects/spring-boot)
+[![React](https://img.shields.io/badge/React-19.2.x-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
 [![MUI](https://img.shields.io/badge/MUI-9.x-007FFF?style=for-the-badge&logo=mui&logoColor=white)](https://mui.com/)
 [![H2 Database](https://img.shields.io/badge/H2-Database-0000BB?style=for-the-badge)](https://www.h2database.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
@@ -15,6 +15,7 @@ Farklı ulaşım türlerini (✈️ uçak, 🚆 tren, 🚌 otobüs) tek bir plat
 
 [Başlarken](#-başlarken) •
 [Özellikler](#-özellikler) •
+[Görseller](#-uygulama-görselleri) •
 [Teknolojiler](#-kullanılan-teknolojiler) •
 [Mimari](#-mimari-tasarım) •
 [API](#-api-endpoints) •
@@ -34,6 +35,20 @@ Farklı ulaşım türlerini (✈️ uçak, 🚆 tren, 🚌 otobüs) tek bir plat
 - 📊 Yöneticiler seferleri, araçları ve rezervasyonları sistem üzerinden yönetebilir
 
 Proje, OOP'nin beş temel prensibini (Kalıtım, Kapsülleme, Çok Biçimlilik, Soyutlama, Hata Yönetimi) gerçek dünya senaryolarına uygulayarak **modüler ve sürdürülebilir** bir yazılım mimarisi sunmayı amaçlamaktadır.
+
+---
+
+## 👥 Proje Ekibi
+
+| Ad Soyad | Öğrenci No | Görevler |
+|----------|------------|----------|
+| **Mustafa Mert Çevik** | 24118080086 | Ulaşım araçları modelleri, sefer arama API'si, seed data |
+| **Muhammed Köseoğlu** | 24118080049 | Kullanıcı sistemi, auth API, admin paneli (backend), proje yönetimi |
+| **Ömer Faruk Kara** | 24118080064 | React frontend geliştirme, UI/UX, koltuk seçim ekranı, export |
+| **Elif Feyza Şengül** | 25118080004 | Bilet/rezervasyon sistemi, exception handling |
+
+> **Ders:** CENG106 — Nesne Yönelimli Programlama<br>
+> **Şube:** 1. Şube
 
 ---
 
@@ -58,23 +73,75 @@ Proje, OOP'nin beş temel prensibini (Kalıtım, Kapsülleme, Çok Biçimlilik, 
 
 ---
 
+## 📸 Uygulama Görselleri
+
+Uygulamanın temel kullanıcı ve yönetici akışları aşağıdaki ekran görüntülerinde görülebilir.
+
+<table>
+  <tr>
+    <td width="50%">
+      <strong>Giriş Ekranı</strong><br>
+      <img src="docs/screenshots/01-login.png" alt="CityGo giriş ekranı" width="100%">
+    </td>
+    <td width="50%">
+      <strong>Kayıt Ekranı</strong><br>
+      <img src="docs/screenshots/02-register.png" alt="CityGo kayıt ekranı" width="100%">
+    </td>
+  </tr>
+  <tr>
+    <td width="50%">
+      <strong>Sefer Arama</strong><br>
+      <img src="docs/screenshots/03-home-search.png" alt="CityGo sefer arama ekranı" width="100%">
+    </td>
+    <td width="50%">
+      <strong>Arama Sonuçları</strong><br>
+      <img src="docs/screenshots/04-search-results.png" alt="CityGo arama sonuçları ekranı" width="100%">
+    </td>
+  </tr>
+  <tr>
+    <td width="50%">
+      <strong>Koltuk Seçimi</strong><br>
+      <img src="docs/screenshots/05-seat-selection.png" alt="CityGo koltuk seçimi ekranı" width="100%">
+    </td>
+    <td width="50%">
+      <strong>Biletlerim</strong><br>
+      <img src="docs/screenshots/06-my-tickets.png" alt="CityGo biletlerim ekranı" width="100%">
+    </td>
+  </tr>
+  <tr>
+    <td width="50%">
+      <strong>Admin Paneli</strong><br>
+      <img src="docs/screenshots/07-admin-dashboard.png" alt="CityGo admin paneli istatistik ekranı" width="100%">
+    </td>
+    <td width="50%">
+      <strong>Sefer Yönetimi</strong><br>
+      <img src="docs/screenshots/08-admin-trips.png" alt="CityGo admin sefer yönetimi ekranı" width="100%">
+    </td>
+  </tr>
+</table>
+
+---
+
 ## 🛠 Kullanılan Teknolojiler
 
 ### Backend
 | Teknoloji | Versiyon | Kullanım Amacı |
 |-----------|----------|----------------|
 | Java | 17 | Backend programlama dili |
-| Spring Boot | 3.x | REST API geliştirme, bağımlılık yönetimi |
+| Spring Boot | 3.2.5 | REST API geliştirme, bağımlılık yönetimi |
 | Spring Data JPA (Hibernate) | — | Nesne-ilişkisel eşleme (ORM) |
 | H2 Database | 2.x | Gömülü ilişkisel veritabanı (dosya tabanlı) |
 | Maven | — | Bağımlılık ve derleme yönetimi |
+| Spring Security Crypto | — | BCrypt ile şifre hashleme |
 
 ### Frontend
 | Teknoloji | Versiyon | Kullanım Amacı |
 |-----------|----------|----------------|
-| React | 19.x | Kullanıcı arayüzü geliştirme |
+| React | 19.2.x | Kullanıcı arayüzü geliştirme |
 | MUI (Material UI) | 9.x | Hazır, profesyonel UI bileşenleri |
 | Vite | 8.x | Geliştirme sunucusu ve derleme |
+| Axios | 1.15.x | REST API istekleri |
+| React Router | 7.x | Sayfa yönlendirme ve route guard yapısı |
 
 ### Araçlar
 | Araç | Kullanım Amacı |
@@ -145,6 +212,12 @@ Bu projede Nesne Yönelimli Programlamanın temel prensipleri şu şekilde uygul
 - Özel exception sınıfları tanımlanmıştır (ör. geçersiz tarih, dolu kapasite)
 - Merkezi `GlobalExceptionHandler` ile tutarlı hata yönetimi sağlanmıştır
 
+### 6. Kimlik Doğrulama ve Veri Güvenliği
+- Şifreler veritabanında düz metin tutulmaz; BCrypt ile hashlenir
+- Eski SHA-256 formatındaki kayıtlar başarılı girişten sonra BCrypt formatına taşınır
+- Auth endpointleri DTO ile çalışır ve response içinde şifre/hash bilgisi dönmez
+- Admin endpointlerinde frontend guard'a ek olarak backend tarafında `X-User-Id` ile admin kontrolü yapılır
+
 ---
 
 ## 📁 Proje Yapısı
@@ -164,12 +237,20 @@ CityGo/
 │   │   │   ├── Sefer.java
 │   │   │   ├── Bilet.java
 │   │   │   ├── Koltuk.java
-│   │   │   └── BiletDurumu.java      # Enum
+│   │   │   ├── BiletDurumu.java      # Enum
+│   │   │   └── KoltukTipi.java       # Enum
 │   │   ├── controller/               # REST Controller'lar
 │   │   │   ├── AuthController.java
 │   │   │   ├── SeferController.java
 │   │   │   ├── BiletController.java
-│   │   │   └── AdminController.java
+│   │   │   ├── AdminController.java
+│   │   │   └── ExportController.java
+│   │   ├── dto/                      # Request/response DTO sınıfları
+│   │   │   ├── AuthResponse.java
+│   │   │   ├── LoginRequest.java
+│   │   │   ├── RegisterRequest.java
+│   │   │   ├── CreateTicketRequest.java
+│   │   │   └── TripRequest.java
 │   │   ├── service/                  # İş mantığı katmanı
 │   │   │   ├── KullaniciService.java
 │   │   │   ├── AramaService.java
@@ -195,14 +276,16 @@ CityGo/
 │   │   │   ├── SearchResultsPage.jsx
 │   │   │   ├── SeatSelectionPage.jsx
 │   │   │   ├── MyTicketsPage.jsx
-│   │   │   └── AdminPanel.jsx
+│   │   │   ├── AdminPanel.jsx
+│   │   │   └── NotFound.jsx
 │   │   ├── services/                 # API çağrıları
 │   │   ├── App.jsx
 │   │   └── main.jsx
 │   ├── package.json
 │   └── vite.config.js
 │
-├── CityGo_Roadmap.md                # Proje yol haritası
+├── docs/                            # Raporlar, roadmap ve sunum dosyaları
+│   └── screenshots/                 # README için uygulama ekran görüntüleri
 ├── README.md                         # Bu dosya
 └── LICENSE                           # MIT Lisansı
 ```
@@ -253,6 +336,13 @@ npm run dev
 
 > Frontend varsayılan olarak `http://localhost:5173` adresinde çalışacaktır.
 > API adresini değiştirmek için `frontend/.env.example` dosyasını `.env` olarak kopyalayıp `VITE_API_BASE_URL` değerini güncelleyin.
+
+Opsiyonel `.env` kurulumu:
+
+```bash
+cd frontend
+cp .env.example .env
+```
 
 ### Varsayılan Kullanıcılar (Seed Data)
 
@@ -347,19 +437,7 @@ cd frontend
 npm run build
 ```
 
----
-
-## 👥 Proje Ekibi
-
-| Ad Soyad | Öğrenci No | Görevler |
-|----------|------------|----------|
-| **Mustafa Mert Çevik** | 24118080086 | Ulaşım araçları modelleri, sefer arama API'si, seed data |
-| **Muhammed Köseoğlu** | 24118080049 | Kullanıcı sistemi, auth API, admin paneli (backend), proje yönetimi |
-| **Ömer Faruk Kara** | 24118080064 | React frontend geliştirme, UI/UX, koltuk seçim ekranı, export |
-| **Elif Feyza Şengül** | 25118080004 | Bilet/rezervasyon sistemi, exception handling |
-
-> **Ders:** CENG106 — Nesne Yönelimli Programlama  
-> **Şube:** 1. Şube
+> Frontend bağımlılık güvenliği için `cd frontend && npm audit` komutu da kullanılabilir.
 
 ---
 
@@ -371,7 +449,7 @@ Bu proje [MIT Lisansı](LICENSE) kapsamında lisanslanmıştır.
 
 <div align="center">
 
-**CityGo** ile yolculuğunuzu planlayın! 🚀
+**CityGo** ile yolculuğunuzu planlayın.
 
 *CENG106 Nesne Yönelimli Programlama — 2026*
 
