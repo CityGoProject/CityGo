@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="docs/citygo_logo.png" alt="CityGo logosu" width="180">
+
 # 🚌 CityGo
 
 ### Akıllı Ulaşım ve Rezervasyon Sistemi
